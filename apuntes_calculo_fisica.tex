@@ -1,0 +1,574 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{ulem}
+\usepackage{amsmath,amsfonts}
+\usepackage{graphicx}
+\usepackage{color}
+
+\usepackage[spanish]{babel}
+\usepackage{amssymb, amsthm}
+\usepackage{enumitem}
+\usepackage{mathrsfs}
+\usepackage{float}
+\usepackage{booktabs} % Para tablas elegantes
+\usepackage{parskip}  % Para espaciado entre párrafos
+
+% --- Configuración de estilo ---
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+\renewcommand{\baselinestretch}{1.2} % Interlineado
+
+% --- Comandos personalizados ---
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\dom}{\text{dom}}
+
+\newcommand{\fc}[1]{{\color{blue}{#1}}}
+
+\title{Cálculo para física -- versión 0.1} 
+\author{Franz Chouly}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+%\documentclass[12pt, a4paper]{article}
+%\usepackage[utf8]{inputenc}
+%\usepackage[spanish]{babel}
+%\usepackage{amsmath, amssymb, amsthm}
+%\usepackage{graphicx}
+%\usepackage{enumitem}
+%\usepackage{mathrsfs}
+%\usepackage{float}
+%\usepackage{hyperref}
+%\usepackage{booktabs} % Para tablas elegantes
+%\usepackage{parskip}  % Para espaciado entre párrafos
+
+% --- Configuración de estilo ---
+%\setlength{\parindent}{0pt}
+%\setlength{\parskip}{1em}
+%\renewcommand{\baselinestretch}{1.2} % Interlineado
+
+% --- Comandos personalizados ---
+%\newcommand{\R}{\mathbb{R}}
+%\newcommand{\C}{\mathbb{C}}
+%\newcommand{\N}{\mathbb{N}}
+%\newcommand{\dom}{\text{dom}}
+
+%\title{\textbf{Apuntes de Funciones}}
+%\author{Franz C.}
+%\date{\today}
+
+%\begin{document}
+%\maketitle
+
+\section{Funciones}
+
+\subsection{Lo mínimo}
+
+\subsubsection{Definición de función}
+Una \textbf{función} es una \textit{regla} que asigna a cada elemento de un conjunto \( A \) (el \textbf{dominio}) \textit{exactamente un} elemento de un conjunto \( B \) (el \textbf{codominio}). Formalmente, si \( f: A \to B \), entonces para cada \( x \in A \), existe un único \( y \in B \) tal que \( y = f(x) \).
+
+\begin{itemize}
+    \item \textbf{Notación:} \( f: A \to B \), \( x \mapsto f(x) \).
+    \item \textbf{Analogía:} Una "máquina" que transforma un número en otro (ej: \( f(x) = x^2 \)).
+\end{itemize}
+
+\subsubsection{Ejemplos básicos}
+\begin{itemize}
+    \item \textbf{Polinomios:} \( p(x) = a_nx^n + \dots + a_0 \).
+    \item \textbf{Raíz cuadrada:} \( f(x) = \sqrt{x} \), con \( x\geq 0 %\dom(f) = [0, +\infty) 
+    \).
+\end{itemize}
+
+\subsubsection{Dominio de definición}
+El \textbf{dominio} de \( f \) es el conjunto de valores \( x \) para los cuales \( f(x) \) \textit{está definido}. Ejemplos:
+\begin{itemize}
+    \item \( \displaystyle f(x) = \frac{1}{x} \): \( \dom(f) = \R \setminus \{0\} \).
+    \item \( f(x) = \sqrt{x} \): \( \dom(f) = [0, +\infty) \).
+\end{itemize}
+
+\subsubsection{Gráficos}
+La \textbf{gráfica} de \( f \) es el conjunto \( \{(x, f(x)) \mid x \in \dom(f)\} \). Herramientas útiles:
+\begin{itemize}
+    \item \textbf{Test de la recta vertical:} Si una recta vertical corta la gráfica en más de un punto, \textit{no es función}.
+\end{itemize}
+
+\subsubsection{Funciones pares e impares}
+\begin{itemize}
+    \item \textbf{Par:} \( f(-x) = f(x) \) (ej: \( f(x) = x^2 \)).
+    \item \textbf{Impar:} \( f(-x) = -f(x) \) (ej: \( f(x) = x^3 \)).
+\end{itemize}
+
+\subsubsection{Operaciones con funciones}
+Dadas \( f \) y \( g \), se definen:
+\begin{itemize}
+    \item \textbf{Suma:} \( (f + g)(x) = f(x) + g(x) \), con \( \dom(f + g) = \dom(f) \cap \dom(g) \).
+    \item \textbf{Producto:} \( (f \cdot g)(x) = f(x) \cdot g(x) \), mismo dominio.
+    \item \textbf{Composición:} \( (f \circ g)(x) = f(g(x)) \), con \[ \dom(f \circ g) = \{x \in \dom(g) \mid g(x) \in \dom(f)\}. \]
+\end{itemize}
+
+\subsubsection{Función inversa}
+Si \( f \) es \textbf{biyectiva}, existe \( f^{-1} \) tal que:
+\[
+f^{-1}(f(x)) = x \quad \text{y} \quad f(f^{-1}(y)) = y.
+\]
+\textbf{Ejemplos:}
+\begin{itemize}
+    \item \( f(x) = x \) es su propia inversa.
+    \item \( f(x) = x^2 \) \textit{no es biyectiva} en \( \R \), pero sí en \( [0, +\infty) \), donde \( f^{-1}(y) = \sqrt{y} \).
+\end{itemize}
+
+\subsubsection{Monotonía}
+\begin{itemize}
+    \item \textbf{Creciente:} \( x_1 < x_2 \implies f(x_1) \leq f(x_2) \).
+    \item \textbf{Decreciente:} \( x_1 < x_2 \implies f(x_1) \geq f(x_2) \).
+\end{itemize}
+\textbf{Ejemplos:}
+\begin{itemize}
+    \item \( f(x) = x^3 \) es creciente en \( \R \).
+    \item \( f(x) = \displaystyle \frac{1}{x} \) es decreciente en \( (0, +\infty) \).
+\end{itemize}
+
+\subsection{Polinomios}
+
+\subsubsection{Definición y ejemplos}
+Un \textbf{polinomio} es una función de la forma:
+\[
+p(x) = a_nx^n + a_{n-1}x^{n-1} + \dots + a_0,
+\]
+donde \( a_i \in \R \) (o \( \C \)) y \( n \in \N \).
+
+\subsubsection{Origen histórico}
+Los polinomios surgieron en la \textbf{Edad Media} para resolver problemas geométricos (ej: cálculo de áreas) y ecuaciones algebraicas. Su estudio formal se desarrolló con el álgebra simbólica (siglos XVI-XVII).
+
+\subsubsection{Propiedades fundamentales}
+\begin{itemize}
+    \item \textbf{Dominio:} \( \dom(p) = \R \) (o \( \C \)).
+    %\item \textbf{Álgebra:} Los polinomios forman un \textit{anillo conmutativo} con la suma y el producto.
+    \item \textbf{Composición:} Si \( p \) y \( q \) son polinomios, \( p \circ q \) también lo es.
+    \item El conjunto de los polinomios con coeficientes en un cuerpo $\mathbb{K}$ (como $\mathbb{R}$ o $\mathbb{C}$) \textbf{forma un álgebra sobre $\mathbb{K}$}. Esto significa que, además de ser un espacio vectorial (donde podemos sumar polinomios y multiplicarlos por escalares), los polinomios se pueden multiplicar entre sí, y el resultado sigue siendo un polinomio. Por ejemplo, si $P(x) = 2x^2 + 3x + 1$ y $Q(x) = x + 2$, su suma $P(x) + Q(x) = 2x^2 + 4x + 3$ y su producto $P(x) \cdot Q(x) = 2x^3 + 7x^2 + 7x + 2$ son también polinomios. Además, la multiplicación cumple con las propiedades de \textbf{asociatividad}, \textbf{conmutatividad} y \textbf{distributividad}, lo que confirma que los polinomios son un álgebra conmutativa y unitaria (con $1$ neutro para la multiplicación).
+
+\end{itemize}
+
+
+
+\subsubsection{Límites y no-polinomios}
+\begin{itemize}
+    \item \textbf{Cociente:} \( \displaystyle \frac{p(x)}{q(x)} \) \textit{no es polinomio} (ej: \( \displaystyle \frac{1}{x} \)).
+    \item \textbf{Inversa:} La inversa de \( p(x) = x^2 \) es \( \sqrt{x} \), que \textit{no es polinomio}.
+\end{itemize}
+
+\subsubsection{Aproximación y Interés}
+Los polinomios son clave en:
+\begin{itemize}
+    \item \textbf{Series de Taylor:} Aproximan funciones suaves.
+    \item \textbf{Interpolación de Lagrange:} Pasa por puntos dados.
+    \item Los \textbf{polinomios de Hermite} \(H_n(x)\) son una familia de polinomios ortogonales con respecto al peso \(e^{-x^2}\) en el intervalo \((-\infty, \infty)\). Estos polinomios, definidos por la relación de recurrencia \(H_{n+1}(x) = 2xH_n(x) - 2nH_{n-1}(x)\) con \(H_0(x) = 1\) y \(H_1(x) = 2x\), aparecen de manera natural en la resolución de la \textbf{ecuación de Schrödinger} para el \textbf{oscilador armónico cuántico}. En este contexto, las soluciones de la ecuación de Schrödinger independiente del tiempo para un potencial cuadrático \(V(x) = \frac{1}{2}m\omega^2x^2\) están dadas por las funciones de onda \(\psi_n(x) = N_n H_n(\alpha x)e^{-\frac{\alpha^2x^2}{2}}\), donde \(\alpha = \sqrt{\frac{m\omega}{\hbar}}\) y \(N_n\) es una constante de normalización. Los polinomios de Hermite permiten así describir los \textbf{estados cuánticos estacionarios} del oscilador armónico, con energías cuantizadas \(E_n = \hbar\omega(n + \frac{1}{2})\).
+
+\end{itemize}
+
+\subsection{Exponencial y logaritmo}
+
+\subsubsection{Desarrollo histórico}
+El estudio de la exponencial y el logaritmo se remonta a los siglos XVI-XVII, con aportes de Napier, Briggs y Euler. Hairer y Wanner (\textit{Analysis by Its History}) destacan su rol en la modelización de crecimiento y decaimiento.
+
+\subsubsection{Propiedades básicas}
+\begin{itemize}
+    \item \textbf{Exponencial:} \( f(x) = a^x \) (\( a > 0 \)).
+    \begin{itemize}
+        \item \( a^{x+y} = a^x a^y \).
+        \item \( \lim_{x \to +\infty} a^x = +\infty \) si \( a > 1 \).
+    \end{itemize}
+    \item \textbf{Logaritmo:} \( g(x) = \log_a(x) \) (\( a > 0, a \neq 1 \)).
+    \begin{itemize}
+        \item \( \log_a(xy) = \log_a(x) + \log_a(y) \).
+        \item \( \log_a(a^x) = x \).
+    \end{itemize}
+\end{itemize}
+
+\subsection{Funciones trigonométricas}
+
+\subsubsection{Desarrollo histórico}
+Las funciones trigonométricas surgieron en la antigüedad para estudiar astronomía y geometría. Hairer y Wanner (\textit{Analysis by Its History}) señalan su formalización en el siglo XVIII con Euler.
+
+\subsubsection{Periodicidad}
+Todas las funciones trigonométricas son \textbf{periódicas}:
+\begin{itemize}
+    \item \( \sin(x + 2\pi) = \sin(x) \).
+    \item \( \cos(x + 2\pi) = \cos(x) \).
+\end{itemize}
+
+\subsubsection{Fórmulas imprescindibles}
+\begin{itemize}
+    \item \( \sin^2(x) + \cos^2(x) = 1 \).
+    \item \( \sin(a \pm b) = \sin(a)\cos(b) \pm \cos(a)\sin(b) \).
+\end{itemize}
+
+\subsubsection{Series de Fourier}
+Toda función periódica \emph{razonable} puede expresarse como suma de senos y cosenos (Gasquet-Witomski, \textit{Fourier Analysis and Applications}).
+
+\subsection{Valor absoluto}
+
+\subsubsection{Definición}
+\[
+|x| =
+\begin{cases}
+x & \text{si } x \geq 0, \\
+-x & \text{si } x < 0.
+\end{cases}
+\]
+
+\subsubsection{Propiedades}
+\begin{itemize}
+    \item \( |x| \geq 0 \) y \( |x| = 0 \iff x = 0 \).
+    \item \( |xy| = |x||y| \).
+    \item \( |x + y| \leq |x| + |y| \) (desigualdad triangular).
+\end{itemize}
+
+Para demostrar la \textbf{desigualdad triangular} en \(\mathbb{R}\), que establece que para cualesquiera \(a, b \in \mathbb{R}\) se cumple \(|a + b| \leq |a| + |b|\), procedemos de la siguiente manera:
+
+Consideremos los casos posibles para los signos de \(a\) y \(b\):
+\begin{itemize}
+    \item Si \(a\) y \(b\) son ambos no negativos o ambos no positivos, entonces \(|a + b| = |a| + |b|\) directamente.
+    \item Si \(a\) y \(b\) tienen signos opuestos, sin pérdida de generalidad, supongamos \(a \geq 0\) y \(b \leq 0\). Entonces, \(|a + b| \leq |a|\) o \(|a + b| \leq |b|\), dependiendo de cuál sea mayor. Entonces, tenemos \(|a + b| \leq \max\{|a|, |b|\} \leq |a| + |b|\), y la desigualdad se satisface.
+\end{itemize}
+
+Para una demostración formal, observamos que:
+\[
+-|a| \leq a \leq |a| \quad \text{y} \quad -|b| \leq b \leq |b|.
+\]
+Sumando estas desigualdades, obtenemos:
+\[
+-(|a| + |b|) \leq a + b \leq |a| + |b|.
+\]
+Por definición de valor absoluto, esto implica que \(|a + b| \leq |a| + |b|\), lo que completa la prueba.
+
+\begin{center}
+    $\star$
+\end{center}
+
+\end{document}
+
+
+*****************************
+
+\section{Ejercicios Resueltos}
+
+\subsection{Funciones: Definición y Dominio}
+
+\begin{enumerate}
+
+\item \textbf{Determinar el dominio de las siguientes funciones:}
+\begin{enumerate}
+    \item $ f(x) = \frac{1}{x-2} $
+    \item $ g(x) = \sqrt{3x + 6} $
+\end{enumerate}
+
+\textbf{Solución:}
+\begin{itemize}
+    \item[a)] El denominador no puede ser cero: $ x - 2 \neq 0 \implies x \neq 2 $. Entonces, $ \dom(f) = \R \setminus \{2\} $.
+    \item[b)] El argumento de la raíz debe ser no negativo: $ 3x + 6 \geq 0 \implies x \geq -2 $. Entonces, $ \dom(g) = [-2, +\infty) $.
+\end{itemize}
+
+---
+
+\item \textbf{Dadas $ f(x) = x^2 + 1 $ y $ g(x) = \sqrt{x} $, calcular $ (f \circ g)(x) $ y su dominio.}
+
+\textbf{Solución:}
+$$
+(f \circ g)(x) = f(g(x)) = f(\sqrt{x}) = (\sqrt{x})^2 + 1 = x + 1.
+$$
+El dominio de $ g $ es $ [0, +\infty) $, y como $ f $ está definida en todo $ \R $, el dominio de $ f \circ g $ es $ [0, +\infty) $.
+
+---
+
+\subsection{Polinomios}
+
+\item \textbf{Demostrar que la suma de dos polinomios es un polinomio.}
+
+\textbf{Solución:}
+Sean $ p(x) = \sum_{k=0}^n a_k x^k $ y $ q(x) = \sum_{k=0}^m b_k x^k $ polinomios. Su suma es:
+$$
+(p + q)(x) = \sum_{k=0}^{\max(n,m)} (a_k + b_k) x^k,
+$$
+donde $ a_k = 0 $ si $ k > n $ y $ b_k = 0 $ si $ k > m $. Claramente, $ p + q $ es un polinomio.
+
+---
+
+\item \textbf{Encontrar un polinomio $ p $ de grado 2 tal que $ p(0) = 1 $, $ p(1) = 0 $ y $ p(-1) = 2 $.}
+
+\textbf{Solución:}
+Sea $ p(x) = ax^2 + bx + c $. Usando las condiciones:
+
+
+***************
+**************
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Definir la función
+def f(x):
+    return x**2 * np.sin(x)
+
+# Crear valores de x (ej: de -10 a 10 con 500 puntos)
+x = np.linspace(-10, 10, 500)
+y = f(x)
+
+# Graficar
+plt.figure(figsize=(8, 4))
+plt.plot(x, y, label=r'$f(x) = x^2 \sin(x)$', color='blue')
+plt.axhline(0, color='black', linewidth=0.5)  # Eje x
+plt.axvline(0, color='black', linewidth=0.5)  # Eje y
+plt.grid(True, linestyle='--', alpha=0.7)
+plt.title('Gráfico de $f(x) = x^2 \\sin(x)$')
+plt.xlabel('x')
+plt.ylabel('f(x)')
+plt.legend()
+plt.show()
+
+import sympy as sp
+import matplotlib.pyplot as plt
+
+# Definir la variable simbólica y la función
+x = sp.symbols('x')
+f = x**3 / (x**2 - 1)
+
+# Graficar
+sp.plot(f, (x, -5, 5),
+        title='Gráfico de $f(x) = \\frac{x^3}{x^2 - 1}$',
+        xlabel='x', ylabel='f(x)',
+        ylim=[-100, 100],  # Ajustar límites para ver asíntotas
+        show=True)
+
+
+
+*************************
+
+\section{Cálculo de Límites Clásicos}
+
+\subsection{Indeterminaciones Básicas}
+Las indeterminaciones son formas que \textit{no permiten determinar} el límite directamente. Las más comunes son:
+$$
+\frac{0}{0}, \quad \frac{\infty}{\infty}, \quad 0 \cdot \infty, \quad \infty - \infty, \quad 0^0, \quad 1^\infty, \quad \infty^0.
+$$
+
+\subsection{Regla de L'Hôpital}
+Si $ \lim_{x \to a} \frac{f(x)}{g(x)} $ es de la forma $ \frac{0}{0} $ o $ \frac{\infty}{\infty} $, y $ f $ y $ g $ son derivables cerca de $ a $, entonces:
+$$
+\lim_{x \to a} \frac{f(x)}{g(x)} = \lim_{x \to a} \frac{f'(x)}{g'(x)},
+$$
+siempre que el límite del lado derecho exista.
+
+\textbf{Ejemplo:}
+$$
+\lim_{x \to 0} \frac{\sin(x)}{x} \quad \text{(forma } \frac{0}{0}\text{)}.
+$$
+Aplicando L'Hôpital:
+$$
+\lim_{x \to 0} \frac{\cos(x)}{1} = \cos(0) = 1.
+$$
+
+---
+
+\subsection{Límites Fundamentales}
+\begin{enumerate}
+    \item $ \lim_{x \to 0} \frac{\sin(x)}{x} = 1 $.
+    \item $ \lim_{x \to 0} \frac{1 - \cos(x)}{x^2} = \frac{1}{2} $.
+    \item $ \lim_{x \to \infty} \left(1 + \frac{1}{x}\right)^x = e $.
+    \item $ \lim_{x \to 0} \frac{e^x - 1}{x} = 1 $.
+\end{enumerate}
+
+\textbf{Ejemplo de aplicación:}
+$$
+\lim_{x \to 0} \frac{\tan(x)}{x} = \lim_{x \to 0} \frac{\sin(x)}{x \cos(x)} = \frac{1}{1} = 1.
+$$
+
+---
+
+\subsection{Trucos para Resolver Límites}
+
+\subsubsection{Racionalización}
+Para límites con raíces, multiplicar por el conjugado:
+$$
+\lim_{x \to 0} \frac{\sqrt{x + 1} - 1}{x} = \lim_{x \to 0} \frac{(\sqrt{x + 1} - 1)(\sqrt{x + 1} + 1)}{x (\sqrt{x + 1} + 1)} = \lim_{x \to 0} \frac{x}{x (\sqrt{x + 1} + 1)} = \frac{1}{2}.
+$$
+
+\subsubsection{Factorización}
+Para polinomios, factorizar el numerador y denominador:
+$$
+\lim_{x \to 1} \frac{x^2 - 1}{x - 1} = \lim_{x \to 1} \frac{(x - 1)(x + 1)}{x - 1} = \lim_{x \to 1} (x + 1) = 2.
+$$
+
+\subsubsection{Infinitésimos Equivalentes}
+Para $ x \to 0 $:
+$$
+\sin(x) \sim x, \quad \tan(x) \sim x, \quad 1 - \cos(x) \sim \frac{x^2}{2}, \quad e^x - 1 \sim x.
+$$
+\textbf{Ejemplo:}
+$$
+\lim_{x \to 0} \frac{\sin(3x)}{5x} = \lim_{x \to 0} \frac{3x}{5x} = \frac{3}{5}.
+$$
+
+---
+
+\subsection{Límites al Infinito}
+
+\subsubsection{Polinomios}
+El límite de un polinomio $ p(x) = a_nx^n + \dots + a_0 $ cuando $ x \to \infty $ depende del término dominante
+
+
+*******************************
+
+
+\subsection{Lo minimo}
+% Para el Practico 1
+% Y Parcial, y Examen
+
+\begin{itemize}
+    \item Definicion de una funcion. Una maquina para fabricar un numero a partir de un otro. Notaciones de base.
+    \item Ejemplo: polinomios y raiz de x.
+    \item Dominio de definicion.
+    \item Graficos.
+    \item Funciones pares, impares.
+    \item Las funciones se pueden anadir, multiplicar. Regla sobre el dominio de definicion.
+    \item Tambien se pueden componer. Regla sobre el dominio de definicion.
+    \item Funcion inversa. Ejemplos: x y x al cuadrado.
+    \item Las funciones pueden ser, a veces, crecientes o decrecientes. Ejemplos.
+\end{itemize}
+
+\subsection{Polinomios}
+
+\begin{enumerate}
+    \item Definicion y ejemplos.
+    \item Origen historica: edad media, problemas basicas de geometria (superficies), ecuaciones algebraicas.
+    \item Siempre estan definidos en todo R (en todo C).
+    \item Forman una algebra.
+    Detailles.
+    \item La compuesta de polinomios es un polinomio.
+    \item El cociente de un polinomio no es mas un polinomio en general. Ejemplos: constantes, 1 sobre x.
+    \item La inversa de un polinomio no es un polinomio.
+    Ejemplo x al cuadrado. Tampoco un polinomio no tiene inversa. Bijectividad.
+    \item Sirven para aproximar funciones mas complejas: Taylor, Lagrange, series.
+    
+\end{enumerate}
+
+\subsection{Exponencial y log}
+
+\begin{enumerate}
+    \item Desarollo historico. Hairer y Wanner.
+    \item Graficos. Propiedades basicas.
+\end{enumerate}
+
+\subsection{Funciones trigo}
+
+\begin{enumerate}
+    \item Desorollo historico. Hairer y Wanner.
+    \item Periodicidad.
+    \item Formulas imprescindibles.
+    \item Series de Fourier. (idea). Mas Gasquet Witomski.
+\end{enumerate}
+
+\subsection{El valor absoluto}
+
+\begin{enumerate}
+    \item Definicion.
+    \item Ejemplos.
+    \item Propiedades.
+\end{enumerate}
+
+\subsection{Temario}
+
+\paragraph{Definición y concepto de función}
+\begin{itemize}
+    \item Ejemplos y gráficas.
+    \item Polinomios, log y exp, funciones trigonometricas. 
+    \item Dominios de definici\'on.
+    \item Operaciones de base: scalar, 4 operaciones, composición, inversa.
+    \item Funciones periodicas, pares, impares.
+\end{itemize}
+
+\subsection{Practico 1}
+
+OK
+
+\subsection{Stewart}
+
+El valor absoluto !!
+
+OK 104 71
+
+
+A VOIR X Pagina 9 41
+54
+
+Piskunov
+
+\subsection{Hairer y Wanner}
+
+VU A INTEGRER
+
+\subsection{Mise en Forme AI}
+
+Le faire maintenant, et ensuite completer avec Hairer et Wanner
+ENSUITE
+
+\subsection{Exos parciales}
+
+Funciones pares, impares.
+Compuesta de funciones.
+Inversa de funciones.
+Trigonometria a full.
+
+\subsection{Sympy}
+
+Definicion de funcion.
+Graficos.
+
+\newpage
+
+\section{etc}
+
+\subsection{Temario}
+
+\subsection{Practico}
+
+\subsection{Stewart}
+
+\subsection{Hairer y Wanner}
+
+\subsection{Mise en Forme AI}
+
+\subsection{Exos parciales}
+
+\subsection{Sympy}
+
+Document A part et on insere ensuite
+
+METTRE SUR GITHUB
+A TRIER PLUS BAS
+Hopital
+
+
+
+Redactar apuntes detallados. Sitio web publico open etc.
+**************************************
+
+
+FAIRE UNE NOTE
+Temario
+Ver Practicos > Stewart > Hairer Wanner > STOP
+
+Motivacion : Schrodinger 1D estacionaria. Soluciones con polinomios. D.
+Integral y probabilidad de presencia. I.
+
+
+\end{document}
+
