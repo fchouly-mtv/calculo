@@ -1,16 +1,59 @@
-\documentclass{article}
+\documentclass[12pt, a4paper]{article}
 \usepackage[utf8]{inputenc}
-\usepackage{url}
-\usepackage{hyperref}
-\usepackage{ulem}
-\usepackage{amsmath,amsfonts}
-\usepackage{graphicx}
-\usepackage{color}
-
 \usepackage[spanish]{babel}
-\usepackage{amssymb, amsthm}
+\usepackage{amsmath, amsthm, amssymb, amsfonts}
 \usepackage{enumitem}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{hyperref}
 \usepackage{mathrsfs}
+\usepackage{parskip}
+\usepackage{setspace}
+\usepackage{xcolor}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% Configuración de la página
+\geometry{left=2.5cm, right=2.5cm, top=3cm, bottom=3cm}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\textit{Apuntes: Límite y Continuidad}}
+\lhead{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\setlength{\headheight}{14.49998pt}
+
+% Definición de colores
+\definecolor{azulrioplatense}{RGB}{0, 102, 204}
+\definecolor{grisclaro}{RGB}{240, 240, 240}
+
+% Estilo para teoremas y definiciones
+\newtheoremstyle{rioplatense}
+    {12pt}   % Espacio arriba
+    {12pt}   % Espacio abajo
+    {\itshape} % Cuerpo del teorema
+    {0pt}    % Sangría
+    {\bfseries} % Cabeza del teorema
+    {.}      % Puntuación después de la cabeza
+    { }      % Espacio después de la cabeza
+    {}       % Cabeza especificada por el usuario
+
+\theoremstyle{rioplatense}
+\newtheorem{definicion}{Definición}[section]
+\newtheorem{teorema}{Teorema}[section]
+\newtheorem{ejemplo}{Ejemplo}[section]
+
+\usepackage{url}
+\usepackage{ulem}
+%\usepackage{color}
+
+%\usepackage[spanish]{babel}
+%\usepackage{amssymb, amsthm}
+%\usepackage{enumitem}
+%\usepackage{mathrsfs}
 \usepackage{float}
 \usepackage{booktabs} % Para tablas elegantes
 \usepackage{parskip}  % Para espaciado entre párrafos
@@ -28,7 +71,7 @@
 
 \newcommand{\fc}[1]{{\color{blue}{#1}}}
 
-\title{Cálculo para física -- versión 0.1} 
+\title{Cálculo para física -- versión 0.2} 
 \author{Franz Chouly}
 \date{\today}
 
@@ -68,6 +111,8 @@
 %\begin{document}
 %\maketitle
 
+\newpage
+
 \section{Funciones}
 
 \subsection{Lo mínimo}
@@ -104,6 +149,11 @@ La \textbf{gráfica} de \( f \) es el conjunto \( \{(x, f(x)) \mid x \in \dom(f)
 \begin{itemize}
     \item \textbf{Par:} \( f(-x) = f(x) \) (ej: \( f(x) = x^2 \)).
     \item \textbf{Impar:} \( f(-x) = -f(x) \) (ej: \( f(x) = x^3 \)).
+\item Es importante\footnote{\textbf{Weyl, H.} (1964).
+\emph{Symétrie et mathématique moderne}.
+Nouvelle bibliothèque scientifique.
+Flammarion, Paris, 156~p.
+ISBN : 978-2-08-210141-7.}.
 \end{itemize}
 
 \subsubsection{Operaciones con funciones}
@@ -157,22 +207,178 @@ Los polinomios surgieron en la \textbf{Edad Media} para resolver problemas geom�
 
 \end{itemize}
 
-
-
-\subsubsection{Límites y no-polinomios}
+\subsubsection{No-polinomios}
 \begin{itemize}
-    \item \textbf{Cociente:} \( \displaystyle \frac{p(x)}{q(x)} \) \textit{no es polinomio} (ej: \( \displaystyle \frac{1}{x} \)).
+    \item \textbf{Cociente:} \( \displaystyle \frac{p(x)}{q(x)} \) \textit{no es polinomio} (ej: \( \displaystyle {1}/{x} \)).
     \item \textbf{Inversa:} La inversa de \( p(x) = x^2 \) es \( \sqrt{x} \), que \textit{no es polinomio}.
 \end{itemize}
 
-\subsubsection{Aproximación y Interés}
+\subsubsection{Interés}
 Los polinomios son clave en:
 \begin{itemize}
-    \item \textbf{Series de Taylor:} Aproximan funciones suaves.
-    \item \textbf{Interpolación de Lagrange:} Pasa por puntos dados.
+    \item \textbf{Series de Taylor.} %Aproximan funciones suaves cerca de un punto.
+
+Las series de Taylor permiten aproximar funciones usando polinomios construidos a partir de las derivadas de la función en un punto. La idea central es que, si una función \( f(x) \) es derivable en \( x = a \), se puede expresar como \[ f(x) \simeq f(a) + f'(a)(x-a) + \frac{f''(a)}{2!}(x-a)^2 + \cdots.\] Cuantos más términos se incluyan, mejor será la aproximación cerca de \( a \). Por ejemplo, para funciones comunes como \( e^x \) o \( \cos(x) \), los primeros términos ya dan resultados sorprendentemente precisos para valores pequeños de \( x \).
+
+Un caso clásico es la función exponencial \( e^x \), cuya serie de Maclaurin (Taylor en \( a=0 \)) al orden 2 es \[ e^x \simeq 1 + x + \frac{x^2}{2} .\] Para el coseno, en cambio, los términos impares se anulan, y al orden 2 queda \[ \cos(x) \simeq 1 - \frac{x^2}{2}.\] Estas aproximaciones son útiles en física, ingeniería y cálculo numérico, donde a menudo basta con polinomios simples para modelar comportamientos locales con buena precisión.
+
+    \item \textbf{Interpolación de Lagrange.} %Pasa por puntos dados.
+
+%\section{Interpolación de Lagrange: ajustar puntos con polinomios}
+
+La interpolación de Lagrange permite construir un polinomio \( P(x) \) de grado \( n \) que pasa exactamente por \( n+1 \) puntos dados. A diferencia de las series de Taylor, no requiere derivadas, solo los valores de la función en los puntos elegidos. La fórmula es \( P(x) = \sum_{i=0}^n y_i \cdot L_i(x) \), donde \( L_i(x) \) son los polinomios base de Lagrange, definidos para anularse en todos los puntos excepto en \( x_i \). Este método es útil para aproximar funciones cuando solo se conocen algunos de sus valores, como en datos experimentales o tablas.
+
+Por ejemplo, si interpolamos \( \cos(x) \) en los puntos \( x_0 = 0 \), \( x_1 = \pi/4 \) y \( x_2 = \pi/2 \) (con \( y_0 = 1 \), \( y_1 = \sqrt{2}/2 \) y \( y_2 = 0 \)), el polinomio de Lagrange de grado 2 resultante es
+%\[
+%P(x) = 1 \cdot \frac{(x - \pi/4)(x - \pi/2)}{(0 - \pi/4)(0 - \pi/2)} + \frac{\sqrt{2}}{2} \cdot \frac{(x - 0)(x - \pi/2)}{(\pi/4 - 0)(\pi/4 - \pi/2)} + 0 \cdot \frac{(x - 0)(x - \pi/4)}{(\pi/2 - 0)(\pi/2 - \pi/4)}.
+%\]
+Simplificando, se obtiene 
+\( P(x) \simeq 1 - 0.6366x + 0.2251x^2 \), que coincide con \( \cos(x) \) en los puntos dados.
+    
     \item Los \textbf{polinomios de Hermite} \(H_n(x)\) son una familia de polinomios ortogonales con respecto al peso \(e^{-x^2}\) en el intervalo \((-\infty, \infty)\). Estos polinomios, definidos por la relación de recurrencia \(H_{n+1}(x) = 2xH_n(x) - 2nH_{n-1}(x)\) con \(H_0(x) = 1\) y \(H_1(x) = 2x\), aparecen de manera natural en la resolución de la \textbf{ecuación de Schrödinger} para el \textbf{oscilador armónico cuántico}. En este contexto, las soluciones de la ecuación de Schrödinger independiente del tiempo para un potencial cuadrático \(V(x) = \frac{1}{2}m\omega^2x^2\) están dadas por las funciones de onda \(\psi_n(x) = N_n H_n(\alpha x)e^{-\frac{\alpha^2x^2}{2}}\), donde \(\alpha = \sqrt{\frac{m\omega}{\hbar}}\) y \(N_n\) es una constante de normalización. Los polinomios de Hermite permiten así describir los \textbf{estados cuánticos estacionarios} del oscilador armónico, con energías cuantizadas \(E_n = \hbar\omega(n + \frac{1}{2})\).
 
 \end{itemize}
+
+\subsection{Funciones trigonométricas}
+
+\subsubsection{Fórmulas básicas}
+
+\begin{enumerate}
+\item \textbf{Definiciones básicas:}  
+
+\[
+\sen \theta = \frac{\text{opuesto}}{\text{hipotenusa}}, \quad  
+\cos \theta = \frac{\text{adyacente}}{\text{hipotenusa}}, \quad  
+\tan \theta = \frac{\text{opuesto}}{\text{adyacente}} = \frac{\sin \theta}{\cos \theta} .
+\]
+
+\item \textbf{Identidad pitagórica:}
+\[
+\sin^2 \theta + \cos^2 \theta = 1.
+\]
+
+%\item \textbf{Relación entre tangente y secante:}
+%\[
+%1 + \tan^2 \theta = \sec^2 \theta
+%\]
+
+%\item \textbf{Relación entre cotangente y cosecante:}
+%\[
+%1 + \cot^2 \theta = \csc^2 \theta
+%\]
+
+\item \textbf{Ángulos complementarios:}
+\[
+\sin\left(\frac{\pi}{2} - \theta\right) = \cos \theta, \quad
+\cos\left(\frac{\pi}{2} - \theta\right) = \sin \theta.
+\]
+\item \textbf{Periodicidad:}
+todas las funciones trigonométricas son \textbf{periódicas}, particularmente:
+\begin{itemize}
+    \item \( \sin(x + 2\pi) = \sin(x) \).
+    \item \( \cos(x + 2\pi) = \cos(x) \).
+\end{itemize}
+
+
+\end{enumerate}
+
+\subsubsection{Desarrollo histórico}
+Las funciones trigonométricas surgieron de forma implícita en la antigüedad para estudiar astronomía y geometría (ángulos). %Hairer y Wanner (\textit{Analysis by Its History}) señalan su formalización en el siglo XVIII con Euler. *** Here for version 1.1. and add more about Fourier series, etc. Sine function: 
+La función $\sen$ empezó a aparecer de forma más explicita en los trabajos de %Indian 
+Brahmagupta (alrededor de 630) y luego %. Europe 
+de Regiomontanus (1464). %**** 
+
+%\subsubsection{Periodicidad}
+%Todas las funciones trigonométricas son \textbf{periódicas}:
+%\begin{itemize}
+ %   \item \( \sin(x + 2\pi) = \sin(x) \).
+ %   \item \( \cos(x + 2\pi) = \cos(x) \).
+%\end{itemize}
+
+%\subsubsection{Fórmulas imprescindibles}
+%\begin{itemize}
+%    \item \( \sin^2(x) + \cos^2(x) = 1 \).
+%    \item \( \sin(a \pm b) = \sin(a)\cos(b) \pm \cos(a)\sin(b) \).
+%f\end{itemize}
+
+\subsubsection{Series de Fourier}
+Una clase importante de funciones periódicas pueden expresarse como suma de senos y cosenos (Gasquet-Witomski, \textit{Fourier Analysis and Applications}).
+
+\paragraph{¿Qué son las series de Fourier?}
+Las \textbf{series de Fourier} son una herramienta fundamental en matemática y física que permite descomponer una función periódica en una suma (posiblemente infinita) de funciones trigonométricas básicas: senos y cosenos. Esta idea, desarrollada por \textbf{Joseph Fourier} a principios del siglo XIX, surgió del estudio de la propagación del calor, pero hoy se aplica en áreas tan diversas como el procesamiento de señales, la acústica y la compresión de imágenes.
+
+\paragraph{Contexto histórico}
+Fourier presentó su teoría en 1807, revolucionando la forma en que los científicos entendían las ondas y los fenómenos periódicos. Su trabajo, inicialmente controvertido, demostró que funciones discontinuas podían representarse mediante series trigonométricas, algo que desafiaba las ideas matemáticas de la época.
+
+\paragraph{Ejemplo clásico}
+Consideremos la función continua $f(x) = x$ definida en el intervalo $[-\pi, \pi]$. Su serie de Fourier está dada por:
+$$
+f(x) \simeq \sum_{n=1}^{\infty} \frac{2(-1)^{n+1}}{n} \sin(nx).
+$$
+Aquí, cada término $\frac{2(-1)^{n+1}}{n} \sin(nx)$ representa una \textit{armónica} que, al sumarse, aproxima la función original. Cuantos más términos se incluyan, mejor será la aproximación.
+%
+%\section{Sumas parciales}
+A continuación, se muestran las sumas parciales de la serie de Fourier. % para \( f(x) = x \) con 1, 2 y 3 términos.
+
+\medskip
+
+\noindent
+{Suma parcial con 1 término (\( n = 1 \))}:
+\[
+S_1(x) %= \frac{2(-1)^{2}}{1} \sin(x) 
+= 2 \sin(x).
+\]
+{Suma parcial con 2 términos (\( n = 1, 2 \))}:
+\[
+S_2(x) %= 2 \sin(x) + \frac{2(-1)^{3}}{2} \sin(2x) 
+= 2 \sin(x) - \sin(2x).
+\]
+{Suma parcial con 3 términos (\( n = 1, 2, 3 \))}:
+\[
+S_3(x) = %2 \sin(x) - \sin(2x) + \frac{2(-1)^{4}}{3} \sin(3x) 
+= 2 \sin(x) - \sin(2x) + \frac{2}{3} \sin(3x).
+\]
+%
+%\section{Representación gráfica}
+A continuación, se muestran las gráficas de las sumas parciales \( S_1(x) \), \( S_2(x) \), y \( S_3(x) \) junto con la función original \( f(x) = x \).
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines = middle,
+    xlabel = \(x\),
+    ylabel = \(f(x)\),
+    xmin=-3.5, xmax=3.5,
+    ymin=-3.5, ymax=3.5,
+    legend style={at={(1.05,0.5)},anchor=west}, % Légende à droite
+    grid=both,
+    grid style={line width=.1pt, draw=gray!10},
+    major grid style={line width=.2pt,draw=gray!50},
+    samples=200,
+    domain=-pi:pi,
+    restrict y to domain=-3.5:3.5,
+    xtick={-3.14159, 0, 3.14159},
+    xticklabels={$-\pi$, 0, $\pi$}
+]
+
+\addplot[blue, thick, line width=1.5pt] {x};
+\addlegendentry{\(f(x) = x\)}
+
+\addplot[red, dashed, line width=1.5pt] {2*sin(deg(x))};
+\addlegendentry{\(S_1(x) = 2 \sin(x)\)}
+
+\addplot[green, dotted, line width=1.5pt] {2*sin(deg(x)) - sin(2*deg(x))};
+\addlegendentry{\(S_2(x) = 2 \sin(x) - \sin(2x)\)}
+
+\addplot[orange, loosely dashed, line width=1.5pt] {2*sin(deg(x)) - sin(2*deg(x)) + (2/3)*sin(3*deg(x))};
+\addlegendentry{\(S_3(x) = 2 \sin(x) - \sin(2x) + \frac{2}{3} \sin(3x)\)}
+
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\paragraph{¿Por qué importa?}
+Las series de Fourier son la base del análisis de frecuencias, esencial en telecomunicaciones, música y hasta en el diseño de filtros digitales. ¡Son el ``ADN matemático'' de las señales periódicas.
 
 \subsection{Exponencial y logaritmo}
 
@@ -192,27 +398,6 @@ El estudio de la exponencial y el logaritmo se remonta a los siglos XVI-XVII, co
         \item \( \log_a(a^x) = x \).
     \end{itemize}
 \end{itemize}
-
-\subsection{Funciones trigonométricas}
-
-\subsubsection{Desarrollo histórico}
-Las funciones trigonométricas surgieron en la antigüedad para estudiar astronomía y geometría. Hairer y Wanner (\textit{Analysis by Its History}) señalan su formalización en el siglo XVIII con Euler.
-
-\subsubsection{Periodicidad}
-Todas las funciones trigonométricas son \textbf{periódicas}:
-\begin{itemize}
-    \item \( \sin(x + 2\pi) = \sin(x) \).
-    \item \( \cos(x + 2\pi) = \cos(x) \).
-\end{itemize}
-
-\subsubsection{Fórmulas imprescindibles}
-\begin{itemize}
-    \item \( \sin^2(x) + \cos^2(x) = 1 \).
-    \item \( \sin(a \pm b) = \sin(a)\cos(b) \pm \cos(a)\sin(b) \).
-\end{itemize}
-
-\subsubsection{Series de Fourier}
-Toda función periódica \emph{razonable} puede expresarse como suma de senos y cosenos (Gasquet-Witomski, \textit{Fourier Analysis and Applications}).
 
 \subsection{Valor absoluto}
 
@@ -251,116 +436,105 @@ Sumando estas desigualdades, obtenemos:
 Por definición de valor absoluto, esto implica que \(|a + b| \leq |a| + |b|\), lo que completa la prueba.
 
 \begin{center}
-    $\star$
+$\star$
+Versión 1.1 -- 12 Marzo 26
+$\star$
 \end{center}
 
-\end{document}
+%\end{document}
+\newpage
 
+\section{Definición y concepto de límite}
+\subsection{Introducción}
+El concepto de \textbf{límite} es la piedra angular del análisis matemático. Permite estudiar el comportamiento de una función cerca de un punto, incluso cuando la función no está definida en ese punto. Intuitivamente, el límite describe el valor al que se acerca la función cuando su variable independiente se aproxima a un valor dado.
 
-*****************************
+\subsection{Definición formal}
+\begin{definicion}[Límite de una función]
+    Sea $f: A \subseteq \mathbb{R} \to \mathbb{R}$ una función y $c \in \mathbb{R}$ un punto de acumulación de $A$. Decimos que $L \in \mathbb{R}$ es el \textbf{límite} de $f(x)$ cuando $x$ tiende a $c$, y lo denotamos como:
+    $$
+    \lim_{x \to c} f(x) = L,
+    $$
+    si para todo $\varepsilon > 0$, existe un $\delta > 0$ tal que para todo $x \in A$ con $0 < |x - c| < \delta$, se cumple que $|f(x) - L| < \varepsilon$.
+\end{definicion}
 
-\section{Ejercicios Resueltos}
+\subsection{Unicidad del límite}
+\begin{teorema}[Unicidad del límite]
+    Si $\lim_{x \to c} f(x) = L_1$ y $\lim_{x \to c} f(x) = L_2$, entonces $L_1 = L_2$.
+\end{teorema}
+\begin{proof}
+    Supongamos que $L_1 \neq L_2$. Tomemos $\varepsilon = \frac{|L_1 - L_2|}{2}$. Por definición de límite, existen $\delta_1$ y $\delta_2$ tales que:
+    $$
+    |f(x) - L_1| < \varepsilon \quad \text{y} \quad |f(x) - L_2| < \varepsilon,
+    $$
+    para $0 < |x - c| < \delta = \min\{\delta_1, \delta_2\}$. Sin embargo, por la desigualdad triangular:
+    $$
+    |L_1 - L_2| \leq |L_1 - f(x)| + |f(x) - L_2| < 2\varepsilon = |L_1 - L_2|,
+    $$
+    lo cual es una contradicción. Por lo tanto, $L_1 = L_2$.
+\end{proof}
 
-\subsection{Funciones: Definición y Dominio}
+\subsection{Ejemplos}
+\begin{ejemplo}
+    Consideremos la función $f(x) = \frac{x^2 - 1}{x - 1}$. Observemos que $f$ no está definida en $x = 1$, pero podemos calcular su límite cuando $x \to 1$:
+    $$
+    \lim_{x \to 1} \frac{x^2 - 1}{x - 1} = \lim_{x \to 1} \frac{(x - 1)(x + 1)}{x - 1} = \lim_{x \to 1} (x + 1) = 2.
+    $$
+    Aquí, simplificamos la expresión algebraica para eliminar la indeterminación.
+\end{ejemplo}
 
+\section{Definición y concepto de continuidad}
+\subsection{Definición formal}
+\begin{definicion}[Continuidad en un punto]
+    Sea $f: A \subseteq \mathbb{R} \to \mathbb{R}$ una función y $c \in A$. Decimos que $f$ es \textbf{continua en $c$} si:
+    $$
+    \lim_{x \to c} f(x) = f(c).
+    $$
+    Es decir, $f$ es continua en $c$ si el límite de $f(x)$ cuando $x \to c$ existe, es finito y coincide con $f(c)$.
+\end{definicion}
+
+\subsection{Teorema de Bolzano (valores intermedios)}
+\begin{teorema}[Teorema de Bolzano]
+    Sea $f: [a, b] \to \mathbb{R}$ una función continua en el intervalo cerrado $[a, b]$. Si $f(a)$ y $f(b)$ tienen signos opuestos (es decir, $f(a) \cdot f(b) < 0$), entonces existe al menos un $c \in (a, b)$ tal que $f(c) = 0$.
+\end{teorema}
+\begin{proof}
+    La demostración se basa en el método de bisección. Consideremos el punto medio $m = \frac{a + b}{2}$. Si $f(m) = 0$, hemos terminado. Si no, $f(m)$ tiene el mismo signo que $f(a)$ o $f(b)$. Repetimos el proceso en el subintervalo correspondiente. Por el axioma de completez de los números reales, este proceso converge a un punto $c$ donde $f(c) = 0$.
+\end{proof}
+
+\subsection{Método de dicotomía para calcular un cero}
+El teorema de Bolzano garantiza la existencia de un cero, pero no proporciona un método para encontrarlo. El \textbf{método de dicotomía} (o bisección) es un algoritmo iterativo que permite aproximar un cero de una función continua en un intervalo $[a, b]$ donde $f(a) \cdot f(b) < 0$.
+
+\subsubsection{Algoritmo}
 \begin{enumerate}
-
-\item \textbf{Determinar el dominio de las siguientes funciones:}
-\begin{enumerate}
-    \item $ f(x) = \frac{1}{x-2} $
-    \item $ g(x) = \sqrt{3x + 6} $
+    \item \textbf{Inicialización:} Elige $a$ y $b$ tales que $f(a) \cdot f(b) < 0$.
+    \item \textbf{Iteración:}
+          \begin{itemize}
+              \item Calcula el punto medio $m = \frac{a + b}{2}$.
+              \item Si $f(m) = 0$, entonces $m$ es un cero de $f$.
+              \item Si $f(a) \cdot f(m) < 0$, entonces el cero está en $[a, m]$. Actualiza $b = m$.
+              \item Si $f(m) \cdot f(b) < 0$, entonces el cero está en $[m, b]$. Actualiza $a = m$.
+          \end{itemize}
+    \item \textbf{Repetición:} Repite el paso 2 hasta que $|b - a| < \varepsilon$, donde $\varepsilon$ es la precisión deseada.
 \end{enumerate}
 
-\textbf{Solución:}
+\subsubsection{Ejemplo}
+Consideremos $f(x) = x^3 - x - 1$ en el intervalo $[1, 2]$. Claramente, $f(1) = -1$ y $f(2) = 5$, por lo que $f(1) \cdot f(2) < 0$. Aplicando el método de bisección:
 \begin{itemize}
-    \item[a)] El denominador no puede ser cero: $ x - 2 \neq 0 \implies x \neq 2 $. Entonces, $ \dom(f) = \R \setminus \{2\} $.
-    \item[b)] El argumento de la raíz debe ser no negativo: $ 3x + 6 \geq 0 \implies x \geq -2 $. Entonces, $ \dom(g) = [-2, +\infty) $.
+    \item Primera iteración: $m = 1.5$, $f(1.5) = 0.875$. El cero está en $[1, 1.5]$.
+    \item Segunda iteración: $m = 1.25$, $f(1.25) = -0.234$. El cero está en $[1.25, 1.5]$.
+    \item Continuamos hasta alcanzar la precisión deseada.
 \end{itemize}
 
----
+%\newpage
 
-\item \textbf{Dadas $ f(x) = x^2 + 1 $ y $ g(x) = \sqrt{x} $, calcular $ (f \circ g)(x) $ y su dominio.}
+\subsection{Cálculo de límites clásicos}
 
-\textbf{Solución:}
-$$
-(f \circ g)(x) = f(g(x)) = f(\sqrt{x}) = (\sqrt{x})^2 + 1 = x + 1.
-$$
-El dominio de $ g $ es $ [0, +\infty) $, y como $ f $ está definida en todo $ \R $, el dominio de $ f \circ g $ es $ [0, +\infty) $.
-
----
-
-\subsection{Polinomios}
-
-\item \textbf{Demostrar que la suma de dos polinomios es un polinomio.}
-
-\textbf{Solución:}
-Sean $ p(x) = \sum_{k=0}^n a_k x^k $ y $ q(x) = \sum_{k=0}^m b_k x^k $ polinomios. Su suma es:
-$$
-(p + q)(x) = \sum_{k=0}^{\max(n,m)} (a_k + b_k) x^k,
-$$
-donde $ a_k = 0 $ si $ k > n $ y $ b_k = 0 $ si $ k > m $. Claramente, $ p + q $ es un polinomio.
-
----
-
-\item \textbf{Encontrar un polinomio $ p $ de grado 2 tal que $ p(0) = 1 $, $ p(1) = 0 $ y $ p(-1) = 2 $.}
-
-\textbf{Solución:}
-Sea $ p(x) = ax^2 + bx + c $. Usando las condiciones:
-
-
-***************
-**************
-
-import numpy as np
-import matplotlib.pyplot as plt
-
-# Definir la función
-def f(x):
-    return x**2 * np.sin(x)
-
-# Crear valores de x (ej: de -10 a 10 con 500 puntos)
-x = np.linspace(-10, 10, 500)
-y = f(x)
-
-# Graficar
-plt.figure(figsize=(8, 4))
-plt.plot(x, y, label=r'$f(x) = x^2 \sin(x)$', color='blue')
-plt.axhline(0, color='black', linewidth=0.5)  # Eje x
-plt.axvline(0, color='black', linewidth=0.5)  # Eje y
-plt.grid(True, linestyle='--', alpha=0.7)
-plt.title('Gráfico de $f(x) = x^2 \\sin(x)$')
-plt.xlabel('x')
-plt.ylabel('f(x)')
-plt.legend()
-plt.show()
-
-import sympy as sp
-import matplotlib.pyplot as plt
-
-# Definir la variable simbólica y la función
-x = sp.symbols('x')
-f = x**3 / (x**2 - 1)
-
-# Graficar
-sp.plot(f, (x, -5, 5),
-        title='Gráfico de $f(x) = \\frac{x^3}{x^2 - 1}$',
-        xlabel='x', ylabel='f(x)',
-        ylim=[-100, 100],  # Ajustar límites para ver asíntotas
-        show=True)
-
-
-
-*************************
-
-\section{Cálculo de Límites Clásicos}
-
-\subsection{Indeterminaciones Básicas}
+\subsubsection{Indeterminaciones básicas}
 Las indeterminaciones son formas que \textit{no permiten determinar} el límite directamente. Las más comunes son:
 $$
 \frac{0}{0}, \quad \frac{\infty}{\infty}, \quad 0 \cdot \infty, \quad \infty - \infty, \quad 0^0, \quad 1^\infty, \quad \infty^0.
 $$
 
-\subsection{Regla de L'Hôpital}
+\subsubsection{Regla de L'Hôpital}
 Si $ \lim_{x \to a} \frac{f(x)}{g(x)} $ es de la forma $ \frac{0}{0} $ o $ \frac{\infty}{\infty} $, y $ f $ y $ g $ son derivables cerca de $ a $, entonces:
 $$
 \lim_{x \to a} \frac{f(x)}{g(x)} = \lim_{x \to a} \frac{f'(x)}{g'(x)},
@@ -376,14 +550,12 @@ $$
 \lim_{x \to 0} \frac{\cos(x)}{1} = \cos(0) = 1.
 $$
 
----
-
-\subsection{Límites Fundamentales}
+\subsubsection{Límites fundamentales}
 \begin{enumerate}
-    \item $ \lim_{x \to 0} \frac{\sin(x)}{x} = 1 $.
-    \item $ \lim_{x \to 0} \frac{1 - \cos(x)}{x^2} = \frac{1}{2} $.
-    \item $ \lim_{x \to \infty} \left(1 + \frac{1}{x}\right)^x = e $.
-    \item $ \lim_{x \to 0} \frac{e^x - 1}{x} = 1 $.
+    \item $\displaystyle \lim_{x \to 0} \frac{\sin(x)}{x} = 1 $.
+    \item $\displaystyle \lim_{x \to 0} \frac{1 - \cos(x)}{x^2} = \frac{1}{2} $.
+    \item $\displaystyle \lim_{x \to \infty} \left(1 + \frac{1}{x}\right)^x = e $.
+    \item $\displaystyle \lim_{x \to 0} \frac{e^x - 1}{x} = 1 $.
 \end{enumerate}
 
 \textbf{Ejemplo de aplicación:}
@@ -391,23 +563,21 @@ $$
 \lim_{x \to 0} \frac{\tan(x)}{x} = \lim_{x \to 0} \frac{\sin(x)}{x \cos(x)} = \frac{1}{1} = 1.
 $$
 
----
+\subsubsection{Trucos para resolver límites}
 
-\subsection{Trucos para Resolver Límites}
-
-\subsubsection{Racionalización}
+\paragraph{Racionalización}
 Para límites con raíces, multiplicar por el conjugado:
 $$
 \lim_{x \to 0} \frac{\sqrt{x + 1} - 1}{x} = \lim_{x \to 0} \frac{(\sqrt{x + 1} - 1)(\sqrt{x + 1} + 1)}{x (\sqrt{x + 1} + 1)} = \lim_{x \to 0} \frac{x}{x (\sqrt{x + 1} + 1)} = \frac{1}{2}.
 $$
 
-\subsubsection{Factorización}
+\paragraph{Factorización}
 Para polinomios, factorizar el numerador y denominador:
 $$
 \lim_{x \to 1} \frac{x^2 - 1}{x - 1} = \lim_{x \to 1} \frac{(x - 1)(x + 1)}{x - 1} = \lim_{x \to 1} (x + 1) = 2.
 $$
 
-\subsubsection{Infinitésimos Equivalentes}
+\paragraph{Infinitésimos equivalentes}
 Para $ x \to 0 $:
 $$
 \sin(x) \sim x, \quad \tan(x) \sim x, \quad 1 - \cos(x) \sim \frac{x^2}{2}, \quad e^x - 1 \sim x.
@@ -417,158 +587,91 @@ $$
 \lim_{x \to 0} \frac{\sin(3x)}{5x} = \lim_{x \to 0} \frac{3x}{5x} = \frac{3}{5}.
 $$
 
----
+\paragraph{Límites al infinito}
+%
+%\subsubsection{Polinomios}
+El límite de un polinomio $ p(x) = a_nx^n + \dots + a_0 $ cuando $ x \to \infty $ depende del término dominante.
 
-\subsection{Límites al Infinito}
-
-\subsubsection{Polinomios}
-El límite de un polinomio $ p(x) = a_nx^n + \dots + a_0 $ cuando $ x \to \infty $ depende del término dominante
-
-
-*******************************
-
-
-\subsection{Lo minimo}
-% Para el Practico 1
-% Y Parcial, y Examen
-
-\begin{itemize}
-    \item Definicion de una funcion. Una maquina para fabricar un numero a partir de un otro. Notaciones de base.
-    \item Ejemplo: polinomios y raiz de x.
-    \item Dominio de definicion.
-    \item Graficos.
-    \item Funciones pares, impares.
-    \item Las funciones se pueden anadir, multiplicar. Regla sobre el dominio de definicion.
-    \item Tambien se pueden componer. Regla sobre el dominio de definicion.
-    \item Funcion inversa. Ejemplos: x y x al cuadrado.
-    \item Las funciones pueden ser, a veces, crecientes o decrecientes. Ejemplos.
-\end{itemize}
-
-\subsection{Polinomios}
-
-\begin{enumerate}
-    \item Definicion y ejemplos.
-    \item Origen historica: edad media, problemas basicas de geometria (superficies), ecuaciones algebraicas.
-    \item Siempre estan definidos en todo R (en todo C).
-    \item Forman una algebra.
-    Detailles.
-    \item La compuesta de polinomios es un polinomio.
-    \item El cociente de un polinomio no es mas un polinomio en general. Ejemplos: constantes, 1 sobre x.
-    \item La inversa de un polinomio no es un polinomio.
-    Ejemplo x al cuadrado. Tampoco un polinomio no tiene inversa. Bijectividad.
-    \item Sirven para aproximar funciones mas complejas: Taylor, Lagrange, series.
-    
-\end{enumerate}
-
-\subsection{Exponencial y log}
-
-\begin{enumerate}
-    \item Desarollo historico. Hairer y Wanner.
-    \item Graficos. Propiedades basicas.
-\end{enumerate}
-
-\subsection{Funciones trigo}
-
-\begin{enumerate}
-    \item Desorollo historico. Hairer y Wanner.
-    \item Periodicidad.
-    \item Formulas imprescindibles.
-    \item Series de Fourier. (idea). Mas Gasquet Witomski.
-\end{enumerate}
-
-\subsection{El valor absoluto}
-
-\begin{enumerate}
-    \item Definicion.
-    \item Ejemplos.
-    \item Propiedades.
-\end{enumerate}
-
-\subsection{Temario}
-
-\paragraph{Definición y concepto de función}
-\begin{itemize}
-    \item Ejemplos y gráficas.
-    \item Polinomios, log y exp, funciones trigonometricas. 
-    \item Dominios de definici\'on.
-    \item Operaciones de base: scalar, 4 operaciones, composición, inversa.
-    \item Funciones periodicas, pares, impares.
-\end{itemize}
-
-\subsection{Practico 1}
-
-OK
-
-\subsection{Stewart}
-
-El valor absoluto !!
-
-OK 104 71
-
-
-A VOIR X Pagina 9 41
-54
-
-Piskunov
-
-\subsection{Hairer y Wanner}
-
-VU A INTEGRER
-
-\subsection{Mise en Forme AI}
-
-Le faire maintenant, et ensuite completer avec Hairer et Wanner
-ENSUITE
-
-\subsection{Exos parciales}
-
-Funciones pares, impares.
-Compuesta de funciones.
-Inversa de funciones.
-Trigonometria a full.
-
-\subsection{Sympy}
-
-Definicion de funcion.
-Graficos.
+\begin{center}
+$\star$
+Versión 1.0 -- 12 Marzo 26
+$\star$
+\end{center}
 
 \newpage
 
-\section{etc}
+\section{EXTRA}
 
-\subsection{Temario}
+\newpage
 
-\subsection{Practico}
+\section{Sugerencias de lecturas}
 
-\subsection{Stewart}
+La selección de obras que se presenta a continuación abarca desde reflexiones sobre la ciencia y las matemáticas hasta exploraciones filosóficas y neurocientíficas. Cada texto ha sido elegido por su capacidad para inspirar, desafiar y ampliar la comprensión de temas fundamentales en sus respectivos campos. Las obras están ordenadas alfabéticamente por autor para facilitar su consulta.
 
-\subsection{Hairer y Wanner}
+\vspace{1em}
 
-\subsection{Mise en Forme AI}
+\subsection*{Dahan-Dalmedico, A. \& Peiffer, J.}
+Esta obra es una exploración fascinante del desarrollo histórico de las matemáticas, desde sus orígenes hasta su evolución en el contexto cultural, económico e institucional. Las autoras, Amy Dahan-Dalmedico y Jeanne Peiffer, ofrecen un análisis detallado de los temas clave que todo estudiante o docente enfrenta, como ecuaciones, espacio, límites y funciones. Lejos de presentar las matemáticas como un cuerpo estático de axiomas, este libro las muestra como una disciplina dinámica y en constante evolución.
 
-\subsection{Exos parciales}
+\noindent
+\textbf{Dahan-Dalmedico, A.} \& \textbf{Peiffer, J.} (1986).
+\emph{Une histoire des mathématiques : Routes et dédales}.
+Préface de Jean-Toussaint Desanti.
+Points Sciences, Éditions du Seuil, Paris, 320~p.
+ISBN : 978-2-02-009138-1.
 
-\subsection{Sympy}
+\vspace{1em}
 
-Document A part et on insere ensuite
+\subsection*{Hairer, E. \& Wanner, G.}
+Este texto es una referencia esencial para quienes desean comprender el análisis matemático desde una perspectiva histórica. Ernst Hairer y Gerhard Wanner examinan cómo los conceptos fundamentales del análisis se han desarrollado a lo largo del tiempo, ofreciendo una visión enriquecedora para estudiantes y profesionales de las matemáticas.
 
-METTRE SUR GITHUB
-A TRIER PLUS BAS
-Hopital
+\noindent
+\textit{E. Hairer} and \textit{G. Wanner}, \emph{Analysis in historischer Entwicklung}. Übersetzt von Andreas Lochmann. Berlin: Springer (2011; Zbl 1247.26003)
 
+\vspace{1em}
 
+\subsection*{Lloyd, G.~E.~R.}
+Geoffrey E. R. Lloyd, profesor emérito de filosofía y ciencia antiguas en la Universidad de Cambridge, ofrece en este libro una visión profunda de la ciencia griega, desde el siglo III a.C. hasta el siglo II a.C. La obra explora cómo surgió el pensamiento científico en la antigua Grecia y cómo este contexto histórico y cultural influyó en el desarrollo de la ciencia. Es una lectura imprescindible para historiadores de la ciencia y cualquier persona interesada en los orígenes del pensamiento científico.
 
-Redactar apuntes detallados. Sitio web publico open etc.
-**************************************
+\noindent
+\textbf{Lloyd, G.~E.~R.} (1993).
+\emph{Une histoire de la science grecque}.
+Traduit de l'anglais par Charles Brunschwig.
+Points Sciences, Éditions du Seuil, Paris, 448~p.
+ISBN : 978-2-02-017765-8.
 
+\vspace{1em}
 
-FAIRE UNE NOTE
-Temario
-Ver Practicos > Stewart > Hairer Wanner > STOP
+\subsection*{Masson, S.}
+Steve Masson, en esta obra accesible y práctica, explora cómo podemos optimizar el funcionamiento de nuestro cerebro. A través de ejemplos concretos y consejos basados en la neurociencia, el autor nos guía en el descubrimiento de estrategias para mejorar nuestras capacidades cognitivas. Este libro es ideal para quienes buscan entender mejor el cerebro y aplicar este conocimiento en su vida diaria.
 
-Motivacion : Schrodinger 1D estacionaria. Soluciones con polinomios. D.
-Integral y probabilidad de presencia. I.
+\noindent
+\textbf{Masson, S.} (2021).
+\emph{Activer ses neurones}.
+Odile Jacob, Paris, 256~p.
+ISBN : 978-2-738-15150-6.
 
+\vspace{1em}
+
+\subsection*{Russell, B.}
+Bertrand Russell, uno de los filósofos más influyentes del siglo XX, reúne en este libro una colección de ensayos que exploran el arte de filosofar. Con su estilo claro y penetrante, Russell aborda temas fundamentales de la filosofía, invitando al lector a reflexionar sobre el pensamiento crítico y la búsqueda de la verdad. Una lectura esencial para amantes de la filosofía y el pensamiento analítico.
+
+\noindent
+\textbf{Russell, B.} (1968).
+\emph{The Art of Philosophizing, and Other Essays}.
+Philosophical Library, New York, 119~p.
+
+\vspace{1em}
+
+\subsection*{Weyl, H.}
+Hermann Weyl, matemático y físico teórico, presenta en este libro una reflexión sobre la simetría y su papel en las matemáticas modernas. La obra incluye un "álbum de imágenes" que ilustra la diversidad de formas y patrones simétricos en la naturaleza y el arte. Weyl combina rigor matemático con una sensibilidad estética, haciendo de este libro una lectura fascinante tanto para matemáticos como para amantes del arte y la ciencia.
+
+\noindent
+\textbf{Weyl, H.} (1964).
+\emph{Symétrie et mathématique moderne}.
+Nouvelle bibliothèque scientifique.
+Flammarion, Paris, 156~p.
+ISBN : 978-2-08-210141-7.
 
 \end{document}
 
