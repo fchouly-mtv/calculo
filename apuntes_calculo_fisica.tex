@@ -600,6 +600,108 @@ $\star$
 
 \newpage
 
+\section{Derivación}
+
+Primero presentamos conceptos básicos, y luego unos teoremas importantes.
+
+\subsection{Definición y concepto de derivada}
+\subsubsection{Introducción}
+La \textbf{derivada} de una función es uno de los conceptos fundamentales del análisis matemático. Representa la tasa de variación instantánea de una función en un punto y es la herramienta central del cálculo diferencial. Geométricamente, la derivada en un punto es la pendiente de la recta tangente a la curva en ese punto.
+
+\subsubsection{Definición formal}
+\begin{definicion}[Derivada de una función en un punto]
+    Sea $f: A \subseteq \mathbb{R} \to \mathbb{R}$ una función y $c \in A$ un punto interior de $A$. Decimos que $f$ es \textbf{derivable en $c$} si existe el siguiente límite:
+    $$
+    f'(c) = \lim_{h \to 0} \frac{f(c + h) - f(c)}{h}.
+    $$
+    Este límite, si existe, se denomina \textbf{derivada de $f$ en $c$} y representa la pendiente de la recta tangente a la gráfica de $f$ en el punto $(c, f(c))$.
+\end{definicion}
+
+\subsubsection{Interpretación gráfica}
+La derivada $f'(c)$ es la pendiente de la recta tangente a la curva $y = f(x)$ en el punto $(c, f(c))$. Si $f$ es derivable en $c$, la ecuación de la recta tangente es:
+$$
+y = f'(c)(x - c) + f(c).
+$$
+
+\begin{center}
+\begin{tikzpicture}
+    %\draw[->] (-2,0) -- (4,0) node[right]{$x$};
+    %\draw[->] (0,-1) -- (0,4) node[above]{$y$};
+    \draw[domain=0.5:3.5, smooth, variable=\x, azulrioplatense, thick] plot ({\x}, {0.5*(\x-2)^2 + 2});
+    \draw[azulrioplatense, thick] (0.5,2) -- (3.5,2) node[right]{Recta tangente};
+    \filldraw (2,2) circle (2pt) node[below right]{$(c, f(c))$};
+    \node at (2.5,0.5) {$f'(c) = \text{pendiente}$};
+\end{tikzpicture}
+\end{center}
+
+\subsubsection{Ejemplos de derivación de funciones elementales}
+\begin{ejemplo}
+    Calculamos las derivadas de algunas funciones elementales:
+    \begin{itemize}
+        \item Si $f(x) = k$ (constante), entonces $f'(x) = 0$.
+        \item Si $f(x) = x^n$, entonces $f'(x) = n x^{n-1}$.
+        \item Si $f(x) = \sin(x)$, entonces $f'(x) = \cos(x)$.
+        \item Si $f(x) = e^x$, entonces $f'(x) = e^x$.
+    \end{itemize}
+\end{ejemplo}
+
+\subsubsection{Reglas de derivación}
+\begin{teorema}[Reglas de derivación]
+    Sean $f$ y $g$ funciones derivables en $x$. Entonces:
+    \begin{itemize}
+        \item \textbf{Suma:} $(f + g)'(x) = f'(x) + g'(x)$.
+        \item \textbf{Producto:} $(f \cdot g)'(x) = f'(x)g(x) + f(x)g'(x)$.
+        \item \textbf{Cociente:} $\displaystyle \left(\frac{f}{g}\right)'(x) = \frac{f'(x)g(x) - f(x)g'(x)}{g(x)^2}$, si $g(x) \neq 0$.
+        \item \textbf{Composición:} $(f \circ g)'(x) = f'(g(x)) \cdot g'(x)$.
+    \end{itemize}
+\end{teorema}
+
+\begin{ejemplo}
+    Calculemos la derivada de $f(x) = x^2 \sin(x)$:
+    $$
+    f'(x) = (x^2)' \sin(x) + x^2 (\sin(x))' = 2x \sin(x) + x^2 \cos(x).
+    $$
+\end{ejemplo}
+
+\subsubsection{Monotonía y extremos}
+\begin{definicion}[Función creciente/decreciente]
+    Sea $f$ derivable en un intervalo $I$.
+    \begin{itemize}
+        \item $f$ es \textbf{creciente} en $I$ si $f'(x) \geq 0$ para todo $x \in I$.
+        \item $f$ es \textbf{decreciente} en $I$ si $f'(x) \leq 0$ para todo $x \in I$.
+    \end{itemize}
+\end{definicion}
+
+\begin{teorema}[Teorema de Fermat (puntos críticos)]
+    Si $f$ tiene un extremo local en $c$ y es derivable en $c$, entonces $f'(c) = 0$.
+\end{teorema}
+
+\subsection{Teoremas de derivación}
+\subsubsection{Teorema de Rolle}
+\begin{teorema}[Teorema de Rolle]
+    Sea $f: [a, b] \to \mathbb{R}$ una función continua en $[a, b]$ y derivable en $(a, b)$. Si $f(a) = f(b)$, entonces existe al menos un $c \in (a, b)$ tal que $f'(c) = 0$.
+\end{teorema}
+
+\subsubsection{Teorema de Lagrange (Incrementos Finitos)}
+\begin{teorema}[Teorema del Valor Medio (Lagrange)]
+    Sea $f: [a, b] \to \mathbb{R}$ una función continua en $[a, b]$ y derivable en $(a, b)$. Entonces existe al menos un $c \in (a, b)$ tal que:
+    $$
+    f'(c) = \frac{f(b) - f(a)}{b - a}.
+    $$
+\end{teorema}
+
+\begin{proof}[Interpretación geométrica]
+    El teorema afirma que existe un punto $c \in (a, b)$ donde la pendiente de la recta tangente a la curva $y = f(x)$ es igual a la pendiente de la recta secante que une los puntos $(a, f(a))$ y $(b, f(b))$.
+\end{proof}
+
+\begin{center}
+$\star$
+Versión 1.0 -- 16 Marzo 26
+$\star$
+\end{center}
+
+\newpage
+
 \section{EXTRA}
 
 \newpage
