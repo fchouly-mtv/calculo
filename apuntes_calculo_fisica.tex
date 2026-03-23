@@ -20,7 +20,7 @@
 \geometry{left=2.5cm, right=2.5cm, top=3cm, bottom=3cm}
 \pagestyle{fancy}
 \fancyhf{}
-\rhead{\textit{Apuntes: Límite y Continuidad}}
+\rhead{\textit{Cálculo para física}}
 \lhead{\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
 
@@ -71,7 +71,7 @@
 
 \newcommand{\fc}[1]{{\color{blue}{#1}}}
 
-\title{Cálculo para física -- versión 0.2} 
+\title{Cálculo para física -- versión 1.0} 
 \author{Franz Chouly}
 \date{\today}
 
@@ -247,7 +247,7 @@ Simplificando, se obtiene
 \item \textbf{Definiciones básicas:}  
 
 \[
-\sen \theta = \frac{\text{opuesto}}{\text{hipotenusa}}, \quad  
+\sin \theta = \frac{\text{opuesto}}{\text{hipotenusa}}, \quad  
 \cos \theta = \frac{\text{adyacente}}{\text{hipotenusa}}, \quad  
 \tan \theta = \frac{\text{opuesto}}{\text{adyacente}} = \frac{\sin \theta}{\cos \theta} .
 \]
@@ -300,6 +300,188 @@ de Regiomontanus (1464). %****
 %    \item \( \sin^2(x) + \cos^2(x) = 1 \).
 %    \item \( \sin(a \pm b) = \sin(a)\cos(b) \pm \cos(a)\sin(b) \).
 %f\end{itemize}
+
+\subsubsection{Relaciones básicas y consecuencias}
+
+\paragraph{Teorema de Ptolomeo, 150, Regiomontanus, 1467}
+\[
+\sin(a + b) = \sin a \cos b + \cos a \sin b
+\]
+\[
+\cos(a + b) = \cos a \cos b - \sin a \sin b
+\]
+
+\paragraph{Fórmulas de ángulo doble}
+\[
+\sin(2x) = 2 \sin x \cos x
+\]
+\[
+\cos(2x) = \cos^2 x - \sin^2 x
+\]
+
+\paragraph{Fórmulas de De Moivre}
+Partemos de lo anterior y de:
+\[
+\sin(nx + x) = \sin(nx) \cos x + \cos(nx) \sin x
+\]
+\[
+\cos(nx + x) = \cos(nx) \cos x - \sin(nx) \sin x
+\]
+Simplificando los argumentos:
+\[
+\sin((n+1)x) = \sin(nx) \cos x + \cos(nx) \sin x
+\]
+\[
+\cos((n+1)x) = \cos(nx) \cos x - \sin(nx) \sin x
+\]
+Y iteramos. Obtenemos lo siguiente, con la notación
+%\[
+%(\cos a + i \sin a)^{n+1} = \cos((n+1)a) + i \sin((n+1)a)
+%\]
+\[
+\binom{n}{k} = \frac{n!}{k!(n - k)!}.
+\]
+
+\paragraph{Fórmulas para múltiples ángulos}
+
+%\subsubsection*{3x}
+\[
+\sin(3x) = \binom{3}{1} \sin x \cos^2 x - \binom{3}{3} \sin^3 x
+\]
+\[
+\cos(3x) = \binom{3}{0} \cos^3 x - \binom{3}{2} \cos x \sin^2 x
+\]
+
+%\subsubsection*{4x}
+\[
+\sin(4x) = \binom{4}{1} \sin x \cos^3 x - \binom{4}{3} \sin^3 x \cos x
+\]
+\[
+\cos(4x) = \binom{4}{0} \cos^4 x - \binom{4}{2} \cos^2 x \sin^2 x + \binom{4}{4} \sin^4 x
+\]
+
+%\subsubsection*{5x}
+\[
+\sin(5x) = \binom{5}{1} \sin x \cos^4 x - \binom{5}{3} \sin^3 x \cos^2 x + \binom{5}{5} \sin^5 x
+\]
+\[
+\cos(5x) = \binom{5}{0} \cos^5 x - \binom{5}{2} \cos^3 x \sin^2 x + \binom{5}{4} \cos x \sin^4 x
+\]
+
+%\subsubsection*{6x}
+\[
+\sin(6x) = \binom{6}{1} \sin x \cos^5 x - \binom{6}{3} \sin^3 x \cos^3 x + \binom{6}{5} \sin^5 x \cos x
+\]
+\[
+\cos(6x) = \binom{6}{0} \cos^6 x - \binom{6}{2} \cos^4 x \sin^2 x + \binom{6}{4} \cos^2 x \sin^4 x - \binom{6}{6} \sin^6 x
+\]
+
+\paragraph{Fórmula general para \(\cos(nx)\)}
+Obtenemos:
+\[
+\cos(nx) = \sum_{k=0}^{\lfloor n/2 \rfloor} (-1)^k \binom{n}{2k} \cos^{n-2k} x \sin^{2k} x
+\]
+Más informalmente:
+\begin{align*}
+\cos(nx) = {} &
+1 \cdot \cos^n x \\
+&- \frac{n(n-1)}{2} \cos^{n-2} x \sin^2 x \\
+&+ \frac{n(n-1)(n-2)(n-3)}{24} \cos^{n-4} x \sin^4 x \\
+&+ \cdots
+\end{align*}
+%
+%\[
+%\cos(nx) =
+%1 \cdot \cos^n x
+%- \frac{n(n-1)}{2} \cos^{n-2} x \sin^2 x
+%+ \frac{n(n-1)(n-2)(n-3)}{24} \cos^{n-4} x \sin^4 x
+%+ \cdots
+%\]
+
+\paragraph{Fórmula general para \(\sin(nx)\)}
+\[
+\sin(nx) = \sum_{k=0}^{\lfloor (n-1)/2 \rfloor} (-1)^k \binom{n}{2k+1} \cos^{n-2k-1} x \sin^{2k+1} x
+\]
+Más informalmente:
+\begin{align*}
+\sin(nx) = {} &
+n \cos^{n-1} x \sin x \\
+&- \frac{n(n-1)(n-2)}{6} \cos^{n-3} x \sin^3 x \\
+&+ \frac{n(n-1)(n-2)(n-3)(n-4)}{120} \cos^{n-5} x \sin^5 x \\
+&+ \cdots
+\end{align*}
+Debemos estas formulas a de Moivre (1730) (ver también Euler, 1748).
+
+\paragraph{Series}
+En la formula $\cos(nx)$, hacemos el cambio de variable $X=nx$:
+\begin{align*}
+\cos(X) = {} &
+1 \cdot \cos^n (X/n) \\
+&- \frac{1(1-1/n)}{2/n^2} \cos^{n-2}(X/n) \sin^2 (X/n) \\
+&+ \frac{1(1-1/n)(1-2/n)(1-3/n)}{24/n^4} \cos^{n-4} (X/n) \sin^4 (X/n) \\
+&+ \cdots
+\end{align*}
+Lo mismo: 
+\begin{align*}
+\sin(X) = {} &
+n \cos^{n-1} \left(\frac{X}{n}\right) \sin \left(\frac{X}{n}\right) \\
+&- \frac{1 \cdot (1-1/n)}{6/n^2} \cos^{n-3} \left(\frac{X}{n}\right) \sin^3 \left(\frac{X}{n}\right) \\
+&+ \frac{1 \cdot (1-1/n) \cdot (1-2/n) \cdot (1-3/n) \cdot (1-4/n)}{120/n^4} \cos^{n-5} \left(\frac{X}{n}\right) \sin^5 \left(\frac{X}{n}\right) \\
+&+ \cdots
+\end{align*}
+Ahora hacemos, formalmente, siguiendo Jac. Bernoulli:
+\[
+n\rightarrow +\infty, \quad
+\cos(X/n) \simeq 1, \quad
+\sen(X/n) \simeq X/n, \quad 
+(1-k/n) \simeq 1.
+\]
+Deducimos las series:
+\begin{align*}
+\cos x = 
+1 
+- \frac{x^2}{2!}
++ \frac{x^4}{4!} 
+- \frac{x^6}{6!} 
++ \frac{x^8}{8!} 
+- \frac{x^{10}}{10!} 
++ \cdots
+\end{align*}
+y
+\begin{align*}
+\sin x = 
+x 
+- \frac{x^3}{3!} 
++ \frac{x^5}{5!} 
+- \frac{x^7}{7!} 
++ \frac{x^9}{9!} 
+- \frac{x^{11}}{11!} 
++ \cdots
+\end{align*}
+
+%Teorema (Ptolemy, 150, Regiomontanus, 1467)
+%\[
+%\sen(a + b ) = \sen( a) \cos(b) + 
+%\cos 
+%\]
+%Tambien
+%\[
+%sen(2x) =
+%cos(2x) = 
+%\]
+%De Moivre
+%\[
+%sen((n+1)a 
+%cos 
+%\]
+%Esto implica
+%\[
+%cos (3x) 
+%\]
+%Y más generalmente 
+%\[
+%cos (nx) 
+%\]
 
 \subsubsection{Series de Fourier}
 Una clase importante de funciones periódicas pueden expresarse como suma de senos y cosenos (Gasquet-Witomski, \textit{Fourier Analysis and Applications}).
@@ -399,6 +581,203 @@ El estudio de la exponencial y el logaritmo se remonta a los siglos XVI-XVII, co
     \end{itemize}
 \end{itemize}
 
+\subsubsection{M\'as sobre exponencial}
+
+\paragraph{El Triángulo de Pascal y la Fórmula del Binomio}
+
+\paragraph{Introducción}
+El Triángulo de Pascal es una disposición triangular de números que tiene aplicaciones en combinatoria, álgebra y teoría de probabilidades. Cada número en el triángulo es la suma de los dos números directamente encima de él. Además, los coeficientes binomiales \(\binom{n}{k}\) se pueden obtener directamente del triángulo.
+
+\paragraph{Construcción del Triángulo de Pascal}
+\begin{center}
+\begin{tabular}{cccccccc}
+& & & 1 & & & & \\
+& & 1 & & 1 & & & \\
+& 1 & & 2 & & 1 & & \\
+1 & & 3 & & 3 & & 1 & \\
+& \vdots & & \vdots & & \vdots & & \\
+\end{tabular}
+\end{center}
+
+\paragraph{Propiedades del Triángulo de Pascal}
+\begin{itemize}
+    \item La suma de los elementos de la fila \(n\) es \(2^n\).
+    \item Cada fila comienza y termina con 1.
+    \item Los coeficientes son simétricos: \(\binom{n}{k} = \binom{n}{n-k}\).
+\end{itemize}
+
+
+
+\paragraph{Relación entre el triángulo de Pascal y la fórmula del binomio de Newton}
+El \textbf{triángulo de Pascal} es una representación gráfica de los coeficientes binomiales $\binom{n}{k}$. Cada fila $n$ del triángulo corresponde a los coeficientes del desarrollo de $(a + b)^n$ en el binomio de Newton:
+\begin{equation*}
+(a + b)^n = \sum_{k=0}^{n} \binom{n}{k} a^{n-k} b^k
+\end{equation*}
+{Ejemplo para $n = 4$}.
+%
+El desarrollo de $(a + b)^4$ es:
+%
+\begin{equation*}
+(a + b)^4 = a^4 + 4a^3b + 6a^2b^2 + 4ab^3 + b^4
+\end{equation*}
+%
+Los coeficientes $1, 4, 6, 4, 1$ son los números en la cuarta fila del triángulo de Pascal.
+%
+\begin{center}
+\begin{tabular}{cccccccccc}
+&& & & 1 & & \\
+&& & 1 & & 1 & \\
+&& 1 & & 2 & & 1 \\
+&1 & & 3 & & 3 & & 1 \\
+1 && 4 & & 6 & & 4 && 1
+\end{tabular}
+\end{center}
+
+\paragraph{Fórmula de recurrencia de los coeficientes binomiales}
+
+Los coeficientes binomiales satisfacen la siguiente relación de recurrencia:
+\begin{equation*}
+\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}
+\end{equation*}
+con las condiciones iniciales:
+
+\begin{equation*}
+\binom{n}{0} = \binom{n}{n} = 1
+\end{equation*}
+
+%\subsection*{Prueba de la fórmula de recurrencia}
+
+\paragraph{Demostración combinatoria}
+
+Consideremos un conjunto de $n$ elementos. El número de subconjuntos de tamaño $k$, $\binom{n}{k}$, puede dividirse en dos casos:
+\begin{itemize}
+    \item Subconjuntos que incluyen un elemento específico (digamos, $x$): hay $\binom{n-1}{k-1}$ de estos.
+    \item Subconjuntos que no incluyen el elemento $x$: hay $\binom{n-1}{k}$ de estos.
+\end{itemize}
+Por lo tanto, la relación de recurrencia se cumple:
+\begin{equation*}
+\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}
+\end{equation*}
+\paragraph{Demostración algebraica}
+Usando la definición de los coeficientes binomiales:
+\begin{align*}
+\binom{n-1}{k-1} + \binom{n-1}{k} &= \frac{(n-1)!}{(k-1)!(n-k)!} + \frac{(n-1)!}{k!(n-1-k)!} \\
+&= \frac{(n-1)!}{(k-1)!(n-k)!} + \frac{(n-1)!}{k!(n-k-1)!} \\
+&= \frac{(n-1)!}{k!(n-k)!} \left( k + (n-k) \right) \\
+&= \frac{(n-1)!}{k!(n-k)!} \cdot n \\
+&= \frac{n!}{k!(n-k)!} \\
+&= \binom{n}{k}
+\end{align*}
+
+\paragraph{Fórmula del binomio de Newton}
+La fórmula del binomio de Newton expresa la expansión de \((a + b)^n\) como una suma de términos que involucran coeficientes binomiales:
+\[
+(a + b)^n = \sum_{k=0}^n \binom{n}{k} a^{n-k} b^k
+\]
+donde \(\binom{n}{k}\) es el coeficiente binomial, definido como:
+\[
+\binom{n}{k} = \frac{n!}{k!(n-k)!}
+\]
+La prueba de esta formula es elemental.
+%\section*{Fórmula del binomio de Newton}
+%
+%La fórmula del binomio de Newton establece que, para cualquier entero no negativo $n$ y cualquier número real $a$ y $b$,
+%
+%\begin{equation*}
+%(a + b)^n = \sum_{k=0}^{n} \binom{n}{k} a^{n-k} b^k
+%\end{equation*}
+%
+%\section*{Prueba por inducción matemática}
+
+\textbf{Caso base ($n = 0$)}
+Para $n = 0$,
+\begin{equation*}
+(a + b)^0 = 1
+\end{equation*}
+Por otro lado,
+\begin{equation*}
+\sum_{k=0}^{0} \binom{0}{k} a^{0-k} b^k = \binom{0}{0} a^0 b^0 = 1
+\end{equation*}
+Por lo tanto, la fórmula se cumple para $n = 0$.
+
+\textbf{Hipótesis de inducción}
+Supongamos que la fórmula se cumple para algún entero $n = m$, es decir,
+\begin{equation*}
+(a + b)^m = \sum_{k=0}^{m} \binom{m}{k} a^{m-k} b^k
+\end{equation*}
+
+\textbf{Paso inductivo ($n = m + 1$)}
+Queremos demostrar que la fórmula se cumple para $n = m + 1$, es decir,
+\begin{equation*}
+(a + b)^{m+1} = \sum_{k=0}^{m+1} \binom{m+1}{k} a^{(m+1)-k} b^k
+\end{equation*}
+Consideramos $(a + b)^{m+1} = (a + b)(a + b)^m$. Usando la hipótesis de inducción,
+\begin{align*}
+(a + b)^{m+1} &= (a + b) \sum_{k=0}^{m} \binom{m}{k} a^{m-k} b^k \\
+&= a \sum_{k=0}^{m} \binom{m}{k} a^{m-k} b^k + b \sum_{k=0}^{m} \binom{m}{k} a^{m-k} b^k
+\end{align*}
+Reindexamos la segunda suma:
+\begin{align*}
+(a + b)^{m+1} &= \sum_{k=0}^{m} \binom{m}{k} a^{m+1-k} b^k + \sum_{k=1}^{m+1} \binom{m}{k-1} a^{m+1-k} b^k
+\end{align*}
+Combinamos las sumas:
+\begin{align*}
+(a + b)^{m+1} &= \binom{m}{0} a^{m+1} b^0 + \sum_{k=1}^{m} \left[ \binom{m}{k} + \binom{m}{k-1} \right] a^{m+1-k} b^k + \binom{m}{m} a^0 b^{m+1}
+\end{align*}
+Usamos la propiedad de los coeficientes binomiales: $\binom{m}{k} + \binom{m}{k-1} = \binom{m+1}{k}$,
+\begin{align*}
+(a + b)^{m+1} &= \binom{m+1}{0} a^{m+1} b^0 + \sum_{k=1}^{m} \binom{m+1}{k} a^{m+1-k} b^k + \binom{m+1}{m+1} a^0 b^{m+1}
+\end{align*}
+Lo que es equivalente a
+\begin{equation*}
+(a + b)^{m+1} = \sum_{k=0}^{m+1} \binom{m+1}{k} a^{(m+1)-k} b^k
+\end{equation*}
+Por el principio de inducción matemática, la fórmula del binomio de Newton se cumple para todo entero no negativo $n$.
+%\subsection*{Ejemplo de Aplicación}
+Por ejemplo, para \((a + b)^4\):
+\[
+(a + b)^4 = \binom{4}{0}a^4b^0 + \binom{4}{1}a^3b^1 + \binom{4}{2}a^2b^2 + \binom{4}{3}a^1b^3 + \binom{4}{4}a^0b^4
+\]
+\[
+= 1 \cdot a^4 + 4 \cdot a^3b + 6 \cdot a^2b^2 + 4 \cdot ab^3 + 1 \cdot b^4
+\]
+
+
+\paragraph{Desarrollo de \((1 + \frac{x}{N})^N\) usando el binomio de Newton}
+
+\paragraph{Fórmula compacta}
+\[
+\left(1 + \frac{x}{N}\right)^N = \sum_{k=0}^N \binom{N}{k} \left(\frac{x}{N}\right)^k
+\]
+
+\paragraph{Desarrollo de los 4 primeros términos}
+\[
+\left(1 + \frac{x}{N}\right)^N = \binom{N}{0} \left(\frac{x}{N}\right)^0 + \binom{N}{1} \left(\frac{x}{N}\right)^1 + \binom{N}{2} \left(\frac{x}{N}\right)^2 + \binom{N}{3} \left(\frac{x}{N}\right)^3 + \dots %\mathcal{O}\left(\frac{x^4}{N^3}\right)
+\]
+Sustituyendo los coeficientes binomiales:
+\[
+\left(1 + \frac{x}{N}\right)^N = 1 + N \cdot \frac{x}{N} + \frac{N(N-1)}{2} \cdot \frac{x^2}{N^2} + \frac{N(N-1)(N-2)}{6} \cdot \frac{x^3}{N^3} + \dots %\mathcal{O}\left(\frac{x^4}{N^3}\right)
+\]
+Lo que se simplifica a:
+\[
+\left(1 + \frac{x}{N}\right)^N = 1 + x + \frac{x^2}{2} \left(1 - \frac{1}{N}\right) + \frac{x^3}{6} \left(1 - \frac{1}{N}\right)\left(1 - \frac{2}{N}\right) + \dots %\mathcal{O}\left(\frac{x^4}{N^3}\right)
+\]
+\paragraph{Serie exponencial}
+Tomando $N$ grande en la formula anterior (Euler):
+\[
+e^x =  1 + x + \frac{x^2}{2!} + \frac{x^3}{3!}  + \dots
+\]
+El método es peligroso. Por ejemplo así:
+\[
+1 = \frac{1}{N} + \ldots + \frac{1}{N} = \dots
+\]
+Pero la serie es valida. La prueba rigorosa se hara bien despues de Euler.
+
+\paragraph{Origen del exponencial} Viene de un problema de geometria planteado por F. Debeaune (1601--1652), resuelto por Leibniz (1684). Esta vinculado igual a problemas prácticos (Euler, 1748), en demografía o economía, donde nos interesamos a expresiones como
+\[
+(1 + \omega )^N
+\]
+con $\omega$ pequeño y $N$ largo. Ver el libro de Hairer \& Wanner.
 \subsection{Valor absoluto}
 
 \subsubsection{Definición}
@@ -437,7 +816,7 @@ Por definición de valor absoluto, esto implica que \(|a + b| \leq |a| + |b|\), 
 
 \begin{center}
 $\star$
-Versión 1.1 -- 12 Marzo 26
+Versión 1.2 -- 23 Marzo 26
 $\star$
 \end{center}
 
@@ -697,6 +1076,273 @@ $$
 \begin{center}
 $\star$
 Versión 1.0 -- 16 Marzo 26
+$\star$
+\end{center}
+
+\newpage
+
+\section{Integración}
+\subsection{Nociones básicas}
+\subsubsection{Particiones}
+\begin{definicion}[Partición de un intervalo]
+    Sea $[a, b]$ un intervalo cerrado. Una \textbf{partición} $P$ de $[a, b]$ es un conjunto finito de puntos $x_0, x_1, \ldots, x_n$ tales que:
+    $$
+    a = x_0 < x_1 < \cdots < x_n = b.
+    $$
+    La \textbf{norma} de la partición, denotada $P$, es la longitud del subintervalo más grande:
+    $$
+    P = \max_{1 \leq i \leq n} x_i - x_{i-1}.
+    $$
+\end{definicion}
+
+\subsubsection{Definición de integral de Riemann}
+\begin{definicion}[Integral de Riemann]
+    Sea $f: [a, b] \to \mathbb{R}$ una función acotada y $P = x_0, x_1, \ldots, x_n$ una partición de $[a, b]$. Para cada subintervalo $[x_{i-1}, x_i]$, definimos:
+    $$
+    m_i = \inf f(x) : x \in [x_{i-1}, x_i], \quad M_i = \sup f(x) : x \in [x_{i-1}, x_i].
+    $$
+    Las \textbf{sumas inferior y superior} de $f$ respecto a $P$ son:
+    $$
+    L(f, P) = \sum_{i=1}^n m_i (x_i - x_{i-1}), \quad U(f, P) = \sum_{i=1}^n M_i (x_i - x_{i-1}).
+    $$
+    Decimos que $f$ es \textbf{integrable según Riemann} en $[a, b]$ si:
+    $$
+    \sup_P L(f, P) = \inf_P U(f, P) = I,
+    $$
+    y en ese caso, $I$ se denomina la \textbf{integral de Riemann} de $f$ en $[a, b]$, denotada:
+    $$
+    \int_a^b f(x)  dx = I.
+    $$
+\end{definicion}
+
+\subsection{Teorema fundamental del cálculo}
+\subsubsection{Enunciado}
+\begin{teorema}[Teorema Fundamental del Cálculo]
+    Sea $f: [a, b] \to \mathbb{R}$ una función continua. Definimos $F: [a, b] \to \mathbb{R}$ como:
+    $$
+    F(x) = \int_a^x f(t)  dt.
+    $$
+    Entonces, $F$ es derivable en $(a, b)$ y se cumple:
+    $$
+    F'(x) = f(x) \quad \forall x \in (a, b).
+    $$
+    Además, si $G$ es cualquier primitiva de $f$ en $[a, b]$, entonces:
+    $$
+    \int_a^b f(x)  dx = G(b) - G(a).
+    $$
+\end{teorema}
+
+\subsubsection{Aplicación al cálculo de primitivas}
+\begin{ejemplo}
+    Calculemos $\int_0^1 x^2  dx$ usando el Teorema Fundamental del Cálculo. Sabemos que $G(x) = \frac{x^3}{3}$ es una primitiva de $f(x) = x^2$. Por lo tanto:
+    $$
+    \int_0^1 x^2  dx = G(1) - G(0) = \frac{1^3}{3} - \frac{0^3}{3} = \frac{1}{3}.
+    $$
+\end{ejemplo}
+
+\subsection{Métodos generales de integración}
+\subsubsection{Cambio de variables}
+\begin{teorema}[Cambio de variables]
+    Sea $g: [\alpha, \beta] \to [a, b]$ una función derivable con derivada continua y biyectiva, y sea $f: [a, b] \to \mathbb{R}$ continua. Entonces:
+    $$
+    \int_a^b f(x)  dx = \int_{\alpha}^{\beta} f(g(u)) g'(u)  du.
+    $$
+\end{teorema}
+
+\begin{ejemplo}
+    Calculemos $\int_0^1 \sqrt{1 - x^2}  dx$ usando el cambio de variables $x = \sin(u)$. Entonces, $dx = \cos(u)  du$, y los límites de integración cambian a $u = 0$ y $u = \frac{\pi}{2}$:
+    $$
+    \int_0^1 \sqrt{1 - x^2}  dx = \int_0^{\frac{\pi}{2}} \sqrt{1 - \sin^2(u)} \cos(u)  du = \int_0^{\frac{\pi}{2}} \cos^2(u)  du.
+    $$
+    Usando la identidad $\cos^2(u) = \frac{1 + \cos(2u)}{2}$, obtenemos:
+    $$
+    \int_0^{\frac{\pi}{2}} \frac{1 + \cos(2u)}{2}  du = \frac{\pi}{4}.
+    $$
+\end{ejemplo}
+
+\subsubsection{Integración por partes}
+\begin{teorema}[Integración por partes]
+    Sean $u$ y $v$ funciones derivables con derivadas continuas en $[a, b]$. Entonces:
+    $$
+    \int_a^b u(x) v'(x)  dx = u(x) v(x) \Big|_a^b - \int_a^b u'(x) v(x)  dx.
+    $$
+\end{teorema}
+
+\begin{ejemplo}
+    Calculemos $\int_0^1 x e^x  dx$ usando integración por partes. Tomamos $u(x) = x$ y $v'(x) = e^x$, de modo que $u'(x) = 1$ y $v(x) = e^x$. Aplicando la fórmula:
+    $$
+    \int_0^1 x e^x  dx = x e^x \Big|_0^1 - \int_0^1 e^x  dx = e - (e - 1) = 1.
+    $$
+\end{ejemplo}
+
+\subsection{Métodos numéricos para aproximar una integral}
+\subsubsection{Regla de los rectángulos}
+Dada una partición $P = x_0, x_1, \ldots, x_n$ de $[a, b]$, la \textbf{regla de los rectángulos} aproxima la integral de $f$ como:
+$$
+\int_a^b f(x)  dx \approx \sum_{i=1}^n f\left(\frac{x_{i-1} + x_i}{2}\right) (x_i - x_{i-1}).
+$$
+
+\subsubsection{Regla del trapecio}
+La \textbf{regla del trapecio} aproxima la integral de $f$ como:
+$$
+\int_a^b f(x)  dx \approx \sum_{i=1}^n \frac{f(x_{i-1}) + f(x_i)}{2} (x_i - x_{i-1}).
+$$
+
+\begin{ejemplo}
+    Aproximemos $\int_0^1 x^2  dx$ usando la regla del trapecio con $n = 4$ subintervalos. La partición es $P = 0, 0.25, 0.5, 0.75, 1$. Aplicando la fórmula:
+    $$
+    \int_0^1 x^2  dx \approx \frac{0.25}{2} \left( f(0) + 2f(0.25) + 2f(0.5) + 2f(0.75) + f(1) \right) = 0.328125.
+    $$
+    El valor exacto es $\frac{1}{3} \approx 0.3333$, por lo que el error es pequeño.
+\end{ejemplo}
+
+\begin{center}
+$\star$
+Versión 1.0 -- 17 Marzo 26
+$\star$
+\end{center}
+
+\newpage 
+
+\section{Ecuaciones diferenciales}
+
+\subsection{Definición de un problema de Cauchy}
+\begin{definicion}[Problema de Cauchy]
+    Un \textbf{problema de Cauchy} (o problema de valor inicial) para una ecuación diferencial ordinaria (EDO) de orden $n$ consiste en encontrar una función $y(t)$ que satisfaga:
+    $$
+    y^{(n)}(t) = f(t, y(t), y'(t), \ldots, y^{(n-1)}(t)),
+    $$
+    junto con las condiciones iniciales:
+    $$
+    y(t_0) = y_0, \quad y'(t_0) = y_1, \quad \ldots, \quad y^{(n-1)}(t_0) = y_{n-1},
+    $$
+    donde $f$ es una función dada, $t_0$ es un punto del dominio, y $y_0, y_1, \ldots, y_{n-1}$ son valores conocidos.
+\end{definicion}
+
+\begin{ejemplo}
+    Un problema de Cauchy de primer orden tiene la forma:
+    $$
+    y'(t) = f(t, y(t)), \quad y(t_0) = y_0.
+    $$
+    Por ejemplo, el problema:
+    $$
+    y' = 2ty, \quad y(0) = 1,
+    $$
+    es un problema de Cauchy para una EDO lineal de primer orden.
+\end{ejemplo}
+
+\subsection{Ecuaciones lineales de primer orden}
+\begin{definicion}[Ecuación lineal de primer orden]
+    Una ecuación diferencial lineal de primer orden es de la forma:
+    $$
+    y'(t) + p(t)y(t) = g(t),
+    $$
+    donde $p(t)$ y $g(t)$ son funciones continuas en un intervalo $I$.
+\end{definicion}
+
+\subsubsection{Método de resolución}
+La solución general de la ecuación $y' + p(t)y = g(t)$ se obtiene usando un \textbf{factor integrante} $\mu(t) = e^{\int p(t)  dt}$:
+$$
+y(t) = \frac{1}{\mu(t)} \left( \int \mu(t) g(t)  dt + C \right),
+$$
+donde $C$ es una constante arbitraria.
+
+\begin{ejemplo}
+    Resolvamos la ecuación $y' + 2ty = t$. El factor integrante es:
+    $$
+    \mu(t) = e^{\int 2t  dt} = e^{t^2}.
+    $$
+    Multiplicamos la ecuación por $\mu(t)$:
+    $$
+    e^{t^2} y' + 2t e^{t^2} y = t e^{t^2}.
+    $$
+    El lado izquierdo es la derivada de $e^{t^2} y$, por lo que:
+    $$
+    \frac{d}{dt} \left( e^{t^2} y \right) = t e^{t^2}.
+    $$
+    Integrando ambos lados:
+    $$
+    e^{t^2} y = \int t e^{t^2}  dt = \frac{1}{2} e^{t^2} + C.
+    $$
+    Despejando $y$:
+    $$
+    y(t) = \frac{1}{2} + C e^{-t^2}.
+    $$
+\end{ejemplo}
+
+\subsection{Ejemplo del oscilador armónico}
+\begin{definicion}[Oscilador armónico]
+    El oscilador armónico simple está descrito por la EDO de segundo orden:
+    $$
+    m y''(t) + k y(t) = 0,
+    $$
+    donde $m$ es la masa, $k$ es la constante del resorte, y $y(t)$ es el desplazamiento en el tiempo $t$.
+\end{definicion}
+
+\subsubsection{Solución general}
+La ecuación característica asociada es:
+$$
+m r^2 + k = 0 \implies r = \pm i \sqrt{\frac{k}{m}}.
+$$
+Por lo tanto, la solución general es:
+$$
+y(t) = A \cos\left(\sqrt{\frac{k}{m}} t\right) + B \sin\left(\sqrt{\frac{k}{m}} t\right),
+$$
+donde $A$ y $B$ son constantes determinadas por las condiciones iniciales.
+
+\begin{ejemplo}
+    Para $m = 1$, $k = 4$, y condiciones iniciales $y(0) = 1$, $y'(0) = 0$, la solución es:
+    $$
+    y(t) = \cos(2t).
+    $$
+\end{ejemplo}
+
+\subsection{Ecuaciones no lineales en variables separables}
+\begin{definicion}[Ecuación separable]
+    Una ecuación diferencial de primer orden es \textbf{separable} si puede escribirse como:
+    $$
+    y' = f(t) g(y).
+    $$
+\end{definicion}
+
+\subsubsection{Método de resolución}
+Separamos variables e integramos:
+$$
+\int \frac{dy}{g(y)} = \int f(t)  dt.
+$$
+
+\begin{ejemplo}
+    Resolvamos $y' = t y$. Separando variables:
+    $$
+    \int \frac{dy}{y} = \int t  dt \implies \ln|y| = \frac{t^2}{2} + C.
+    $$
+    Despejando $y$:
+    $$
+    y(t) = C e^{\frac{t^2}{2}}.
+    $$
+\end{ejemplo}
+
+\subsection{Método de Euler explícito}
+\begin{definicion}[Método de Euler]
+    Dado el problema de Cauchy $y' = f(t, y)$, $y(t_0) = y_0$, el método de Euler aproxima la solución en los puntos $t_n = t_0 + n h$ ($n = 0, 1, \ldots$) mediante la iteración:
+    $$
+    y_{n+1} = y_n + h f(t_n, y_n),
+    $$
+    donde $h$ es el tamaño del paso.
+\end{definicion}
+
+\begin{ejemplo}
+    Aproximemos la solución de $y' = t + y$, $y(0) = 1$ con $h = 0.1$ y $n = 2$:
+    \begin{itemize}
+        \item $t_0 = 0$, $y_0 = 1$.
+        \item $t_1 = 0.1$, $y_1 = y_0 + h (t_0 + y_0) = 1 + 0.1 (0 + 1) = 1.1$.
+        \item $t_2 = 0.2$, $y_2 = y_1 + h (t_1 + y_1) = 1.1 + 0.1 (0.1 + 1.1) = 1.22$.
+    \end{itemize}
+\end{ejemplo}
+
+\begin{center}
+$\star$
+Versión 1.0 -- 18 Marzo 26
 $\star$
 \end{center}
 
