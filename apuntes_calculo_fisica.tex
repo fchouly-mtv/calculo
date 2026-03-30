@@ -13,6 +13,8 @@
 \usepackage{xcolor}
 
 \usepackage{tikz}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{shapes.geometric}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
 
@@ -823,87 +825,555 @@ $\star$
 %\end{document}
 \newpage
 
-\section{Definición y concepto de límite}
-\subsection{Introducción}
-El concepto de \textbf{límite} es la piedra angular del análisis matemático. Permite estudiar el comportamiento de una función cerca de un punto, incluso cuando la función no está definida en ese punto. Intuitivamente, el límite describe el valor al que se acerca la función cuando su variable independiente se aproxima a un valor dado.
+\section{Límite y continuidad}
 
-\subsection{Definición formal}
-\begin{definicion}[Límite de una función]
-    Sea $f: A \subseteq \mathbb{R} \to \mathbb{R}$ una función y $c \in \mathbb{R}$ un punto de acumulación de $A$. Decimos que $L \in \mathbb{R}$ es el \textbf{límite} de $f(x)$ cuando $x$ tiende a $c$, y lo denotamos como:
-    $$
-    \lim_{x \to c} f(x) = L,
-    $$
-    si para todo $\varepsilon > 0$, existe un $\delta > 0$ tal que para todo $x \in A$ con $0 < |x - c| < \delta$, se cumple que $|f(x) - L| < \varepsilon$.
-\end{definicion}
+%\usepackage[utf8]{inputenc}
+%\usepackage[spanish]{babel}
+%\usepackage{amsmath}
+%\usepackage{amssymb}
+%\usepackage{pgfplots}
+%\pgfplotsset{compat=1.18}
 
-\subsection{Unicidad del límite}
-\begin{teorema}[Unicidad del límite]
-    Si $\lim_{x \to c} f(x) = L_1$ y $\lim_{x \to c} f(x) = L_2$, entonces $L_1 = L_2$.
-\end{teorema}
-\begin{proof}
-    Supongamos que $L_1 \neq L_2$. Tomemos $\varepsilon = \frac{|L_1 - L_2|}{2}$. Por definición de límite, existen $\delta_1$ y $\delta_2$ tales que:
-    $$
-    |f(x) - L_1| < \varepsilon \quad \text{y} \quad |f(x) - L_2| < \varepsilon,
-    $$
-    para $0 < |x - c| < \delta = \min\{\delta_1, \delta_2\}$. Sin embargo, por la desigualdad triangular:
-    $$
-    |L_1 - L_2| \leq |L_1 - f(x)| + |f(x) - L_2| < 2\varepsilon = |L_1 - L_2|,
-    $$
-    lo cual es una contradicción. Por lo tanto, $L_1 = L_2$.
-\end{proof}
+%\section*{Definición informal pero rigurosa de límite}
 
-\subsection{Ejemplos}
-\begin{ejemplo}
-    Consideremos la función $f(x) = \frac{x^2 - 1}{x - 1}$. Observemos que $f$ no está definida en $x = 1$, pero podemos calcular su límite cuando $x \to 1$:
-    $$
-    \lim_{x \to 1} \frac{x^2 - 1}{x - 1} = \lim_{x \to 1} \frac{(x - 1)(x + 1)}{x - 1} = \lim_{x \to 1} (x + 1) = 2.
-    $$
-    Aquí, simplificamos la expresión algebraica para eliminar la indeterminación.
-\end{ejemplo}
+La noción de \textbf{límite} puede entenderse como sigue:
 
-\section{Definición y concepto de continuidad}
-\subsection{Definición formal}
-\begin{definicion}[Continuidad en un punto]
-    Sea $f: A \subseteq \mathbb{R} \to \mathbb{R}$ una función y $c \in A$. Decimos que $f$ es \textbf{continua en $c$} si:
-    $$
-    \lim_{x \to c} f(x) = f(c).
-    $$
-    Es decir, $f$ es continua en $c$ si el límite de $f(x)$ cuando $x \to c$ existe, es finito y coincide con $f(c)$.
-\end{definicion}
-
-\subsection{Teorema de Bolzano (valores intermedios)}
-\begin{teorema}[Teorema de Bolzano]
-    Sea $f: [a, b] \to \mathbb{R}$ una función continua en el intervalo cerrado $[a, b]$. Si $f(a)$ y $f(b)$ tienen signos opuestos (es decir, $f(a) \cdot f(b) < 0$), entonces existe al menos un $c \in (a, b)$ tal que $f(c) = 0$.
-\end{teorema}
-\begin{proof}
-    La demostración se basa en el método de bisección. Consideremos el punto medio $m = \frac{a + b}{2}$. Si $f(m) = 0$, hemos terminado. Si no, $f(m)$ tiene el mismo signo que $f(a)$ o $f(b)$. Repetimos el proceso en el subintervalo correspondiente. Por el axioma de completez de los números reales, este proceso converge a un punto $c$ donde $f(c) = 0$.
-\end{proof}
-
-\subsection{Método de dicotomía para calcular un cero}
-El teorema de Bolzano garantiza la existencia de un cero, pero no proporciona un método para encontrarlo. El \textbf{método de dicotomía} (o bisección) es un algoritmo iterativo que permite aproximar un cero de una función continua en un intervalo $[a, b]$ donde $f(a) \cdot f(b) < 0$.
-
-\subsubsection{Algoritmo}
-\begin{enumerate}
-    \item \textbf{Inicialización:} Elige $a$ y $b$ tales que $f(a) \cdot f(b) < 0$.
-    \item \textbf{Iteración:}
-          \begin{itemize}
-              \item Calcula el punto medio $m = \frac{a + b}{2}$.
-              \item Si $f(m) = 0$, entonces $m$ es un cero de $f$.
-              \item Si $f(a) \cdot f(m) < 0$, entonces el cero está en $[a, m]$. Actualiza $b = m$.
-              \item Si $f(m) \cdot f(b) < 0$, entonces el cero está en $[m, b]$. Actualiza $a = m$.
-          \end{itemize}
-    \item \textbf{Repetición:} Repite el paso 2 hasta que $|b - a| < \varepsilon$, donde $\varepsilon$ es la precisión deseada.
-\end{enumerate}
-
-\subsubsection{Ejemplo}
-Consideremos $f(x) = x^3 - x - 1$ en el intervalo $[1, 2]$. Claramente, $f(1) = -1$ y $f(2) = 5$, por lo que $f(1) \cdot f(2) < 0$. Aplicando el método de bisección:
 \begin{itemize}
-    \item Primera iteración: $m = 1.5$, $f(1.5) = 0.875$. El cero está en $[1, 1.5]$.
-    \item Segunda iteración: $m = 1.25$, $f(1.25) = -0.234$. El cero está en $[1.25, 1.5]$.
-    \item Continuamos hasta alcanzar la precisión deseada.
+    \item \textbf{Para un límite finito en un punto}: Decimos que $f(x)$ tiende al valor $L$ cuando $x$ tiende a $a$, y escribimos $\lim_{x \to a} f(x) = L$, si cuando $x$ se acerca a $a$, los valores de $f(x)$ se acercan arbitrariamente a $L$.
+
+    \item \textbf{Para un límite en el infinito}: Decimos que $f(x)$ tiende a $L$ cuando $x$ tiende a $+\infty$, y escribimos $\lim_{x \to +\infty} f(x) = L$, si cuando $x$ crece indefinidamente, los valores de $f(x)$ se acercan arbitrariamente a $L$.
 \end{itemize}
 
-%\newpage
+\subsection{Ejemplo con la función $f(x) = \frac{1}{x}$}
+
+Consideremos la función $f(x) = \frac{1}{x}$ y analicemos su comportamiento.
+
+\subsubsection{Límite cuando $x$ tiende a $0^+$}
+
+\begin{itemize}
+    \item  $\displaystyle \lim_{x \to 0^+} \frac{1}{x} = +\infty$
+
+    \item \textbf{Explicación informal}: A medida que $x$ se acerca a $0$ por la derecha, el valor de $f(x)$ crece sin límite.
+
+    \item \textbf{Ejemplo numérico}:
+    \begin{center}
+    \begin{tabular}{|c|c|}
+    \hline
+    $x$ & $f(x) = \frac{1}{x}$ \\ \hline
+    0.1 & 10 \\ \hline
+    0.01 & 100 \\ \hline
+    0.001 & 1000 \\ \hline
+    0.0001 & 10000 \\ \hline
+    \end{tabular}
+    \end{center}
+\end{itemize}
+
+\subsubsection{Límite cuando $x$ tiende a $+\infty$}
+
+\begin{itemize}
+    \item %\textbf{Definición}: 
+    $\displaystyle \lim_{x \to +\infty} \frac{1}{x} = 0$
+
+    \item \textbf{Explicación informal}: A medida que $x$ crece indefinidamente, el valor de $f(x)$ se acerca a $0$.
+
+    \item \textbf{Ejemplo numérico}:
+    \begin{center}
+    \begin{tabular}{|c|c|}
+    \hline
+    $x$ & $f(x) = \frac{1}{x}$ \\ \hline
+    10 & 0.1 \\ \hline
+    100 & 0.01 \\ \hline
+    1000 & 0.001 \\ \hline
+    10000 & 0.0001 \\ \hline
+    \end{tabular}
+    \end{center}
+\end{itemize}
+
+\subsubsection{Gráfico de la función $f(x) = \frac{1}{x}$}
+
+A continuación, un dibujo de la función $f(x) = \frac{1}{x}$ para visualizar su comportamiento:
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = center,
+        xlabel = $x$,
+        ylabel = {$f(x) = \frac{1}{x}$},
+        ymin=-5, ymax=5,
+        xmin=-5, xmax=5,
+        xtick distance=1,
+        ytick distance=1,
+        grid=both,
+        grid style={line width=.1pt, draw=gray!10},
+        major grid style={line width=.2pt,draw=gray!50},
+    ]
+    \addplot[
+        domain=0.1:5,
+        samples=200,
+        color=blue,
+    ]
+    {1/x};
+    \addplot[
+        domain=-5:-0.1,
+        samples=200,
+        color=blue,
+    ]
+    {1/x};
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+
+%\section{Definición y concepto de límite}
+%\subsection{Introducción}
+%El concepto de \textbf{límite} es la piedra angular del análisis matemático. Permite estudiar el comportamiento de una función cerca de un punto, incluso cuando la función no está definida en ese punto. Intuitivamente, el límite describe el valor al que se acerca la función cuando su variable independiente se aproxima a un valor dado.
+
+\subsection{Ejemplos donde no hay límite}
+
+%\title{Análisis de límites en funciones fundamentales}
+%\author{FRANZ C.}
+%\date{\today}
+
+%\section{Introducción}
+%En análisis matemático, el concepto de límite es fundamental para entender el comportamiento de las funciones en puntos específicos o en el infinito. Sin embargo, 
+No todas las funciones tienen límites en ciertos puntos o en el infinito. A continuación, se analizan cuatro casos clásicos donde no existen los límites:
+\begin{itemize}
+    \item \(\lim_{x \to +\infty} \cos(x)\)
+    \item \(\lim_{x \to 0} \frac{1}{x}\)
+    \item \(\lim_{x \to 0} H(x)\) (función de Heaviside)
+    \item \(\lim_{x \to 0} \cos\left(\frac{1}{x}\right)\)
+\end{itemize}
+
+\paragraph{Caso \(\lim_{x \to +\infty} \cos(x)\).}
+La función \(\cos(x)\) es periódica con período \(2\pi\). Esto significa que su comportamiento se repite cada \(2\pi\) unidades. Por lo tanto, para cualquier \(x_n = 2\pi n\) con \(n \in \mathbb{N}\), se tiene \(\cos(x_n) = 1\), mientras que para \(x'_n = 2\pi n + \pi\), se tiene \(\cos(x'_n) = -1\).
+
+\begin{proof}
+Consideremos dos sucesiones:
+\begin{align*}
+    x_n &= 2\pi n \quad \text{y} \quad y_n = 2\pi n + \pi.
+\end{align*}
+Entonces,
+\begin{align*}
+    \lim_{n \to \infty} \cos(x_n) &= 1, \\
+    \lim_{n \to \infty} \cos(y_n) &= -1.
+\end{align*}
+Como los límites de estas dos sucesiones son distintos, no existe el límite \(\lim_{x \to +\infty} \cos(x)\).
+\end{proof}
+
+\textbf{Explicación intuitiva:} La función \(\cos(x)\) oscila indefinidamente entre \(-1\) y \(1\) a medida que \(x\) crece, sin converger a ningún valor específico.
+
+\paragraph{Caso \(\lim_{x \to 0} \frac{1}{x}\).}
+La función \(\frac{1}{x}\) presenta un comportamiento asintótico en \(x = 0\). A medida que \(x\) se acerca a \(0\) por la derecha (\(x \to 0^+\)), \(\frac{1}{x} \to +\infty\), mientras que si \(x\) se acerca a \(0\) por la izquierda (\(x \to 0^-\)), \(\frac{1}{x} \to -\infty\).
+
+\begin{proof}
+Consideremos las sucesiones:
+\begin{align*}
+    x_n &= \frac{1}{n} \quad \text{y} \quad y_n = -\frac{1}{n}.
+\end{align*}
+Entonces,
+\begin{align*}
+    \lim_{n \to \infty} \frac{1}{x_n} &= +\infty, \\
+    \lim_{n \to \infty} \frac{1}{y_n} &= -\infty.
+\end{align*}
+Como los límites laterales son distintos (uno va a \(+\infty\) y el otro a \(-\infty\)), no existe el límite \(\lim_{x \to 0} \frac{1}{x}\).
+\end{proof}
+
+\textbf{Explicación intuitiva:} La función \(\frac{1}{x}\) diverge hacia valores opuestos en cada lado de cero, sin alcanzar un valor finito.
+
+\paragraph{Caso \(\lim_{x \to 0} H(x)\) (función de Heaviside).}
+La función de Heaviside \(H(x)\) se define como:
+\begin{align*}
+    H(x) =
+    \begin{cases}
+        0 & \text{si } x < 0, \\
+        1 & \text{si } x \geq 0.
+    \end{cases}
+\end{align*}
+Esta función tiene una discontinuidad de salto en \(x = 0\). El límite por la izquierda es \(0\), mientras que el límite por la derecha es \(1\).
+
+\begin{proof}
+Consideremos las sucesiones:
+\begin{align*}
+    x_n &= -\frac{1}{n} \quad \text{y} \quad y_n = \frac{1}{n}.
+\end{align*}
+Entonces,
+\begin{align*}
+    \lim_{n \to \infty} H(x_n) &= 0, \\
+    \lim_{n \to \infty} H(y_n) &= 1.
+\end{align*}
+Como los límites laterales son distintos, no existe el límite \(\lim_{x \to 0} H(x)\).
+\end{proof}
+
+\textbf{Explicación intuitiva:} La función de Heaviside "salta" de \(0\) a \(1\) en \(x = 0\), sin tomar un valor intermedio.
+
+\paragraph{Caso \(\lim_{x \to 0} \cos\left(\frac{1}{x}\right)\).}
+La función \(\cos\left(\frac{1}{x}\right)\) oscila cada vez más rápidamente a medida que \(x\) se acerca a \(0\). Para cualquier sucesión \(x_n\) que tienda a \(0\), la función \(\cos\left(\frac{1}{x_n}\right)\) oscilará entre \(-1\) y \(1\) de manera arbitraria.
+
+\begin{proof}
+Consideremos la sucesión \(x_n = \frac{1}{2\pi n}\). Entonces,
+\begin{align*}
+    \cos\left(\frac{1}{x_n}\right) = \cos(2\pi n) = 1.
+\end{align*}
+Sin embargo, si consideramos \(y_n = \frac{1}{2\pi n + \pi}\), entonces
+\begin{align*}
+    \cos\left(\frac{1}{y_n}\right) = \cos(2\pi n + \pi) = -1.
+\end{align*}
+Como podemos encontrar sucesiones que tienden a \(0\) donde la función tiende a \(1\) y otras donde tiende a \(-1\), no existe el límite \(\lim_{x \to 0} \cos\left(\frac{1}{x}\right)\).
+\end{proof}
+
+\textbf{Explicación intuitiva:} La función \(\cos\left(\frac{1}{x}\right)\) oscila infinitamente entre \(-1\) y \(1\) a medida que \(x\) se acerca a \(0\), sin converger a ningún valor específico.
+
+\paragraph{Conclusión}
+En todos los casos analizados, las funciones no tienen límite en los puntos o en el infinito considerados debido a:
+\begin{itemize}
+    \item Oscilaciones infinitas (\(\cos(x)\), \(\cos\left(\frac{1}{x}\right)\)),
+    \item Divergencia a valores opuestos (\(\frac{1}{x}\)),
+    \item Discontinuidad de salto (\(H(x)\)).
+\end{itemize}
+Estos ejemplos ilustran la importancia de analizar tanto los límites laterales como el comportamiento global de una función para determinar la existencia de límites.
+
+%\subsection{Definición formal}
+%\begin{definicion}[Límite de una función]
+%    Sea $f: A \subseteq \mathbb{R} \to \mathbb{R}$ una función y $c \in \mathbb{R}$ un punto de acumulación de $A$. Decimos que $L \in \mathbb{R}$ es el \textbf{límite} de $f(x)$ cuando $x$ tiende a $c$, y lo denotamos como:
+%    $$
+%    \lim_{x \to c} f(x) = L,
+%    $$
+%    si para todo $\varepsilon > 0$, existe un $\delta > 0$ tal que para todo $x \in A$ con $0 < |x - c| < \delta$, se cumple que $|f(x) - L| < \varepsilon$.
+%\end{definicion}
+
+%\subsection{Unicidad del límite}
+%\begin{teorema}[Unicidad del límite]
+%    Si $\lim_{x \to c} f(x) = L_1$ y $\lim_{x \to c} f(x) = L_2$, entonces $L_1 = L_2$.
+%\end{teorema}
+%\begin{proof}
+%    Supongamos que $L_1 \neq L_2$. Tomemos $\varepsilon = \frac{|L_1 - L_2|}{2}$. Por definición de límite, existen $\delta_1$ y $\delta_2$ tales que:
+%    $$
+%    |f(x) - L_1| < \varepsilon \quad \text{y} %\quad |f(x) - L_2| < \varepsilon,
+%    $$
+%    para $0 < |x - c| < \delta = \min\{\delta_1, \delta_2\}$. Sin embargo, por la desigualdad triangular:
+%    $$
+%    |L_1 - L_2| \leq |L_1 - f(x)| + |f(x) - L_2| < 2\varepsilon = |L_1 - L_2|,
+%    $$
+%    lo cual es una contradicción. Por lo tanto, $L_1 = L_2$.
+%\end{proof}
+
+%\subsection{L\'imites de funciones usuales}
+
+\subsection{Potencia real para cualquier exponente real}
+
+La \textbf{potencia real} \( x^a \), donde \( x > 0 \) y \( a \in \mathbb{R} \), se define de la siguiente manera:
+\begin{itemize}
+    \item Si \( a \) es un número \textbf{entero} (positivo, negativo o cero), la definición es directa:
+    \[
+    x^a =
+    \begin{cases}
+    x \cdot x \cdots x \quad (a \text{ veces}) & \text{si } a > 0, \\
+    1 & \text{si } a = 0, \\
+    \frac{1}{x^{-a}} & \text{si } a < 0.
+    \end{cases}
+    \]
+
+    \item Si \( a \) es un número \textbf{racional} (es decir, \( a = \frac{p}{q} \) con \( p, q \in \mathbb{Z} \) y \( q \neq 0 \)), entonces:
+    \[
+    x^a = \sqrt[q]{x^p}.
+    \]
+
+    \item Si \( a \) es un número \textbf{irracional}, la definición se basa en el \textbf{límite de potencias de exponentes racionales} que se aproximan a \( a \). Más precisamente, para cualquier sucesión de números racionales \( \{a_n\} \) que converge a \( a \), se tiene:
+    \[
+    x^a = \lim_{n \to \infty} x^{a_n}.
+    \]
+    Este límite siempre existe y es único para \( x > 0 \).
+\end{itemize}
+
+%\begin{flushleft}
+%\textbf{Nota.}
+%La definición anterior es válida para cualquier \( x > 0 \) y cualquier \( a \in \mathbb{R} \). En lenguaje coloquial, se suele decir que ``la potencia es como multiplicar \( x \) por sí mismo \( a \) veces, pero si \( a \) es fraccionario o irracional, hay que usar raíces o límites''.
+%\end{flushleft}
+
+\subsection{Definición equivalente usando exponencial y logaritmo}
+
+Para cualquier \( x > 0 \) y \( a \in \mathbb{R} \), la potencia real \( x^a \) se define como:
+\[
+x^a = e^{a \cdot \ln(x)}
+\]
+donde:
+\begin{itemize}
+    \item \( e \) es la \textbf{constante de Euler} (\( e \approx 2.71828 \)),
+    \item \( \ln(x) \) es el \textbf{logaritmo natural} de \( x \) (es decir, la función inversa de la exponencial).
+\end{itemize}
+
+\begin{flushleft}
+\textbf{Nota:}
+Esta definición es \textbf{equivalente} a la definición clásica (por casos, raíces y límites), pero es más compacta y se usa mucho.
+\end{flushleft}
+
+\subsection{Límites naturales de funciones elementales}
+%\section*{Límites naturales y gráficos en TikZ}
+
+\paragraph{Función cuadrática: \( f(x) = x^2 \)}
+\begin{itemize}
+    \item \textbf{Dominio natural:} \( x \in \mathbb{R} \)
+    \item \textbf{Límite natural:} \( \lim_{x \to \pm\infty} x^2 = +\infty \)
+
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = center,
+        xlabel = \( x \),
+        ylabel = \( y \),
+        xmin = -10, xmax = 10,
+        ymin = 0, ymax = 100,
+        samples = 100,
+        domain = -10:10
+    ]
+    \addplot[blue, thick] {x^2};
+    \addlegendentry{\( y=x^2 \)}
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\paragraph{Función cúbica: \( f(x) = x^3 \)}
+\begin{itemize}
+
+\item \textbf{Dominio natural:} \( x \in \mathbb{R} \)
+
+    \item \textbf{Límite natural:} \( \lim_{x \to +\infty} x^3 = +\infty \), \( \lim_{x \to -\infty} x^3 = -\infty \)
+    
+\end{itemize}
+
+\begin{center}
+    \begin{tikzpicture}
+    \begin{axis}[
+        axis lines = center,
+        xlabel = \( x \),
+        ylabel = \( y \),
+        xmin = -3, xmax = 3,
+        ymin = -27, ymax = 27,
+        samples = 100,
+        domain = -3:3
+    ]
+    \addplot[red, thick] {x^3};
+    \addlegendentry{\( y=x^3 \)}
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\paragraph{Función exponencial: \( f(x) = e^x \)}
+\begin{itemize}
+    
+    \item
+    \textbf{Dominio natural:} \( x \in \mathbb{R} \). % \( y \in (0, +\infty) \)
+    
+    \item \textbf{Límite natural:} \( \lim_{x \to +\infty} e^x = +\infty \), \( \lim_{x \to -\infty} e^x = 0^+ \)
+     
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = center,
+        xlabel = \( x \),
+        ylabel = \( y \),
+        xmin = -6, xmax = 6,
+        ymin = 0, ymax = 100,
+        samples = 100,
+        domain = -5:5
+    ]
+    \addplot[green!50!black, thick] {exp(x)};
+    \addlegendentry{\( y=e^x \)}
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\paragraph{Función logaritmo natural: \( f(x) = \ln(x) \)}
+\begin{itemize}
+    \item \textbf{Dominio natural:} \( x \in (0, +\infty) \). %\( y \in \mathbb{R} \)
+    \item \textbf{Límite natural:} \( \lim_{x \to 0^+} \ln(x) = -\infty \), \( \lim_{x \to +\infty} \ln(x) = +\infty \)
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = center,
+        xlabel = \( x \),
+        ylabel = \( y \),
+        xmin = 0, xmax = 5,
+        ymin = -5, ymax = 5,
+        samples = 100,
+        domain = 0.01:5
+    ]
+    \addplot[purple, thick] {ln(x)};
+    \addlegendentry{\( y=\ln(x) \)}
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\paragraph{Función potencia general: \( f(x) = x^\alpha \) (para \( \alpha \in \mathbb{R} \))}
+\begin{itemize}
+    
+    \item \textbf{Dominio natural:}
+    \begin{itemize}
+        \item Si \( \alpha \) es entero o racional con denominador impar: \( x \in \mathbb{R} \)
+        \item Si \( \alpha \) es racional con denominador par: \( x \geq 0 \)
+        \item Si \( \alpha \) es irracional: \( x > 0 \)
+    \end{itemize}
+    
+    \item \textbf{Límite natural:}
+    \begin{itemize}
+        \item Si \( \alpha > 0 \): \( \lim_{x \to +\infty} x^\alpha = +\infty \), \( \lim_{x \to 0^+} x^\alpha = 0 \)
+        \item Si \( \alpha < 0 \): \( \lim_{x \to +\infty} x^\alpha = 0 \), \( \lim_{x \to 0^+} x^\alpha = +\infty \)
+        \item Si \( \alpha = 0 \): \( x^0 = 1 \) (función constante)
+    \end{itemize}
+    
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = center,
+        xlabel = \( x \),
+        ylabel = \( y \),
+        xmin = 0, xmax = 3,
+        ymin = 0, ymax = 3,
+        samples = 100,
+        domain = 0.1:3
+    ]
+    \addplot[orange, thick] {x^0.5};
+    \addplot[cyan, thick] {x^2};
+    \addplot[brown, thick] {x^(-1)};
+    \addlegendentry{\( y=x^{0.5} \)}
+    \addlegendentry{\( y=x^2 \)}
+    \addlegendentry{\( y=x^{-1} \)}
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+%\title
+\subsection{Límites de comparación} %entre funciones exponenciales, polinómicas y logarítmicas}
+%\author{}
+%\date{}
+
+%\begin{document}
+
+%\maketitle
+
+\paragraph{Límite de \( \frac{e^x}{x^n} \) cuando \( x \to +\infty \)}
+
+El límite de la función \( \frac{e^x}{x^n} \) cuando \( x \) tiende a infinito es un clásico. Para cualquier entero \( n \geq 1 \), se cumple:
+\[
+\lim_{x \to +\infty} \frac{e^x}{x^n} = +\infty.
+\]
+
+\begin{flushleft}
+\textbf{Demostración:}
+Usando la regla de L'Hôpital \( n \) veces (ya que tanto el numerador como el denominador tienden a \( \infty \)), obtenemos:
+\[
+\lim_{x \to \infty} \frac{e^x}{x^n} = \lim_{x \to \infty} \frac{e^x}{n x^{n-1}} = \cdots = \lim_{x \to \infty} \frac{e^x}{n!} = +\infty.
+\]
+\end{flushleft}
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = center,
+        xlabel = \( x \),
+        ylabel = \( y \),
+        xmin = 0, xmax = 11,
+        ymin = 0, ymax = 40,
+        samples = 100,
+        domain = 1:10
+    ]
+    %\addplot[blue, thick] {exp(x)/x^2};
+    \addplot[red, thick] {exp(x)/x^3};
+    \addplot[green!50!black, thick] {exp(x)/x^4};
+    %\addlegendentry{\( \frac{e^x}{x^2} \)}
+    \addlegendentry{\( y=\frac{e^x}{x^3} \)}
+    \addlegendentry{\( y=\frac{e^x}{x^4} \)}
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\paragraph{Límite de \( \displaystyle \frac{x^m}{\ln(x)} \) cuando \( x \to +\infty \)}
+
+Para cualquier entero \( m \geq 1 \), el límite de \( \frac{x^m}{\ln(x)} \) cuando \( x \) tiende a infinito es:
+\[
+\lim_{x \to +\infty} \frac{x^m}{\ln(x)} = +\infty.
+\]
+
+%\begin{flushleft}
+%\textbf{Justificación:}
+%La función polinómica \( x^m \) crece más rápido que la función logarítmica \( \ln(x) \) cuando \( x \to \infty \). Esto se debe a que, aunque el logaritmo crece sin límite, lo hace \textbf{infinitamente más lento} que cualquier función polinómica. Por lo tanto, el numerador domina al denominador y el límite tiende a \( +\infty \).
+%\end{flushleft}
+
+\begin{flushleft}
+\textbf{Demostración:}
+Usando la regla de L'Hôpital (ya que \( \frac{x^m}{\ln(x)} \) es de la forma \( \frac{\infty}{\infty} \)):
+\[
+\lim_{x \to \infty} \frac{x^m}{\ln(x)} = \lim_{x \to \infty} \frac{m x^{m-1}}{1/x} = \lim_{x \to \infty} m x^m = +\infty.
+\]
+\end{flushleft}
+
+\begin{center}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = center,
+        xlabel = \( x \),
+        ylabel = \( y \),
+        xmin = 1, xmax = 5,
+        ymin = 0, ymax = 100,
+        samples = 100,
+        domain = 1.1:5
+    ]
+    \addplot[blue, thick] {x^2/ln(x)};
+    \addplot[red, thick] {x^3/ln(x)};
+    \addplot[green!50!black, thick] {x^4/ln(x)};
+    \addlegendentry{\( y=\frac{x^2}{\ln(x)} \)}
+    \addlegendentry{\( y=\frac{x^3}{\ln(x)} \)}
+    \addlegendentry{\( y=\frac{x^4}{\ln(x)} \)}
+    \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\subsection{Demostraciones alternativas de límites}
+
+\subsubsection{Límite de \( \frac{e^x}{x^n} \) usando series}
+
+La función exponencial \( e^x \) tiene el siguiente desarrollo en serie alrededor de \( x = 0 \):
+\[
+e^x = \sum_{k=0}^\infty \frac{x^k}{k!} = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots + \frac{x^n}{n!} + \cdots
+\]
+Para \( x > 0 \), podemos truncar la serie y obtener una cota inferior:
+\[
+e^x > \frac{x^{n+1}}{(n+1)!} \quad \text{para todo } x > 0 \text{ y } n \geq 1.
+\]
+Por lo tanto:
+\[
+\frac{e^x}{x^n} > \frac{x}{{(n+1)}!} \quad \text{para todo } x > 0.
+\]
+Se sigue que:
+\[
+\lim_{x \to +\infty} \frac{e^x}{x^n} = +\infty.
+\]
+
+\subsubsection{Límite de \( \frac{x^m}{\ln(x)} \) usando cambio de variable}
+Para justificar \(\lim_{x \to +\infty} \frac{x^m}{\ln(x)} = +\infty\), usamos el cambio de variable \( t = \ln(x) \), lo que implica \( x = e^t \). Entonces:
+\[
+\frac{x^m}{\ln(x)} = \frac{(e^t)^m}{t} = \frac{e^{m t}}{t}.
+\]
+Cuando \( x \to +\infty \), \( t = \ln(x) \to +\infty \). Por lo tanto, el límite se transforma en:
+\[
+\lim_{t \to +\infty} \frac{e^{m t}}{t}.
+\]
+Este límite ya fue justificado en la sección anterior (es de la forma \( \frac{e^u}{u} \) con \( u = m t \)), y sabemos que:
+\[
+\lim_{t \to +\infty} \frac{e^{m t}}{t} = +\infty.
+\]
+Por lo tanto:
+\[
+\lim_{x \to +\infty} \frac{x^m}{\ln(x)} = +\infty.
+\]
 
 \subsection{Cálculo de límites clásicos}
 
@@ -970,6 +1440,244 @@ $$
 %
 %\subsubsection{Polinomios}
 El límite de un polinomio $ p(x) = a_nx^n + \dots + a_0 $ cuando $ x \to \infty $ depende del término dominante.
+
+%\subsection{Casos concretos clásicos}
+%\begin{ejemplo}
+%    Consideremos la función $f(x) = \frac{x^2 - 1}{x - 1}$. Observemos que $f$ no está definida en $x = 1$, pero podemos calcular su límite cuando $x \to 1$:
+%    $$
+%    \lim_{x \to 1} \frac{x^2 - 1}{x - 1} = \lim_{x \to 1} \frac{(x - 1)(x + 1)}{x - 1} = \lim_{x \to 1} (x + 1) = 2.
+%    $$
+%    Aquí, simplificamos la expresión algebraica para eliminar la indeterminación.
+%\end{ejemplo}
+
+\newpage
+
+\subsection{Continuidad}
+\paragraph{Definición formal}
+\begin{definicion}[Continuidad en un punto]
+    Sea $f: A \subseteq \mathbb{R} \to \mathbb{R}$ una función y $c \in A$. Decimos que $f$ es \textbf{continua en $c$} si:
+    $$
+    \lim_{x \to c} f(x) = f(c).
+    $$
+    Es decir, $f$ es continua en $c$ si el límite de $f(x)$ cuando $x \to c$ existe, es finito y coincide con $f(c)$.
+\end{definicion}
+
+\paragraph{Caracterización secuencial de la continuidad en \(\mathbb{R}\)}
+Sea \(f: A \subset \mathbb{R} \to \mathbb{R}\) una función y \(x_0 \in A\). Entonces, \(f\) es continua en \(x_0\) si y solo si para toda sucesión \(\{x_n\}\) en \(A\) que converge a \(x_0\), se cumple que la sucesión \(\{f(x_n)\}\) converge a \(f(x_0)\). Esto es equivalente a:
+\[
+\forall \{x_n\} \subset A \text{ tal que } \lim_{n \to \infty} x_n = x_0, \quad \lim_{n \to \infty} f(x_n) = f(x_0).
+\]
+Esta caracterización es una consecuencia directa de la equivalencia entre la definición \(\varepsilon\)-\(\delta\) de continuidad y la convergencia de sucesiones en \(\mathbb{R}\).
+
+\paragraph{Operaciones que preservan la continuidad}
+La continuidad se preserva bajo las siguientes operaciones fundamentales: la \textbf{suma}, \textbf{producto}, \textbf{cociente} (con denominador no nulo) y \textbf{composición} de funciones continuas. Además, si \(f\) es continua y \(n \in \mathbb{N}\), entonces \(\sqrt[n]{f}\) también es continua en su dominio. Estas propiedades permiten construir funciones más complejas a partir de funciones continuas básicas, garantizando su continuidad en todo su dominio.
+
+\paragraph{Funciones usuales continuas en \(\mathbb{R}\)}
+Las siguientes funciones son continuas en sus dominios naturales, lo que puede demostrarse utilizando las propiedades de continuidad de funciones elementales y teoremas básicos de análisis matemático:
+\begin{itemize}
+    \item \textbf{Funciones polinómicas}: \(P(x) = a_nx^n + a_{n-1}x^{n-1} + \cdots + a_1x + a_0\), definidas en \(\mathbb{R}\).
+    \item \textbf{Funciones trigonométricas}: \(\sin(x)\), \(\cos(x)\), \(\tan(x)\) y \(\cot(x)\), definidas en sus dominios naturales (ej. \(\tan(x)\) en \(\mathbb{R} \setminus \{\frac{\pi}{2} + k\pi : k \in \mathbb{Z}\}\)).
+    \item \textbf{Funciones exponenciales}: \(e^x\), definida en \(\mathbb{R}\).
+    \item \textbf{Funciones logaritmicas}: \(\ln(x)\), definida en \((0, \infty)\).
+    \item \textbf{Funciones racionales}: \(R(x) = \frac{P(x)}{Q(x)}\), donde \(P(x)\) y \(Q(x)\) son polinomios, definidas en \(\mathbb{R}\) excepto en las raíces de \(Q(x)\).
+\end{itemize}
+Todas estas funciones son continuas en sus respectivos dominios, ya que son composiciones o combinaciones de funciones continuas básicas y los teoremas de continuidad garantizan que la suma, producto, cociente y composición de funciones continuas también lo son.
+
+\paragraph{Ejemplos de funciones no continuas}
+\begin{itemize}
+    \item \textbf{Función de Heaviside (H):}
+    Definida como
+    \[
+    H(x) =
+    \begin{cases}
+    0 & \text{si } x < 0, \\
+    1 & \text{si } x \geq 0,
+    \end{cases}
+    \]
+    esta función presenta una \textbf{discontinuidad de salto} en \(x = 0\), ya que los límites laterales no coinciden: \(\lim_{x \to 0^-} H(x) = 0\) y \(\lim_{x \to 0^+} H(x) = 1\).
+
+    \item \textbf{Función de Riemann (o función de Dirichlet):}
+    Definida como
+    \[
+    f(x) =
+    \begin{cases}
+    1 & \text{si } x \in \mathbb{Q}, \\
+    0 & \text{si } x \notin \mathbb{Q},
+    \end{cases}
+    \]
+    esta función es \textbf{discontinua en todo punto} de \(\mathbb{R}\), ya que en cualquier \(x_0 \in \mathbb{R}\), los límites laterales no existen ni coinciden con \(f(x_0)\).
+\end{itemize}
+
+\paragraph{Teorema de Bolzano (valores intermedios)}
+\begin{teorema}[Teorema de Bolzano]
+    Sea $f: [a, b] \to \mathbb{R}$ una función continua en el intervalo cerrado $[a, b]$. Si $f(a)$ y $f(b)$ tienen signos opuestos (es decir, $f(a) \cdot f(b) < 0$), entonces existe al menos un $c \in (a, b)$ tal que $f(c) = 0$.
+\end{teorema}
+%\begin{proof}
+    La demostración se basa en el método de bisección. Consideremos el punto medio $m = \frac{a + b}{2}$. Si $f(m) = 0$, hemos terminado. Si no, $f(m)$ tiene el mismo signo que $f(a)$ o $f(b)$. Repetimos el proceso en el subintervalo correspondiente. Por el axioma de completez de los números reales, este proceso converge a un punto $c$ donde $f(c) = 0$.
+%\end{proof}
+
+\paragraph{Teorema de Brouwer (enunciado, demostración en 1D y ejemplo)}
+\begin{teorema}[Teorema de Brouwer]
+Sea $K \subset \mathbb{R}^n$ un conjunto compacto y convexo, y sea $f: K \to K$ una función continua. Entonces existe al menos un punto fijo para $f$, es decir, existe $x^* \in K$ tal que $f(x^*) = x^*$.
+\end{teorema}
+
+\paragraph{Demostración en 1D}
+En el caso unidimensional ($n=1$), el teorema se reduce a: Sea $K = [a, b] \subset \mathbb{R}$ y $f: [a, b] \to [a, b]$ continua. Entonces existe $x^* \in [a, b]$ tal que $f(x^*) = x^*$.
+\textbf{Demostración:}
+Consideremos la función $g(x) = f(x) - x$. Como $f$ es continua, $g$ es continua en $[a, b]$.
+Observamos que 
+$a\leq f(a) \leq b$, entonces
+\[
+g(a) = f(a) - a \geq 0.
+\]
+Adem\'as,
+$a\leq f(b) \leq b$, entonces
+\[
+g(b) = f(b) - b \leq 0.
+\]
+Luego, se aplica el teorema de los valores intermedios.
+
+\paragraph{Ejemplo}
+Sea $K = [0, 1]$ y $f(x) = \frac{x + 1}{2}$. Claramente, $f: [0, 1] \to [0, 1]$ es continua. La ecuación $f(x) = x$ tiene solución $x = 1$, que es el punto fijo buscado.
+
+\paragraph{Nota}
+El Teorema del Punto Fijo de Brouwer establece que cualquier función continua de un conjunto convexo y compacto en sí mismo tiene al menos un punto fijo. En términos de campos vectoriales, esto significa que en un dominio simplemente conexo y acotado, existe al menos un punto donde el campo vectorial se anula (un punto fijo).
+
+\paragraph{Ejemplo: Movimiento en una Taza de Café}
+Imagina una taza de café donde el líquido se mueve debido a la rotación de una cuchara. El campo vectorial que describe el movimiento del líquido en la superficie de la taza debe tener al menos un punto donde el líquido no se mueve (un punto fijo).
+
+\paragraph{Teorema de Weierstrass (o Teorema de los valores extremos)}
+\begin{teorema}[Teorema de Weierstrass]
+Si \(f: [a, b] \subset \mathbb{R} \to \mathbb{R}\) es una función continua definida en un intervalo cerrado y acotado \([a, b]\), entonces \(f\) alcanza su máximo absoluto y su mínimo absoluto en \([a, b]\). Es decir, existen puntos \(x_{\max}, x_{\min} \in [a, b]\) tales que:
+\[
+f(x_{\max}) \geq f(x) \quad \forall x \in [a, b], \quad \text{y} \quad f(x_{\min}) \leq f(x) \quad \forall x \in [a, b].
+\]
+\end{teorema}
+
+
+\paragraph{Ejemplo}
+Consideremos la función \(f(x) = x^2 - 2x + 1\) definida en el intervalo \([0, 3]\). Esta función es continua en \([0, 3]\), por lo que, según el teorema de Weierstrass, debe alcanzar un máximo y un mínimo en este intervalo. Efectivamente, \(f\) alcanza su mínimo en \(x = 1\) (donde \(f(1) = 0\)) y su máximo en \(x = 3\) (\(f(3) = 4\)).
+
+\subsection{Método de dicotomía para calcular un cero}
+El teorema de Bolzano garantiza la existencia de un cero, pero no proporciona un método para encontrarlo. El \textbf{método de dicotomía} (o bisección) es un algoritmo iterativo que permite aproximar un cero de una función continua en un intervalo $[a, b]$ donde $f(a) \cdot f(b) < 0$.
+
+\subsubsection{Algoritmo}
+\begin{enumerate}
+    \item \textbf{Inicialización:} Elige $a$ y $b$ tales que $f(a) \cdot f(b) < 0$.
+    \item \textbf{Iteración:}
+          \begin{itemize}
+              \item Calcula el punto medio $m = \frac{a + b}{2}$.
+              \item Si $f(m) = 0$, entonces $m$ es un cero de $f$.
+              \item Si $f(a) \cdot f(m) < 0$, entonces el cero está en $[a, m]$. Actualiza $b = m$.
+              \item Si $f(m) \cdot f(b) < 0$, entonces el cero está en $[m, b]$. Actualiza $a = m$.
+          \end{itemize}
+    \item \textbf{Repetición:} Repite el paso 2 hasta que $|b - a| < \varepsilon$, donde $\varepsilon$ es la precisión deseada.
+\end{enumerate}
+
+\subsubsection{Ejemplo}
+Consideremos $f(x) = x^3 - x - 1$ en el intervalo $[1, 2]$. Claramente, $f(1) = -1$ y $f(2) = 5$, por lo que $f(1) \cdot f(2) < 0$. Aplicando el método de bisección:
+\begin{itemize}
+    \item Primera iteración: $m = 1.5$, $f(1.5) = 0.875$. El cero está en $[1, 1.5]$.
+    \item Segunda iteración: $m = 1.25$, $f(1.25) = -0.234$. El cero está en $[1.25, 1.5]$.
+    \item Continuamos hasta alcanzar la precisión deseada.
+\end{itemize}
+
+%\newpage
+
+
+\section*{Interpolación de Lagrange}
+
+La \textbf{interpolación de Lagrange} es un método para construir un polinomio \( P_n(x) \) de grado \( \leq n \) que pase exactamente por \( n+1 \) puntos dados \( (x_0, y_0), (x_1, y_1), \dots, (x_n, y_n) \). El polinomio se expresa como:
+
+\[
+P_n(x) = \sum_{i=0}^n y_i \cdot L_i(x),
+\]
+
+donde \( L_i(x) \) son los \textbf{polinomios de Lagrange}, definidos por:
+
+\[
+L_i(x) = \prod_{\substack{j=0 \\ j \neq i}}^n \frac{x - x_j}{x_i - x_j}.
+\]
+
+\begin{flushleft}
+\textbf{Nota sobre las \textit{divided differences}:}
+Las \textit{divided differences} son una herramienta computacional para calcular los coeficientes del polinomio de Lagrange de manera eficiente. Se definen recursivamente y permiten construir el polinomio en \( O(n^2) \) operaciones.
+\end{flushleft}
+
+\begin{flushleft}
+\textbf{Ejemplo detallado en criollo:}
+Supongamos que tenemos los puntos \( (1, 3) \), \( (2, 5) \) y \( (3, 2) \). El polinomio de Lagrange que pasa por estos puntos es:
+\[
+P_2(x) = 3 \cdot \frac{(x-2)(x-3)}{(1-2)(1-3)} + 5 \cdot \frac{(x-1)(x-3)}{(2-1)(2-3)} + 2 \cdot \frac{(x-1)(x-2)}{(3-1)(3-2)}.
+\]
+Simplificando, obtenemos \( P_2(x) = 2x^2 - 7x + 8 \).
+\end{flushleft}
+
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = center,
+        xlabel = \( x \),
+        ylabel = \( y \),
+        xmin = 0, xmax = 4,
+        ymin = 0, ymax = 6,
+        samples = 100,
+        domain = 1:3
+    ]
+    \addplot[blue, thick] {2*x^2 - 7*x + 8};
+    \addplot[only marks, mark=*, red] coordinates {(1, 3) (2, 5) (3, 2)};
+    \addlegendentry{\( P_2(x) \)}
+    \addlegendentry{Datos}
+    \end{axis}
+\end{tikzpicture}
+
+---
+
+\section*{Interpolación de Hermite}
+
+La \textbf{interpolación de Hermite} es una generalización de la interpolación de Lagrange que, además de interpolar los valores de la función en los puntos dados, también interpola las derivadas en esos puntos. Esto permite construir un polinomio de grado menor que en el caso de Lagrange para la misma cantidad de puntos.
+
+Si tenemos los puntos \( (x_0, y_0), (x_1, y_1), \dots, (x_n, y_n) \) y las derivadas \( y_0', y_1', \dots, y_n' \), el polinomio de Hermite \( H_{2n+1}(x) \) de grado \( \leq 2n+1 \) se construye usando los polinomios de base de Hermite \( H_i(x) \) y \( \tilde{H}_i(x) \), definidos como:
+
+\[
+H_i(x) = [1 - 2(x - x_i)L_i'(x_i)] \cdot L_i^2(x),
+\]
+\[
+\tilde{H}_i(x) = (x - x_i) \cdot L_i^2(x),
+\]
+
+donde \( L_i(x) \) son los polinomios de Lagrange. El polinomio de Hermite es:
+
+\[
+H_{2n+1}(x) = \sum_{i=0}^n \left[ y_i H_i(x) + y_i' \tilde{H}_i(x) \right].
+\]
+
+\begin{flushleft}
+\textbf{Ejemplo detallado en criollo:}
+Supongamos que queremos interpolar los puntos \( (1, 3) \) con derivada \( y' = 2 \), y \( (2, 5) \) con derivada \( y' = 1 \). El polinomio de Hermite \( H_3(x) \) que interpola estos datos es:
+\[
+H_3(x) = 3H_0(x) + 2\tilde{H}_0(x) + 5H_1(x) + 1\tilde{H}_1(x).
+\]
+Calculando los polinomios de base y simplificando, obtenemos \( H_3(x) \).
+\end{flushleft}
+
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = center,
+        xlabel = \( x \),
+        ylabel = \( y \),
+        xmin = 0, xmax = 4,
+        ymin = 0, ymax = 6,
+        samples = 100,
+        domain = 1:2
+    ]
+    \addplot[blue, thick] {3 + 2*(x-1) + 0.5*(x-1)^2 - (x-1)^2*(x-2) + 5*(x-2) + 1*(x-2)^2 - 0.5*(x-1)*(x-2)^2};
+    \addplot[only marks, mark=*, red] coordinates {(1, 3) (2, 5)};
+    \addplot[only marks, mark=*, green] coordinates {(1, 3+2*0.1) (2, 5+1*0.1)};
+    \addlegendentry{\( H_3(x) \)}
+    \addlegendentry{Datos}
+    \addlegendentry{Datos con derivada}
+    \end{axis}
+\end{tikzpicture}
 
 \begin{center}
 $\star$
@@ -1352,6 +2060,256 @@ $\star$
 
 \newpage
 
+\section{M\'as sobre continuidad}
+
+%\usepackage{parskip}
+
+\subsection{Introducción}
+La noción de continuidad ha evolucionado a lo largo de los siglos, pasando de una intuición geométrica a una formalización rigurosa. 
+
+\subsection{Desde el siglo XVI hasta el siglo XVIII}
+
+\subsubsection{Intuición geométrica y cálculos infinitesimales}
+\begin{itemize}
+    \item \textbf{Siglo XVI--XVII}: Matemáticos como \textbf{Kepler} y \textbf{Galileo} estudiaron curvas continuas desde un enfoque geométrico, sin una definición formal. Kepler, por ejemplo, analizó el movimiento planetario como un proceso continuo.
+    \item \textbf{Newton (1687)} y \textbf{Leibniz (1684)} introdujeron el concepto de límite y funciones continuas en el contexto del cálculo infinitesimal. Leibniz usó el término ``función continua'' para describir curvas sin saltos bruscos, aunque sin una definición rigurosa.
+    \item \textbf{Euler (1748)} definió una función como una expresión analítica \( y = f(x) \), y consideró que una función era continua si podía representarse por una sola expresión algebraica. Esta definición excluía funciones con discontinuidades evitables.
+\end{itemize}
+
+\subsubsection{Definición en términos de límites}
+\begin{itemize}
+    \item \textbf{D'Alembert (1754)} y \textbf{Lagrange (1797)} intentaron formalizar la continuidad usando límites. 
+\end{itemize}
+
+\begin{quotation}
+\textbf{d'Alembert (siglo XVIII)} propuso una visión intuitiva de la continuidad, asociándola a funciones representables por una sola expresión analítica. Para él, una función era continua si su gráfica no presentaba saltos bruscos y podía describirse sin interrupciones. Aunque no formalizó el concepto en términos de límites, su enfoque influyó en el desarrollo posterior del análisis. Consideraba que las funciones definidas a trozos o con discontinuidades evitables no eran continuas, ya que no podían expresarse mediante una sola fórmula. Su idea se basaba en la idea de "suavidad" de la curva, donde la continuidad implicaba que la función no cambiaba abruptamente en ningún punto. 
+
+\textbf{Lagrange (siglo XVIII--XIX)} avanzó un paso más al vincular la continuidad con la representación de funciones mediante series de potencias. Según Lagrange, una función era continua si podía expandirse en serie de Taylor alrededor de cada punto de su dominio. Esta idea permitía aproximar localmente la función por polinomios, garantizando la ausencia de saltos o discontinuidades en un entorno del punto. Su enfoque excluía funciones con discontinuidades evitables, ya que estas no admitían una representación analítica única. Aunque Lagrange no introdujo la notación moderna de límites, su definición fue más cercana a la idea de continuidad como aproximación local. Su trabajo influyó en el desarrollo del análisis matemático y en la posterior formalización de Cauchy y Weierstrass.
+\end{quotation}
+
+\subsection{Desde el siglo XIX: La formalización rigurosa}
+
+\subsubsection{Definición de Cauchy}
+\begin{itemize}
+    \item \textbf{Cauchy (1821)} propuso la primera definición rigurosa de continuidad: una función \( f \) es continua en un punto \( a \) si, para cualquier \( \epsilon > 0 \), existe un \( \delta > 0 \) tal que \( |f(x) - f(a)| < \epsilon \) siempre que \( |x - a| < \delta \). Esta definición es esencialmente la que conocemos hoy, pero sin el uso explícito de la notación moderna.
+\end{itemize}
+
+\subsubsection{Definición de Weierstrass (1872)}
+\begin{itemize}
+    \item \textbf{Weierstrass} formalizó la definición epsilon-delta de continuidad en términos de límites, eliminando las ambigüedades de las definiciones anteriores. Su enfoque se basa en: 
+    {Una función} f {es continua en} a {si} 
+    \[
+    \forall \epsilon > 0, \exists \delta > 0 \text{ tal que } |x - a| < \delta \implies |f(x) - f(a)| < \epsilon.
+    \]
+\end{itemize}
+
+\subsubsection{Contribuciones de Heine y Dedekind}
+\begin{itemize}
+    \item \textbf{Heine (1872)} introdujo el concepto de continuidad uniforme, extendiendo la idea de continuidad a conjuntos.
+    \item \textbf{Dedekind (1872)} definió los números reales como cortes en el conjunto de los racionales, lo que permitió una base sólida para la continuidad en el análisis real.
+\end{itemize}
+
+\subsection{Desde el siglo XX}
+
+\subsubsection{Definición topológica}
+\begin{itemize}
+    \item \textbf{Hausdorff (1914)} definió la continuidad en términos de topología: una función es continua si la preimagen de todo conjunto abierto es un conjunto abierto. Esta definición generaliza el concepto de continuidad a espacios topológicos arbitrarios y es la que se usa en la matemática moderna.
+    \item \textbf{Bourbaki (1940--1960)} consolidó la definición de continuidad en el contexto de la teoría de conjuntos y la topología, estandarizando su uso en la matemática abstracta.
+\end{itemize}
+
+\subsubsection{Definiciones modernas y generalizaciones}
+\begin{itemize}
+    \item \textbf{Análisis funcional}: La continuidad se extiende a funciones entre espacios vectoriales topológicos, donde se estudian propiedades como la continuidad lineal y la continuidad débil.
+    \item \textbf{Teoría de categorías}: La continuidad se define en términos de funtores que preservan límites, ampliando el concepto a contextos algebraicos y geométricos.
+    \item \textbf{Matemática computacional}: Se desarrollan algoritmos para verificar la continuidad de funciones definidas por computadora, especialmente en contextos numéricos y de optimización.
+\end{itemize}
+
+\section{A\'un m\'as sobre continuidad}
+
+\subsection{Funciones Lipschitz}
+
+\begin{definicion}[Función Lipschitz]
+Una función \( f: D \subseteq \mathbb{R} \to \mathbb{R} \) se dice \textbf{Lipschitziana} (o que satisface una condición de Lipschitz) si existe una constante \( L \geq 0 \) tal que para todo \( x, y \in D \),
+\[
+|f(x) - f(y)| \leq L |x - y|.
+\]
+La constante \( L \) se denomina \textbf{constante de Lipschitz} de \( f \). Si \( f \) es Lipschitziana, se escribe \( f \in \text{Lip}(D) \).
+\end{definicion}
+
+\noindent
+\textbf{Ejemplos:}
+\begin{itemize}
+    \item \textbf{Función identidad:} \( f(x) = x \) en \( \mathbb{R} \) es Lipschitziana con \( L = 1 \).
+    \item \textbf{Funciones lineales:} Si \( f(x) = ax + b \), entonces \( f \) es Lipschitziana con \( L = |a| \).
+    \item \textbf{Funciones con derivada acotada:} Si \( f: \mathbb{R} \to \mathbb{R} \) es diferenciable y \( |f'(x)| \leq L \) para todo \( x \), entonces \( f \) es Lipschitziana con constante \( L \).
+\end{itemize}
+
+\noindent
+\textbf{Ejemplos de funciones continuas no Lipschitzianas:}
+\begin{itemize}
+    \item \textbf{Raíz cuadrada:} \( f(x) = \sqrt{x} \) en \( [0,1] \) no es Lipschitziana. \item \textbf{Función cuadrática:} \( f(x) = x^2 \) en \( \mathbb{R} \) no es Lipschitziana global.
+    \item \textbf{Hiperbólica:} \( f(x) = \frac{1}{x} \) en \( (0,1) \) no es Lipschitziana.
+\end{itemize}
+
+\noindent
+\textbf{Propiedades importantes:}
+\begin{enumerate}
+    \item \textbf{Linealidad:} La suma de funciones Lipschitzianas y el producto por escalares son Lipschitzianas.
+    \item \textbf{Composición:} Si \( f \in \text{Lip}(D) \) y \( g \in \text{Lip}(f(D)) \), entonces \( g \circ f \in \text{Lip}(D) \).
+    \item \textbf{Acotación de derivadas:} Si \( f \) es diferenciable y Lipschitziana, entonces \( \|f'(x)\| \leq L \) para todo \( x \).
+    \item \textbf{Relación con continuidad:} Toda función Lipschitziana es uniformemente continua. Sin embargo, el recíproco no es cierto (ejemplo: \( f(x) = \sqrt{x} \) en \( [0,1] \)).
+\end{enumerate}
+
+\begin{teorema}[Teorema de Rademacher]
+Si \( f: \mathbb{R} \to \mathbb{R} \) es Lipschitziana, entonces \( f \) es diferenciable casi en todas partes (en el sentido de Lebesgue). Es decir, existe un conjunto \( E \subseteq \mathbb{R}\) de medida nula tal que \( f \) es diferenciable en todo \( x \in \mathbb{R} \setminus E \).
+\end{teorema}
+
+\noindent
+\textbf{Vínculo con la continuidad:}
+La condición de Lipschitz implica continuidad uniforme, pero no al revés. Por ejemplo, la función \( f(x) = x \sin(x) \) es continua y uniformemente continua en \( \mathbb{R} \), pero no es Lipschitziana.
+
+\subsection{Stone-Weierstrass}
+
+%\newtheorem{teorema}{Teorema}[section]
+%\newtheorem{ejemplo}{Ejemplo}[section]
+
+En análisis matemático, las funciones continuas sobre un intervalo cerrado y acotado pueden definirse como la \textbf{clausura} (para una cierta norma) de un espacio vectorial de funciones "simples" (polinomios, funciones trigonométricas, etc.). Esto es el corazón del \textbf{teorema de Stone-Weierstrass}, que generaliza el clásico teorema de aproximación de Weierstrass. A continuación, desarrollamos este concepto.
+
+%\section{Teorema de Stone-Weierstrass}
+
+\paragraph{Enunciado formal}
+Sea \( I \subset \mathbb{R} \) un intervalo cerrado y acotado, y sea \( C(I) \) el espacio vectorial de las funciones continuas \( f: I \to \mathbb{R} \). Sea \( V \subset C(I) \) un subespacio vectorial que satisface las siguientes condiciones:
+
+\begin{enumerate}
+    \item \textbf{Separación de puntos}: Para todo \( x, y \in I \) con \( x \neq y \), existe \( f \in V \) tal que \( f(x) \neq f(y) \).
+    \item \textbf{Contiene constantes}: La función constante \( 1 \) pertenece a \( V \).
+    \item \textbf{Estabilidad por multiplicación}: Si \( f, g \in V \), entonces \( f \cdot g \in V \).
+\end{enumerate}
+
+Entonces, \( V \) es \textbf{denso} en \( C(I) \) para la norma uniforme \( \| \cdot \|_\infty \), es decir:
+\[
+\overline{V} = C(I),
+\]
+donde \( \overline{V} \) denota la clausura de \( V \) en \( C(I) \) con respecto a la norma uniforme:
+\[
+\|f\|_\infty = \sup_{x \in I} |f(x)|.
+\]
+
+\begin{proof}
+Ver \cite{Stone1937}.
+\end{proof}
+
+\paragraph{Interpretación}
+Esto significa que \textbf{cualquier función continua en \( I \) puede aproximarse uniformemente por funciones del subespacio \( V \)}. La norma uniforme \( \| \cdot \|_\infty \) garantiza que la aproximación sea "buena" en todo el intervalo, no solo en puntos aislados.
+
+\paragraph{Ejemplos de subespacios \( V \)}
+
+\paragraph{Polinomios reales: \( V = \mathbb{R}[X] \)}
+El espacio vectorial de los polinomios reales:
+\[
+V = \mathbb{R}[X] = \left\{ \sum_{k=0}^n a_k x^k \mid n \in \mathbb{N}, a_k \in \mathbb{R} \right\}.
+\]
+- \textbf{Separación de puntos}: La función \( x \mapsto x \) separa puntos.
+- \textbf{Contiene constantes}: \( 1 \in \mathbb{R}[X] \).
+- \textbf{Estabilidad por multiplicación}: El producto de dos polinomios es un polinomio.
+
+\textbf{Resultado}: Por el teorema de Stone-Weierstrass,
+\[
+\overline{\mathbb{R}[X]} = C([a, b]).
+\]
+Esto es el \textbf{teorema de aproximación de Weierstrass} (1885): cualquier función continua en \([a, b]\) puede aproximarse uniformemente por una sucesión de polinomios.
+
+\paragraph{Otros ejemplos}
+\begin{itemize}
+    \item \textbf{Funciones trigonométricas}: Sea \( V = \text{Vect}\{1, \sin(nx), \cos(nx) \mid n \in \mathbb{N}\} \). Si \( I = [0, 2\pi] \), entonces \( \overline{V} = C([0, 2\pi]) \) (serie de Fourier).
+\end{itemize}
+
+
+\paragraph{Norma considerada: norma uniforme \( \| \cdot \|_\infty \)}
+
+La norma uniforme se define como:
+\[
+\|f\|_\infty = \sup_{x \in I} |f(x)|.
+\]
+La convergencia en esta norma es la \textbf{convergencia uniforme}. Esto es crucial porque:
+\begin{itemize}
+    \item Preserva la continuidad: si \( f_n \to f \) uniformemente y cada \( f_n \) es continua, entonces \( f \) es continua.
+    \item Es la norma natural para muchos problemas de aproximación.
+\end{itemize}
+
+\paragraph{Ejemplo detallado: Aproximación de \( f(x) = |x| \) en \([-1, 1]\) por polinomios}
+
+Queremos aproximar la función \( f(x) = |x| \) en el intervalo \([-1, 1]\) por una sucesión de polinomios \( P_n(x) \) de grado \( n \), de modo que:
+\[
+\lim_{n \to \infty} \|f - P_n\|_\infty = 0.
+\]
+
+\paragraph{Polinomios de Bernstein}
+Los \textbf{polinomios de Bernstein} proporcionan una construcción explícita de tal aproximación. Para una función \( f \) continua en \([0, 1]\), los polinomios de Bernstein de grado \( n \) se definen como:
+\[
+B_n(f)(x) = \sum_{k=0}^n f\left(\frac{k}{n}\right) \binom{n}{k} x^k (1-x)^{n-k}.
+\]
+Para nuestro caso, adaptamos el intervalo a \([-1, 1]\) usando la transformación lineal \( x \mapsto \frac{x+1}{2} \).
+
+\begin{ejemplo}
+Consideremos \( f(x) = |x| \) en \([-1, 1]\). Usamos los polinomios de Bernstein adaptados:
+\[
+B_n(f)(x) = \sum_{k=0}^n \left| 2 \cdot \frac{k}{n} - 1 \right| \binom{n}{k} \left( \frac{x+1}{2} \right)^k \left( 1 - \frac{x+1}{2} \right)^{n-k}.
+\]
+Para \( n = 5 \), obtenemos:
+\[
+B_5(f)(x) = 0.2 \cdot (1 - x)^5 + 0.6 \cdot x(1 - x)^4 + 1.0 \cdot x^2(1 - x)^3 + 1.0 \cdot x^3(1 - x)^2 + 0.6 \cdot x^4(1 - x) + 0.2 \cdot x^5.
+\]
+La siguiente tabla muestra los valores de \( B_5(f)(x) \) y \( f(x) \) en algunos puntos de \([-1, 1]\):
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\( x \) & \( f(x) = |x| \) & \( B_5(f)(x) \) \\ \hline
+-1.0 & 1.0 & 1.0 \\ \hline
+-0.5 & 0.5 & 0.499 \\ \hline
+0.0 & 0.0 & 0.016 \\ \hline
+0.5 & 0.5 & 0.499 \\ \hline
+1.0 & 1.0 & 1.0 \\ \hline
+\end{tabular}
+\caption{Comparación entre \( f(x) \) y \( B_5(f)(x) \) para \( n = 5 \).}
+\end{table}
+
+Para \( n \) grande, \( B_n(f)(x) \) converge uniformemente a \( f(x) \). Por ejemplo, con \( n = 100 \), la aproximación es casi perfecta en todo el intervalo.
+\end{ejemplo}
+
+\paragraph{Interpretación}
+Este ejemplo ilustra cómo los polinomios de Bernstein (que son funciones simples) pueden aproximar una función continua no diferenciable en el punto \( x = 0 \). La convergencia es uniforme, lo que garantiza que la aproximación sea buena en todo el intervalo.
+
+\paragraph{Resumen histórico}
+
+\begin{itemize}
+    \item \textbf{1821}: Cauchy introduce la definición de continuidad usando límites.
+    \item \textbf{1872}: Weierstrass define la continuidad en términos de límites funcionales.
+    \item \textbf{1885}: Weierstrass demuestra que cualquier función continua en \([a, b]\) puede aproximarse por polinomios (teorema de aproximación de Weierstrass).
+    \item \textbf{1937}: Stone generaliza el resultado a álgebras de funciones (teorema de Stone-Weierstrass).
+    \item \textbf{Siglo XX}: Desarrollo de la teoría de aproximación, análisis funcional y aplicaciones en física e ingeniería.
+\end{itemize}
+
+\paragraph{Conclusión}
+
+El teorema de Stone-Weierstrass establece que el espacio de las funciones continuas sobre un intervalo cerrado y acotado puede describirse como la clausura (para la norma uniforme) de un espacio vectorial de funciones simples, siempre que este espacio satisfaga ciertas condiciones algebraicas (separación de puntos, contenga constantes y sea estable por multiplicación).
+
+Este resultado es fundamental en análisis matemático, análisis numérico y muchas aplicaciones prácticas, como la interpolación de datos, la compresión de señales y la resolución de ecuaciones diferenciales.
+
+{\footnotesize
+\begin{thebibliography}{9}
+\bibitem{Stone1937}
+Stone, M. H. (1937). \textit{Applications of the theory of Boolean rings to general topology}. Transactions of the American Mathematical Society, 41(3), 375-481.
+
+\bibitem{Weierstrass1885}
+Weierstrass, K. (1885). \textit{Über die analytische Darstellbarkeit sogenannter willkürlicher Funktionen einer reellen Veränderlichen}. Sitzungsberichte der Königlich Preussischen Akademie der Wissenschaften zu Berlin, 1, 633-639.
+
+\bibitem{Rudin1976}
+Rudin, W. (1976). \textit{Principles of Mathematical Analysis} (3rd ed.). McGraw-Hill.
+\end{thebibliography}
+}
 \section{Sugerencias de lecturas}
 
 La selección de obras que se presenta a continuación abarca desde reflexiones sobre la ciencia y las matemáticas hasta exploraciones filosóficas y neurocientíficas. Cada texto ha sido elegido por su capacidad para inspirar, desafiar y ampliar la comprensión de temas fundamentales en sus respectivos campos. Las obras están ordenadas alfabéticamente por autor para facilitar su consulta.
