@@ -73,7 +73,7 @@
 
 \newcommand{\fc}[1]{{\color{blue}{#1}}}
 
-\title{Cálculo para física -- versión 1.0} 
+\title{Cálculo para física -- versión 1.02} 
 \author{Franz Chouly}
 \date{\today}
 
@@ -82,36 +82,6 @@
 \maketitle
 
 \tableofcontents
-
-%\documentclass[12pt, a4paper]{article}
-%\usepackage[utf8]{inputenc}
-%\usepackage[spanish]{babel}
-%\usepackage{amsmath, amssymb, amsthm}
-%\usepackage{graphicx}
-%\usepackage{enumitem}
-%\usepackage{mathrsfs}
-%\usepackage{float}
-%\usepackage{hyperref}
-%\usepackage{booktabs} % Para tablas elegantes
-%\usepackage{parskip}  % Para espaciado entre párrafos
-
-% --- Configuración de estilo ---
-%\setlength{\parindent}{0pt}
-%\setlength{\parskip}{1em}
-%\renewcommand{\baselinestretch}{1.2} % Interlineado
-
-% --- Comandos personalizados ---
-%\newcommand{\R}{\mathbb{R}}
-%\newcommand{\C}{\mathbb{C}}
-%\newcommand{\N}{\mathbb{N}}
-%\newcommand{\dom}{\text{dom}}
-
-%\title{\textbf{Apuntes de Funciones}}
-%\author{Franz C.}
-%\date{\today}
-
-%\begin{document}
-%\maketitle
 
 \newpage
 
@@ -1585,103 +1555,62 @@ Consideremos $f(x) = x^3 - x - 1$ en el intervalo $[1, 2]$. Claramente, $f(1) = 
 %\newpage
 
 
-\section*{Interpolación de Lagrange}
+\subsection{Interpolación de Lagrange}
 
 La \textbf{interpolación de Lagrange} es un método para construir un polinomio \( P_n(x) \) de grado \( \leq n \) que pase exactamente por \( n+1 \) puntos dados \( (x_0, y_0), (x_1, y_1), \dots, (x_n, y_n) \). El polinomio se expresa como:
-
 \[
 P_n(x) = \sum_{i=0}^n y_i \cdot L_i(x),
 \]
-
 donde \( L_i(x) \) son los \textbf{polinomios de Lagrange}, definidos por:
-
 \[
 L_i(x) = \prod_{\substack{j=0 \\ j \neq i}}^n \frac{x - x_j}{x_i - x_j}.
 \]
 
-\begin{flushleft}
+%\begin{flushleft}
 \textbf{Nota sobre las \textit{divided differences}:}
 Las \textit{divided differences} son una herramienta computacional para calcular los coeficientes del polinomio de Lagrange de manera eficiente. Se definen recursivamente y permiten construir el polinomio en \( O(n^2) \) operaciones.
-\end{flushleft}
+%\end{flushleft}
 
 \begin{flushleft}
-\textbf{Ejemplo detallado en criollo:}
-Supongamos que tenemos los puntos \( (1, 3) \), \( (2, 5) \) y \( (3, 2) \). El polinomio de Lagrange que pasa por estos puntos es:
+\textbf{Ejemplo detallado:}
+Supongamos que tenemos los puntos \( (1, 3) \), \( (2, 2) \) y \( (3, 5) \). El polinomio de Lagrange que pasa por estos puntos es:
 \[
-P_2(x) = 3 \cdot \frac{(x-2)(x-3)}{(1-2)(1-3)} + 5 \cdot \frac{(x-1)(x-3)}{(2-1)(2-3)} + 2 \cdot \frac{(x-1)(x-2)}{(3-1)(3-2)}.
+P_2(x) = 3 \cdot \frac{(x-2)(x-3)}{(1-2)(1-3)} + 2 \cdot \frac{(x-1)(x-3)}{(2-1)(2-3)} + 5 \cdot \frac{(x-1)(x-2)}{(3-1)(3-2)}.
 \]
 Simplificando, obtenemos \( P_2(x) = 2x^2 - 7x + 8 \).
 \end{flushleft}
 
+\begin{center}
 \begin{tikzpicture}
     \begin{axis}[
         axis lines = center,
         xlabel = \( x \),
         ylabel = \( y \),
-        xmin = 0, xmax = 4,
+        xmin = 0, xmax = 6,
         ymin = 0, ymax = 6,
         samples = 100,
         domain = 1:3
     ]
     \addplot[blue, thick] {2*x^2 - 7*x + 8};
-    \addplot[only marks, mark=*, red] coordinates {(1, 3) (2, 5) (3, 2)};
+    \addplot[only marks, mark=*, red] coordinates {(1, 3) (2, 2) (3, 5)};
     \addlegendentry{\( P_2(x) \)}
     \addlegendentry{Datos}
     \end{axis}
 \end{tikzpicture}
+\end{center}
 
----
+\paragraph{Fenómeno de Runge}
+El fenómeno de Runge es un problema de oscilación en los bordes que ocurre al interpolar una función suave con polinomios de alto grado en nodos equiespaciados. Este fenómeno fue descubierto por Carl David Tolmé Runge en 1901 y muestra que, aunque el error global de interpolación disminuye al aumentar el grado del polinomio, las oscilaciones cerca de los bordes pueden volverse incontrolables.
 
-\section*{Interpolación de Hermite}
+\paragraph{Interés de la Interpolación de Lagrange en Elementos Finitos}
+La \textbf{interpolación de Lagrange} es fundamental en los métodos de elementos finitos (EF) porque permite aproximar una función desconocida en un dominio discretizado mediante polinomios locales definidos sobre cada elemento. Gracias a esta interpolación, es posible representar la solución de una ecuación diferencial parcial (EDP) con precisión y flexibilidad, utilizando funciones base (los polinomios de Lagrange) que valen 1 en un nodo y 0 en todos los demás. Esto garantiza la continuidad de la solución aproximada entre los elementos, esencial para la estabilidad y convergencia de los métodos EF. Además, la interpolación de Lagrange facilita la construcción de espacios funcionales adecuados, adaptados a la regularidad del problema y a la geometría del dominio, lo que simplifica tanto la implementación numérica como el análisis teórico de los esquemas EF.
 
-La \textbf{interpolación de Hermite} es una generalización de la interpolación de Lagrange que, además de interpolar los valores de la función en los puntos dados, también interpola las derivadas en esos puntos. Esto permite construir un polinomio de grado menor que en el caso de Lagrange para la misma cantidad de puntos.
-
-Si tenemos los puntos \( (x_0, y_0), (x_1, y_1), \dots, (x_n, y_n) \) y las derivadas \( y_0', y_1', \dots, y_n' \), el polinomio de Hermite \( H_{2n+1}(x) \) de grado \( \leq 2n+1 \) se construye usando los polinomios de base de Hermite \( H_i(x) \) y \( \tilde{H}_i(x) \), definidos como:
-
-\[
-H_i(x) = [1 - 2(x - x_i)L_i'(x_i)] \cdot L_i^2(x),
-\]
-\[
-\tilde{H}_i(x) = (x - x_i) \cdot L_i^2(x),
-\]
-
-donde \( L_i(x) \) son los polinomios de Lagrange. El polinomio de Hermite es:
-
-\[
-H_{2n+1}(x) = \sum_{i=0}^n \left[ y_i H_i(x) + y_i' \tilde{H}_i(x) \right].
-\]
-
-\begin{flushleft}
-\textbf{Ejemplo detallado en criollo:}
-Supongamos que queremos interpolar los puntos \( (1, 3) \) con derivada \( y' = 2 \), y \( (2, 5) \) con derivada \( y' = 1 \). El polinomio de Hermite \( H_3(x) \) que interpola estos datos es:
-\[
-H_3(x) = 3H_0(x) + 2\tilde{H}_0(x) + 5H_1(x) + 1\tilde{H}_1(x).
-\]
-Calculando los polinomios de base y simplificando, obtenemos \( H_3(x) \).
-\end{flushleft}
-
-\begin{tikzpicture}
-    \begin{axis}[
-        axis lines = center,
-        xlabel = \( x \),
-        ylabel = \( y \),
-        xmin = 0, xmax = 4,
-        ymin = 0, ymax = 6,
-        samples = 100,
-        domain = 1:2
-    ]
-    \addplot[blue, thick] {3 + 2*(x-1) + 0.5*(x-1)^2 - (x-1)^2*(x-2) + 5*(x-2) + 1*(x-2)^2 - 0.5*(x-1)*(x-2)^2};
-    \addplot[only marks, mark=*, red] coordinates {(1, 3) (2, 5)};
-    \addplot[only marks, mark=*, green] coordinates {(1, 3+2*0.1) (2, 5+1*0.1)};
-    \addlegendentry{\( H_3(x) \)}
-    \addlegendentry{Datos}
-    \addlegendentry{Datos con derivada}
-    \end{axis}
-\end{tikzpicture}
+\paragraph{Referencia}
+Para más detalles, consulta el libro *An Introduction to Numerical Analysis* de Endre Süli y David F. Mayers.
 
 \begin{center}
 $\star$
-Versión 1.0 -- 12 Marzo 26
+Versión 1.1 -- 30 Marzo 26
 $\star$
 \end{center}
 
@@ -1693,7 +1622,26 @@ Primero presentamos conceptos básicos, y luego unos teoremas importantes.
 
 \subsection{Definición y concepto de derivada}
 \subsubsection{Introducción}
-La \textbf{derivada} de una función es uno de los conceptos fundamentales del análisis matemático. Representa la tasa de variación instantánea de una función en un punto y es la herramienta central del cálculo diferencial. Geométricamente, la derivada en un punto es la pendiente de la recta tangente a la curva en ese punto.
+La \textbf{derivada} de una función es uno de los conceptos fundamentales del análisis. Representa la tasa de variación instantánea de una función en un punto y es la herramienta central del cálculo diferencial. Geométricamente, la derivada en un punto es la pendiente de la recta tangente a la curva en ese punto.
+
+Primero, notamos lo siguiente: cuando se estudia el comportamiento de una función en un entorno donde el incremento $\Delta x$ es pequeño, las potencias de $\Delta x$ se vuelven aún más insignificantes. En particular, términos como $(\Delta x)^2$, $(\Delta x)^3$, o superiores, pueden ser despreciados en el análisis, ya que su contribución al resultado final es mínima.
+
+Por ejemplo, si $\Delta x = 0.1$, entonces $(\Delta x)^2 = 0.01$, $(\Delta x)^3 = 0.001$, y así sucesivamente. Estas magnitudes son tan reducidas que, en muchos contextos prácticos, no afectan significativamente el cálculo. 
+
+\subsubsection{Definición informal}
+
+La derivada de una función $f(x)$ en un punto $x$ puede interpretarse como la tasa de cambio instantánea de $f$ respecto a $x$, usando cantidades infinitesimales.
+En la notación de Leibniz, la derivada se define como:
+$$
+\frac{df}{dx} \simeq \frac{\Delta f}{\Delta x}
+$$
+donde $\Delta x$ es un incremento infinitamente pequeño de la variable independiente, y $\Delta f = f(x + \Delta x) - f(x)$ es el incremento correspondiente de la función.
+En la notación de Newton, se escribe como:
+$$
+\dot{f}(x) \simeq \frac{\Delta f}{\Delta x}.
+$$
+Se suele escribir tambi\'en $f'(x)$.
+La derivada representa, por lo tanto, la pendiente de la recta tangente a la curva $y = f(x)$ en el punto $(x, f(x))$, aproximada por el cociente de incrementos cuando $\Delta x$ es lo suficientemente pequeño.
 
 \subsubsection{Definición formal}
 \begin{definicion}[Derivada de una función en un punto]
@@ -1722,15 +1670,170 @@ $$
 \end{center}
 
 \subsubsection{Ejemplos de derivación de funciones elementales}
-\begin{ejemplo}
-    Calculamos las derivadas de algunas funciones elementales:
-    \begin{itemize}
-        \item Si $f(x) = k$ (constante), entonces $f'(x) = 0$.
-        \item Si $f(x) = x^n$, entonces $f'(x) = n x^{n-1}$.
-        \item Si $f(x) = \sin(x)$, entonces $f'(x) = \cos(x)$.
-        \item Si $f(x) = e^x$, entonces $f'(x) = e^x$.
-    \end{itemize}
-\end{ejemplo}
+
+Calculamos las derivadas de algunas funciones elementales.
+
+\paragraph{Polinomios} Si $f(x) = x^n$, entonces $f'(x) = n x^{n-1}$.
+
+De hecho, con el binomio de Newton, tenemos
+\[
+(x + \Delta x)^n = \sum_{k=0}^{n} \binom{n}{k} x^{n-k} (\Delta x)^k
+\]
+o dicho de otra forma
+%\[
+\begin{align*}
+(x + \Delta x)^n &= \binom{n}{0} x^n (\Delta x)^0 + \binom{n}{1} x^{n-1} (\Delta x)^1 \\
+&\quad + \binom{n}{2} x^{n-2} (\Delta x)^2 + \binom{n}{3} x^{n-3} (\Delta x)^3 + \cdots. %\\
+%&\quad + \binom{n}{n} x^0 (\Delta x)^n
+\end{align*}
+%\]
+Simplificamos los primeros terminos
+\begin{align*}
+(x + \Delta x)^n &= x^n  + n x^{n-1} \Delta x \\
+&\quad + \binom{n}{2} x^{n-2} (\Delta x)^2 + \binom{n}{3} x^{n-3} (\Delta x)^3 + \cdots. %\\
+%&\quad + \binom{n}{n} x^0 (\Delta x)^n
+\end{align*}
+Ahora sacamos las potencias de orden superior en $\Delta x$ y obtenemos
+\[
+f( x + \Delta x) - f(x) \simeq n x^{n-1} \Delta x
+\]
+osea 
+\[
+\frac{df}{dx} (x) = n x^{n-1}.
+\] 
+Para cualquier polinomio, se puede deducir la derivada notando que la derivaci\'on es una aplicaci\'on lineal: la derivada de una suma es la suma de las derivadas y, con $\alpha$ un real, la derivada de $\alpha f$ es $\alpha f'$.
+
+\paragraph{Exponencial} Si $f(x) = e^x$, entonces $f'(x) = e^x$.
+
+Retomamos la formula de Euler del primer cap\'itulo:
+\[
+e^x =  1 + x + \frac{x^2}{2!} + \frac{x^3}{3!}  + 
+\frac{x^4}{4!}
+\dots
+\]
+Derivamos cada termino (se tiene que justificar cuidadosamente esta operaci\'on en el caso general, pero ah\'i se puede hacer) y aplicamos la formula anterior:
+\[
+\frac{de^x}{dx} =  0 + 1 + \frac{2x}{2!} 
+\frac{3x^2}{3!}  + 
+\frac{4x^3}{4!} + \dots
+\]
+Simplificamos
+\[
+\frac{de^x}{dx} =  1 + \frac{x}{} 
+\frac{x^2}{2!}  + 
+\frac{x^3}{3!} + \dots
+\]
+Obtenemos exactamente $e^x$ (!).
+
+%\[
+%(x + \Delta x)^n = \sum_{k=0}^{n} \binom{n}{k} x^{n-k} (\Delta x)^k
+%\]
+%\[
+%\begin{align*}
+%(x + \Delta x)^n &= \binom{n}{0} x^n (\Delta x)^0 + \binom{n}{1} x^{n-1} (\Delta x)^1 \\
+%&\quad + \binom{n}{2} x^{n-2} (\Delta x)^2 + \binom{n}{3} x^{n-3} (\Delta x)^3 + \cdots \\
+%&\quad + \binom{n}{n} x^0 (\Delta x)^n
+%\end{align*}
+%\]
+
+\paragraph{Funciones trigonom\'etricas}  Si $f(x) = \sen(x)$, entonces $f'(x) = \cos(x)$.
+ Si $f(x) = \cos(x)$, entonces $f'(x) = -\sen(x)$.
+ 
+Partemos de la serie:
+\begin{align*}
+\cos x = 
+1 
+- \frac{x^2}{2!}
++ \frac{x^4}{4!} 
+- \frac{x^6}{6!} 
++ \frac{x^8}{8!} 
+- \frac{x^{10}}{10!} 
++ \cdots
+\end{align*}
+Derivamos termino por termino y 
+deducimos:
+\begin{align*}
+\frac{d\cos x}{dx} = 
+- \frac{2x}{2!}
++ \frac{4x^3}{4!} 
+- \frac{6x^5}{6!} 
++ \frac{8x^7}{8!} 
+- \frac{10x^{9}}{10!} 
++ \cdots
+\end{align*}
+Simplificamos
+\begin{align*}
+\frac{d\cos x}{dx} = 
+- {x}
++ \frac{x^3}{3!} 
+- \frac{x^5}{5!} 
++ \frac{x^7}{7!} 
+- \frac{x^{9}}{9!} 
++ \cdots
+\end{align*}
+Finalmente identificamos y viene:
+\[
+\frac{d\cos x}{dx} = -\sen(x).
+\]
+De la misma forma, partemos de:
+\begin{align*}
+\sin x = 
+x 
+- \frac{x^3}{3!} 
++ \frac{x^5}{5!} 
+- \frac{x^7}{7!} 
++ \frac{x^9}{9!} 
+- \frac{x^{11}}{11!} 
++ \cdots
+\end{align*}
+y derivamos cada termino:
+\begin{align*}
+\frac{d\sin x}{dx} = 
+1 
+- \frac{3x^2}{3!} 
++ \frac{5x^4}{5!} 
+- \frac{7x^6}{7!} 
++ \frac{9x^8}{9!} 
+- \frac{11x^{10}}{11!} 
++ \cdots
+\end{align*}
+De nuevo simplificamos
+\begin{align*}
+\frac{d\sin x}{dx} = 
+1 
+- \frac{x^2}{2} 
++ \frac{x^4}{4!} 
+- \frac{x^6}{6!} 
++ \frac{x^8}{8!} 
+- \frac{x^{10}}{10!} 
++ \cdots
+\end{align*}
+Identificamos y resulta que:
+\[
+\frac{d\sin x}{dx} = \cos(x).
+\]
+%
+%   \begin{itemize}
+%        \item Si $f(x) = k$ (constante), entonces $f'(x) = 0$.
+%        \item Si $f(x) = x^n$, entonces $f'(x) = n x^{n-1}$.
+%        \item
+%        \item 
+%    \end{itemize}
+
+
+%Luego exp, cos, y sen con las series y despues las otras (ln) con reglas de composicion y inversas, etc.
+%Plus d exemples pour les regles de derivation !!! D ABORD LE LOG Arctan AUSSI C est sympa 
+%***
+
+%\begin{ejemplo}
+%    Calculamos las derivadas de algunas funciones elementales:
+%    \begin{itemize}
+%        \item Si $f(x) = k$ (constante), entonces $f'(x) = 0$.
+%        \item Si $f(x) = x^n$, entonces $f'(x) = n x^{n-1}$.
+%        \item Si $f(x) = \sin(x)$, entonces $f'(x) = \cos(x)$.
+%        \item Si $f(x) = e^x$, entonces $f'(x) = e^x$.
+%    \end{itemize}
+%\end{ejemplo}
 
 \subsubsection{Reglas de derivación}
 \begin{teorema}[Reglas de derivación]
@@ -1749,6 +1852,170 @@ $$
     f'(x) = (x^2)' \sin(x) + x^2 (\sin(x))' = 2x \sin(x) + x^2 \cos(x).
     $$
 \end{ejemplo}
+
+\begin{ejemplo}
+Calculemos la derivada de $f(x) = x^2 \sin\left(\frac{1}{x}\right)$ usando la regla del producto:
+
+$$
+f'(x) = (x^2)' \sin\left(\frac{1}{x}\right) + x^2 \left(\sin\left(\frac{1}{x}\right)\right)'.
+$$
+
+Calculamos cada término por separado:
+\begin{itemize}
+    \item $(x^2)' = 2x$
+    \item $\displaystyle \left(\sin\left(\frac{1}{x}\right)\right)' = \cos\left(\frac{1}{x}\right) \cdot \left(-\frac{1}{x^2}\right) = -\frac{1}{x^2} \cos\left(\frac{1}{x}\right)$
+\end{itemize}
+Por lo tanto,
+$$
+f'(x) = 2x \sin\left(\frac{1}{x}\right) - 2 \cos\left(\frac{1}{x}\right).
+$$
+\end{ejemplo}
+
+\begin{ejemplo}
+Calculemos la derivada de $\tan(x)$ usando la regla del cociente:
+\[
+\begin{aligned}
+\tan(x) &= \frac{\sin(x)}{\cos(x)} \\[0.5em]
+\tan'(x) &= \frac{\cos(x) \cdot \cos(x) - \sin(x) \cdot (-\sin(x))}{\cos^2(x)} \\[0.5em]
+&= \frac{\cos^2(x) + \sin^2(x)}{\cos^2(x)} \\[0.5em]
+&= \frac{1}{\cos^2(x)} \qquad \text{(ya que } \cos^2(x) + \sin^2(x) = 1\text{)} \\[0.5em]
+&= \sec^2(x).
+\end{aligned}
+\]
+La funci\'on $\sec$ es la secante.
+\end{ejemplo}
+
+\begin{ejemplo}
+Calculemos la derivada de $\cot(x)$ usando la regla del cociente:
+\[
+\begin{aligned}
+\cot(x) &= \frac{\cos(x)}{\sin(x)} \\[0.5em]
+\cot'(x) &= \frac{(-\sin(x)) \cdot \sin(x) - \cos(x) \cdot \cos(x)}{\sin^2(x)} \\[0.5em]
+&= \frac{-\sin^2(x) - \cos^2(x)}{\sin^2(x)} \\[0.5em]
+&= -\frac{\sin^2(x) + \cos^2(x)}{\sin^2(x)} \\[0.5em]
+&= -\frac{1}{\sin^2(x)} \qquad \text{(ya que } \sin^2(x) + \cos^2(x) = 1\text{)} \\[0.5em]
+&= -\csc^2(x).
+\end{aligned}
+\]
+La funci\'on $\csc$ es la cosecante.
+\end{ejemplo}
+
+\begin{ejemplo}
+Calculemos la derivada de $f(x) = e^{3x^2 + 2x}$ usando la regla de la cadena:
+
+Sea $u = 3x^2 + 2x$, entonces $f(x) = e^u$. Luego,
+$$
+f'(x) = e^u \cdot u' = e^{3x^2 + 2x} \cdot (6x + 2).
+$$
+\end{ejemplo}
+
+\begin{ejemplo}
+Calculemos la derivada de la función gaussiana $f(x) = e^{-x^2}$:
+
+Sea $u = -x^2$, entonces $f(x) = e^u$. Luego,
+$$
+f'(x) = e^u \cdot u' = e^{-x^2} \cdot (-2x) = -2x e^{-x^2}.
+$$
+\end{ejemplo}
+
+\begin{ejemplo}
+Calculemos la derivada de $\ln(x)$ usando la identidad $e^{\ln(x)} = x$ y la regla de la cadena.
+
+Sabemos que la función exponencial $e^x$ y la función logaritmo natural $\ln(x)$ son funciones inversas. Por lo tanto, podemos escribir:
+\begin{align*}
+e^{\ln(x)} &= x.
+\end{align*}
+Derivamos ambos lados de la ecuación con respecto a $x$:
+\begin{align*}
+\frac{d}{dx} \left( e^{\ln(x)} \right) &= \frac{d}{dx} (x) \\
+e^{\ln(x)} \cdot \frac{d}{dx} (\ln(x)) &= 1.
+\end{align*}
+Dado que $e^{\ln(x)} = x$, sustituimos:
+\begin{align*}
+x \cdot \frac{d}{dx} (\ln(x)) &= 1.
+\end{align*}
+Despejamos $\frac{d}{dx} (\ln(x))$:
+\begin{align*}
+\frac{d}{dx} (\ln(x)) &= \frac{1}{x}.
+\end{align*}
+Para derivar $\ln(f(x))$, aplicamos la regla de la cadena:
+\begin{align*}
+\frac{d}{dx} \ln(f(x)) &= \frac{f'(x)}{f(x)}.
+\end{align*}
+\end{ejemplo}
+
+
+\begin{ejemplo}
+\textbf{La función \(\arctan(x)\):}
+
+La función \(\arctan(x)\) es la \textbf{función inversa} de \(\tan(x)\). Esto significa que, si \(y = \arctan(x)\), entonces:
+$$
+\tan(y) = x \quad \text{y} \quad y \in \left(-\frac{\pi}{2}, \frac{\pi}{2}\right).
+$$
+
+\begin{center}
+    \begin{tikzpicture}[scale=1.2]
+    % Axes
+    \draw[-, very thick] (-6,0) -- (6,0) node[right]{$x$};
+    \draw[-, very thick] (0,-1.6) -- (0,1.6) node[above]{$y$};
+
+    % Grille légère
+    \draw[gray, very thin, dashed] (-6,-1.5) grid (6,1.5);
+
+    % Graphe de arctan(x) (rouge, épais, déplacé pour éviter l'intersection)
+    \draw[domain=-6:6, smooth, variable=\x, red, thick] plot ({\x}, {rad(atan(\x ))});
+    \node[red, above right] at (2,1.2) {$y = \arctan(x)$};
+
+    % Point d'origine
+    \filldraw (0,0) circle (1.5pt) node[below left]{$O$};
+
+    % Points importants sur l'axe y
+    \filldraw (0,1.57) circle (1.2pt) node[left]{$\frac{\pi}{2}$};
+    \filldraw (0,-1.57) circle (1.2pt) node[left]{$-\frac{\pi}{2}$};
+
+    % Points importants sur l'axe x
+    \filldraw (3,0) circle (1.2pt);
+    \filldraw (-3,0) circle (1.2pt);
+\end{tikzpicture}
+\end{center}
+Calculemos la derivada de $\arctan(x)$ usando la regla de la cadena:
+
+Sabemos que $\arctan(x)$ es la función inversa de $\tan(x)$. Usando la regla de la cadena y la identidad $\tan'(\arctan(x)) = 1 + \tan^2(\arctan(x)) = 1 + x^2$,
+$$
+\frac{d}{dx} \arctan(x) = \frac{1}{1 + x^2}.
+$$
+\end{ejemplo}
+
+%\begin{ejemplo}
+%\textbf{Derivada de \(\arctan(x)\):}
+%
+%Usando la regla de la cadena y la identidad \(\frac{d}{dx} \tan(y) = 1 + \tan^2(y)\), obtenemos:
+%\begin{align*}
+%\frac{d}{dx} \arctan(x)
+%&= \frac{1}{\frac{d}{dy} \tan(y)} \quad \text{(derivada de la función inversa)} \\
+%&= \frac{1}{1 + x^2}.
+%\end{align*}
+%Por lo tanto,
+%$$
+%f'(x) = \frac{1}{1 + x^2}.
+%$$
+%\end{ejemplo}
+
+%\begin{ejemplo}
+%
+%\textbf{Derivada de \(\arctan(x)\):}
+
+%Usando la regla de la cadena y la identidad \(\frac{d}{dx} \tan(y) = 1 + \tan^2(y)\), obtenemos:
+%\begin{align*}
+%\frac{d}{dx} \arctan(x)
+%&= \frac{1}{\frac{d}{dy} \tan(y)} \quad \text{(derivada de la función inversa)} \\
+%&= \frac{1}{1 + x^2}.
+%\end{align*}
+%Por lo tanto,
+%$$
+%f'(x) = \frac{1}{1 + x^2}.
+%$$
+%\end{ejemplo}
 
 \subsubsection{Monotonía y extremos}
 \begin{definicion}[Función creciente/decreciente]
@@ -1769,6 +2036,29 @@ $$
     Sea $f: [a, b] \to \mathbb{R}$ una función continua en $[a, b]$ y derivable en $(a, b)$. Si $f(a) = f(b)$, entonces existe al menos un $c \in (a, b)$ tal que $f'(c) = 0$.
 \end{teorema}
 
+\begin{ejemplo}
+\textbf{Aplicación del teorema de Rolle:} Consideremos la altura de un proyectil lanzado verticalmente desde el suelo, que vuelve a caer al suelo después de 4 segundos. La altura $h(t)$ en función del tiempo $t$ (en segundos) es:
+\[
+h(t) = -t^2 + 4t.
+\]
+Sabemos que:
+\begin{itemize}
+    \item $h(0) = 0$ m (lanzado desde el suelo).
+    \item $h(4) = 0$ m (vuelve al suelo).
+    \item $h(t)$ es continua en $[0, 4]$ y derivable en $]0, 4[$.
+\end{itemize}
+
+Por el \textbf{teorema de Rolle}, existe al menos un instante $c \in ]0, 4[$ tal que:
+\[
+h'(c) = 0.
+\]
+Calculando $h'(t) = -2t + 4$, obtenemos:
+\[
+-2c + 4 = 0 \implies c = 2.
+\]
+Por lo tanto, a los $t = 2$ segundos, el proyectil alcanza su altura máxima.
+\end{ejemplo}
+
 \subsubsection{Teorema de Lagrange (Incrementos Finitos)}
 \begin{teorema}[Teorema del Valor Medio (Lagrange)]
     Sea $f: [a, b] \to \mathbb{R}$ una función continua en $[a, b]$ y derivable en $(a, b)$. Entonces existe al menos un $c \in (a, b)$ tal que:
@@ -1781,47 +2071,154 @@ $$
     El teorema afirma que existe un punto $c \in (a, b)$ donde la pendiente de la recta tangente a la curva $y = f(x)$ es igual a la pendiente de la recta secante que une los puntos $(a, f(a))$ y $(b, f(b))$.
 \end{proof}
 
+\begin{ejemplo}
+\textbf{Aplicación del teorema de Lagrange:} Un ciclista recorre 30 km en 1 hora. La distancia recorrida en función del tiempo $d(t)$ es continua y derivable. Sabemos que $d(0) = 0$ km y $d(1) = 30$ km.
+
+Por el \textbf{teorema de Lagrange}, existe al menos un instante $c \in ]0, 1[$ tal que:
+\[
+d'(c) = \frac{d(1) - d(0)}{1 - 0} = 30 \text{ km/h}.
+\]
+Esto significa que en algún momento, la velocidad instantánea del ciclista fue igual a la velocidad promedio del viaje.
+\end{ejemplo}
+
+\subsection{Gradiente descendiente}
+
+El método del gradiente descendente es un algoritmo de optimización utilizado para minimizar funciones, especialmente en el contexto de funciones de costo o pérdida. Es fundamental en métodos numéricos y aprendizaje automático.
+
+\subsubsection{Descripción del Método}
+El gradiente descendente es un algoritmo iterativo que busca el mínimo de una función diferenciable. Dada una función $f(x)$, el método actualiza el valor de $x$ en la dirección opuesta al gradiente de $f$ en $x$, con un tamaño de paso $\alpha$ (tasa de aprendizaje).
+
+\subsubsection{Algoritmo}
+El algoritmo se describe como sigue:
+\begin{enumerate}
+    \item Inicializar $x_0$ (valor inicial).
+    \item Para cada iteración $k$: 
+    \begin{itemize}
+        \item Calcular el gradiente $f'(x_k)$.
+        \item Actualizar $x_{k+1} = x_k - \alpha \cdot f'(x_k)$.
+    \end{itemize}
+    \item Repetir hasta que se cumpla un criterio de parada (por ejemplo, $f'(x_k)$ es cercano a cero).
+\end{enumerate}
+
+\subsubsection{Ejemplo Práctico}
+\begin{ejemplo}
+Consideremos la función $f(x) = x^2 - 4x + 5$. Queremos encontrar el valor de $x$ que minimiza $f(x)$ usando el método del gradiente descendente.
+
+\textbf{Paso 1:} Calculamos la derivada de $f(x)$:
+\begin{equation*}
+    f'(x) = 2x - 4.
+\end{equation*}
+
+\textbf{Paso 2:} Elegimos una tasa de aprendizaje $\alpha = 0.1$ y un valor inicial $x_0 = 0$.
+
+\textbf{Paso 3:} Iteramos:
+\begin{align*}
+    x_1 &= x_0 - \alpha \cdot f'(x_0) = 0 - 0.1 \cdot (2 \cdot 0 - 4) = 0.4 \\
+    x_2 &= x_1 - \alpha \cdot f'(x_1) = 0.4 - 0.1 \cdot (2 \cdot 0.4 - 4) = 0.72 \\
+    x_3 &= x_2 - \alpha \cdot f'(x_2) = 0.72 - 0.1 \cdot (2 \cdot 0.72 - 4) = 0.976 \\
+    x_4 &= x_3 - \alpha \cdot f'(x_3) = 0.976 - 0.1 \cdot (2 \cdot 0.976 - 4) = 1.1808
+\end{align*}
+
+Continuando este proceso, observamos que los valores de $x_k$ se acercan al mínimo de $f(x)$, que es $x = 2$.
+\end{ejemplo}
+
+\subsubsection{Aplicaciones}
+
+\paragraph{Física}
+En física, el método del gradiente descendente se utiliza para encontrar configuraciones de mínima energía en sistemas físicos, como el cálculo de la posición de equilibrio en un potencial gravitatorio o electrostático.
+
+\paragraph{Aprendizaje Automático}
+En aprendizaje automático, el gradiente descendente es la base de algoritmos de entrenamiento de modelos, como la regresión lineal y la optimización de redes neuronales. Se utiliza para ajustar los parámetros de un modelo minimizando una función de pérdida.
+
+
+% ***** \subsection{M\'etodo de Newton}
+
+%\emph{(a completar)}
+
+\subsection{Interpolación de Hermite}
+
+La \textbf{interpolación de Hermite} es una generalización de la interpolación de Lagrange que, además de interpolar los valores de la función en los puntos dados, también interpola las derivadas en esos puntos. 
+
+Si tenemos los puntos \( (x_0, y_0), (x_1, y_1), \dots, (x_n, y_n) \) y las derivadas \( y_0', y_1', \dots, y_n' \), el polinomio de Hermite \( H_{2n+1}(x) \) de grado \( \leq 2n+1 \) se construye usando los polinomios de base de Hermite \( H_i(x) \) y \( \tilde{H}_i(x) \), definidos como:
+\[
+H_i(x) = [1 - 2(x - x_i)L_i'(x_i)] \cdot L_i^2(x),
+\]
+\[
+\tilde{H}_i(x) = (x - x_i) \cdot L_i^2(x),
+\]
+donde \( L_i(x) \) son los polinomios de Lagrange. El polinomio de Hermite es:
+\[
+H_{2n+1}(x) = \sum_{i=0}^n \left[ y_i H_i(x) + y_i' \tilde{H}_i(x) \right].
+\]
+
+% *****
+%DE LHOPITALE
+
+%Fractales
+%De Lhopital
+
+%Fonctions cont non deriv
+%Valeur absolue
+%x sin(1/x)
+%Fractales
+
+%Fonctions derivable avec derivees non continues
+
 \begin{center}
 $\star$
-Versión 1.0 -- 16 Marzo 26
+Versión 1.02 -- 03 Abril 26
 $\star$
 \end{center}
 
 \newpage
 
 \section{Integración}
-\subsection{Nociones básicas}
-\subsubsection{Particiones}
-\begin{definicion}[Partición de un intervalo]
-    Sea $[a, b]$ un intervalo cerrado. Una \textbf{partición} $P$ de $[a, b]$ es un conjunto finito de puntos $x_0, x_1, \ldots, x_n$ tales que:
-    $$
-    a = x_0 < x_1 < \cdots < x_n = b.
-    $$
-    La \textbf{norma} de la partición, denotada $P$, es la longitud del subintervalo más grande:
-    $$
-    P = \max_{1 \leq i \leq n} x_i - x_{i-1}.
-    $$
-\end{definicion}
 
-\subsubsection{Definición de integral de Riemann}
-\begin{definicion}[Integral de Riemann]
-    Sea $f: [a, b] \to \mathbb{R}$ una función acotada y $P = x_0, x_1, \ldots, x_n$ una partición de $[a, b]$. Para cada subintervalo $[x_{i-1}, x_i]$, definimos:
-    $$
-    m_i = \inf f(x) : x \in [x_{i-1}, x_i], \quad M_i = \sup f(x) : x \in [x_{i-1}, x_i].
-    $$
-    Las \textbf{sumas inferior y superior} de $f$ respecto a $P$ son:
-    $$
-    L(f, P) = \sum_{i=1}^n m_i (x_i - x_{i-1}), \quad U(f, P) = \sum_{i=1}^n M_i (x_i - x_{i-1}).
-    $$
-    Decimos que $f$ es \textbf{integrable según Riemann} en $[a, b]$ si:
-    $$
-    \sup_P L(f, P) = \inf_P U(f, P) = I,
-    $$
-    y en ese caso, $I$ se denomina la \textbf{integral de Riemann} de $f$ en $[a, b]$, denotada:
-    $$
-    \int_a^b f(x)  dx = I.
-    $$
-\end{definicion}
+
+%Riemann : Plouf
+
+%Trapecios
+
+%Newton y Leibniz: Teorema fundamental
+
+%Propiedades y tecn basicas
+
+%Integracion numerica (punto medio)
+
+%Henstock-Kurzweil
+
+%\subsection{Nociones básicas}
+%\subsubsection{Particiones}
+%\begin{definicion}[Partición de un intervalo]
+%    Sea $[a, b]$ un intervalo cerrado. Una \textbf{partición} $P$ de $[a, b]$ es un conjunto finito de puntos $x_0, x_1, \ldots, x_n$ tales que:
+%    $$
+%    a = x_0 < x_1 < \cdots < x_n = b.
+%    $$
+%    La \textbf{norma} de la partición, denotada $P$, es la longitud del subintervalo más grande:
+%    $$
+%    P = \max_{1 \leq i \leq n} x_i - x_{i-1}.
+%    $$
+%\end{definicion}
+
+%\subsubsection{Definición de integral de Riemann}
+%\begin{definicion}[Integral de Riemann]
+%    Sea $f: [a, b] \to \mathbb{R}$ una función acotada y $P = x_0, x_1, \ldots, x_n$ una partición de $[a, b]$. Para cada subintervalo $[x_{i-1}, x_i]$, definimos:
+%    $$
+%    m_i = \inf f(x) : x \in [x_{i-1}, x_i], \quad M_i = \sup f(x) : x \in [x_{i-1}, x_i].
+%    $$
+%    Las \textbf{sumas inferior y superior} de $f$ respecto a $P$ son:
+%    $$
+%    L(f, P) = \sum_{i=1}^n m_i (x_i - x_{i-1}), \quad U(f, P) = \sum_{i=1}^n M_i (x_i - x_{i-1}).
+%    $$
+%    Decimos que $f$ es \textbf{integrable según Riemann} en $[a, b]$ si:
+%    $$
+%    \sup_P L(f, P) = \inf_P U(f, P) = I,
+%    $$
+%    y en ese caso, $I$ se denomina la \textbf{integral de Riemann} de $f$ en $[a, b]$, denotada:
+%    $$
+%    \int_a^b f(x) % dx = I.
+%    $$
+%\end{definicion}
 
 \subsection{Teorema fundamental del cálculo}
 \subsubsection{Enunciado}
@@ -1847,6 +2244,10 @@ $\star$
     \int_0^1 x^2  dx = G(1) - G(0) = \frac{1^3}{3} - \frac{0^3}{3} = \frac{1}{3}.
     $$
 \end{ejemplo}
+
+%\subsection{Integrales de funciones usuales}
+
+%\dots
 
 \subsection{Métodos generales de integración}
 \subsubsection{Cambio de variables}
@@ -1901,12 +2302,25 @@ $$
     $$
     \int_0^1 x^2  dx \approx \frac{0.25}{2} \left( f(0) + 2f(0.25) + 2f(0.5) + 2f(0.75) + f(1) \right) = 0.328125.
     $$
-    El valor exacto es $\frac{1}{3} \approx 0.3333$, por lo que el error es pequeño.
+    El valor exacto es $\frac{1}{3} \simeq 0.3333$, por lo que el error es pequeño.
 \end{ejemplo}
+
+% ***** Punto Medio
+
+% ***** Henstock-Kurzweil
+
+%******Def 
+%Henstock-Kurtz
+%Autres
+
+%*******Fourier
+
+%*******Integrales impropres
+
 
 \begin{center}
 $\star$
-Versión 1.0 -- 17 Marzo 26
+Versión 1.01 -- 03 Abril 26
 $\star$
 \end{center}
 
@@ -2054,262 +2468,7 @@ Versión 1.0 -- 18 Marzo 26
 $\star$
 \end{center}
 
-\newpage
 
-\section{EXTRA}
-
-\newpage
-
-\section{M\'as sobre continuidad}
-
-%\usepackage{parskip}
-
-\subsection{Introducción}
-La noción de continuidad ha evolucionado a lo largo de los siglos, pasando de una intuición geométrica a una formalización rigurosa. 
-
-\subsection{Desde el siglo XVI hasta el siglo XVIII}
-
-\subsubsection{Intuición geométrica y cálculos infinitesimales}
-\begin{itemize}
-    \item \textbf{Siglo XVI--XVII}: Matemáticos como \textbf{Kepler} y \textbf{Galileo} estudiaron curvas continuas desde un enfoque geométrico, sin una definición formal. Kepler, por ejemplo, analizó el movimiento planetario como un proceso continuo.
-    \item \textbf{Newton (1687)} y \textbf{Leibniz (1684)} introdujeron el concepto de límite y funciones continuas en el contexto del cálculo infinitesimal. Leibniz usó el término ``función continua'' para describir curvas sin saltos bruscos, aunque sin una definición rigurosa.
-    \item \textbf{Euler (1748)} definió una función como una expresión analítica \( y = f(x) \), y consideró que una función era continua si podía representarse por una sola expresión algebraica. Esta definición excluía funciones con discontinuidades evitables.
-\end{itemize}
-
-\subsubsection{Definición en términos de límites}
-\begin{itemize}
-    \item \textbf{D'Alembert (1754)} y \textbf{Lagrange (1797)} intentaron formalizar la continuidad usando límites. 
-\end{itemize}
-
-\begin{quotation}
-\textbf{d'Alembert (siglo XVIII)} propuso una visión intuitiva de la continuidad, asociándola a funciones representables por una sola expresión analítica. Para él, una función era continua si su gráfica no presentaba saltos bruscos y podía describirse sin interrupciones. Aunque no formalizó el concepto en términos de límites, su enfoque influyó en el desarrollo posterior del análisis. Consideraba que las funciones definidas a trozos o con discontinuidades evitables no eran continuas, ya que no podían expresarse mediante una sola fórmula. Su idea se basaba en la idea de "suavidad" de la curva, donde la continuidad implicaba que la función no cambiaba abruptamente en ningún punto. 
-
-\textbf{Lagrange (siglo XVIII--XIX)} avanzó un paso más al vincular la continuidad con la representación de funciones mediante series de potencias. Según Lagrange, una función era continua si podía expandirse en serie de Taylor alrededor de cada punto de su dominio. Esta idea permitía aproximar localmente la función por polinomios, garantizando la ausencia de saltos o discontinuidades en un entorno del punto. Su enfoque excluía funciones con discontinuidades evitables, ya que estas no admitían una representación analítica única. Aunque Lagrange no introdujo la notación moderna de límites, su definición fue más cercana a la idea de continuidad como aproximación local. Su trabajo influyó en el desarrollo del análisis matemático y en la posterior formalización de Cauchy y Weierstrass.
-\end{quotation}
-
-\subsection{Desde el siglo XIX: La formalización rigurosa}
-
-\subsubsection{Definición de Cauchy}
-\begin{itemize}
-    \item \textbf{Cauchy (1821)} propuso la primera definición rigurosa de continuidad: una función \( f \) es continua en un punto \( a \) si, para cualquier \( \epsilon > 0 \), existe un \( \delta > 0 \) tal que \( |f(x) - f(a)| < \epsilon \) siempre que \( |x - a| < \delta \). Esta definición es esencialmente la que conocemos hoy, pero sin el uso explícito de la notación moderna.
-\end{itemize}
-
-\subsubsection{Definición de Weierstrass (1872)}
-\begin{itemize}
-    \item \textbf{Weierstrass} formalizó la definición epsilon-delta de continuidad en términos de límites, eliminando las ambigüedades de las definiciones anteriores. Su enfoque se basa en: 
-    {Una función} f {es continua en} a {si} 
-    \[
-    \forall \epsilon > 0, \exists \delta > 0 \text{ tal que } |x - a| < \delta \implies |f(x) - f(a)| < \epsilon.
-    \]
-\end{itemize}
-
-\subsubsection{Contribuciones de Heine y Dedekind}
-\begin{itemize}
-    \item \textbf{Heine (1872)} introdujo el concepto de continuidad uniforme, extendiendo la idea de continuidad a conjuntos.
-    \item \textbf{Dedekind (1872)} definió los números reales como cortes en el conjunto de los racionales, lo que permitió una base sólida para la continuidad en el análisis real.
-\end{itemize}
-
-\subsection{Desde el siglo XX}
-
-\subsubsection{Definición topológica}
-\begin{itemize}
-    \item \textbf{Hausdorff (1914)} definió la continuidad en términos de topología: una función es continua si la preimagen de todo conjunto abierto es un conjunto abierto. Esta definición generaliza el concepto de continuidad a espacios topológicos arbitrarios y es la que se usa en la matemática moderna.
-    \item \textbf{Bourbaki (1940--1960)} consolidó la definición de continuidad en el contexto de la teoría de conjuntos y la topología, estandarizando su uso en la matemática abstracta.
-\end{itemize}
-
-\subsubsection{Definiciones modernas y generalizaciones}
-\begin{itemize}
-    \item \textbf{Análisis funcional}: La continuidad se extiende a funciones entre espacios vectoriales topológicos, donde se estudian propiedades como la continuidad lineal y la continuidad débil.
-    \item \textbf{Teoría de categorías}: La continuidad se define en términos de funtores que preservan límites, ampliando el concepto a contextos algebraicos y geométricos.
-    \item \textbf{Matemática computacional}: Se desarrollan algoritmos para verificar la continuidad de funciones definidas por computadora, especialmente en contextos numéricos y de optimización.
-\end{itemize}
-
-\section{A\'un m\'as sobre continuidad}
-
-\subsection{Funciones Lipschitz}
-
-\begin{definicion}[Función Lipschitz]
-Una función \( f: D \subseteq \mathbb{R} \to \mathbb{R} \) se dice \textbf{Lipschitziana} (o que satisface una condición de Lipschitz) si existe una constante \( L \geq 0 \) tal que para todo \( x, y \in D \),
-\[
-|f(x) - f(y)| \leq L |x - y|.
-\]
-La constante \( L \) se denomina \textbf{constante de Lipschitz} de \( f \). Si \( f \) es Lipschitziana, se escribe \( f \in \text{Lip}(D) \).
-\end{definicion}
-
-\noindent
-\textbf{Ejemplos:}
-\begin{itemize}
-    \item \textbf{Función identidad:} \( f(x) = x \) en \( \mathbb{R} \) es Lipschitziana con \( L = 1 \).
-    \item \textbf{Funciones lineales:} Si \( f(x) = ax + b \), entonces \( f \) es Lipschitziana con \( L = |a| \).
-    \item \textbf{Funciones con derivada acotada:} Si \( f: \mathbb{R} \to \mathbb{R} \) es diferenciable y \( |f'(x)| \leq L \) para todo \( x \), entonces \( f \) es Lipschitziana con constante \( L \).
-\end{itemize}
-
-\noindent
-\textbf{Ejemplos de funciones continuas no Lipschitzianas:}
-\begin{itemize}
-    \item \textbf{Raíz cuadrada:} \( f(x) = \sqrt{x} \) en \( [0,1] \) no es Lipschitziana. \item \textbf{Función cuadrática:} \( f(x) = x^2 \) en \( \mathbb{R} \) no es Lipschitziana global.
-    \item \textbf{Hiperbólica:} \( f(x) = \frac{1}{x} \) en \( (0,1) \) no es Lipschitziana.
-\end{itemize}
-
-\noindent
-\textbf{Propiedades importantes:}
-\begin{enumerate}
-    \item \textbf{Linealidad:} La suma de funciones Lipschitzianas y el producto por escalares son Lipschitzianas.
-    \item \textbf{Composición:} Si \( f \in \text{Lip}(D) \) y \( g \in \text{Lip}(f(D)) \), entonces \( g \circ f \in \text{Lip}(D) \).
-    \item \textbf{Acotación de derivadas:} Si \( f \) es diferenciable y Lipschitziana, entonces \( \|f'(x)\| \leq L \) para todo \( x \).
-    \item \textbf{Relación con continuidad:} Toda función Lipschitziana es uniformemente continua. Sin embargo, el recíproco no es cierto (ejemplo: \( f(x) = \sqrt{x} \) en \( [0,1] \)).
-\end{enumerate}
-
-\begin{teorema}[Teorema de Rademacher]
-Si \( f: \mathbb{R} \to \mathbb{R} \) es Lipschitziana, entonces \( f \) es diferenciable casi en todas partes (en el sentido de Lebesgue). Es decir, existe un conjunto \( E \subseteq \mathbb{R}\) de medida nula tal que \( f \) es diferenciable en todo \( x \in \mathbb{R} \setminus E \).
-\end{teorema}
-
-\noindent
-\textbf{Vínculo con la continuidad:}
-La condición de Lipschitz implica continuidad uniforme, pero no al revés. Por ejemplo, la función \( f(x) = x \sin(x) \) es continua y uniformemente continua en \( \mathbb{R} \), pero no es Lipschitziana.
-
-\subsection{Stone-Weierstrass}
-
-%\newtheorem{teorema}{Teorema}[section]
-%\newtheorem{ejemplo}{Ejemplo}[section]
-
-En análisis matemático, las funciones continuas sobre un intervalo cerrado y acotado pueden definirse como la \textbf{clausura} (para una cierta norma) de un espacio vectorial de funciones "simples" (polinomios, funciones trigonométricas, etc.). Esto es el corazón del \textbf{teorema de Stone-Weierstrass}, que generaliza el clásico teorema de aproximación de Weierstrass. A continuación, desarrollamos este concepto.
-
-%\section{Teorema de Stone-Weierstrass}
-
-\paragraph{Enunciado formal}
-Sea \( I \subset \mathbb{R} \) un intervalo cerrado y acotado, y sea \( C(I) \) el espacio vectorial de las funciones continuas \( f: I \to \mathbb{R} \). Sea \( V \subset C(I) \) un subespacio vectorial que satisface las siguientes condiciones:
-
-\begin{enumerate}
-    \item \textbf{Separación de puntos}: Para todo \( x, y \in I \) con \( x \neq y \), existe \( f \in V \) tal que \( f(x) \neq f(y) \).
-    \item \textbf{Contiene constantes}: La función constante \( 1 \) pertenece a \( V \).
-    \item \textbf{Estabilidad por multiplicación}: Si \( f, g \in V \), entonces \( f \cdot g \in V \).
-\end{enumerate}
-
-Entonces, \( V \) es \textbf{denso} en \( C(I) \) para la norma uniforme \( \| \cdot \|_\infty \), es decir:
-\[
-\overline{V} = C(I),
-\]
-donde \( \overline{V} \) denota la clausura de \( V \) en \( C(I) \) con respecto a la norma uniforme:
-\[
-\|f\|_\infty = \sup_{x \in I} |f(x)|.
-\]
-
-\begin{proof}
-Ver \cite{Stone1937}.
-\end{proof}
-
-\paragraph{Interpretación}
-Esto significa que \textbf{cualquier función continua en \( I \) puede aproximarse uniformemente por funciones del subespacio \( V \)}. La norma uniforme \( \| \cdot \|_\infty \) garantiza que la aproximación sea "buena" en todo el intervalo, no solo en puntos aislados.
-
-\paragraph{Ejemplos de subespacios \( V \)}
-
-\paragraph{Polinomios reales: \( V = \mathbb{R}[X] \)}
-El espacio vectorial de los polinomios reales:
-\[
-V = \mathbb{R}[X] = \left\{ \sum_{k=0}^n a_k x^k \mid n \in \mathbb{N}, a_k \in \mathbb{R} \right\}.
-\]
-- \textbf{Separación de puntos}: La función \( x \mapsto x \) separa puntos.
-- \textbf{Contiene constantes}: \( 1 \in \mathbb{R}[X] \).
-- \textbf{Estabilidad por multiplicación}: El producto de dos polinomios es un polinomio.
-
-\textbf{Resultado}: Por el teorema de Stone-Weierstrass,
-\[
-\overline{\mathbb{R}[X]} = C([a, b]).
-\]
-Esto es el \textbf{teorema de aproximación de Weierstrass} (1885): cualquier función continua en \([a, b]\) puede aproximarse uniformemente por una sucesión de polinomios.
-
-\paragraph{Otros ejemplos}
-\begin{itemize}
-    \item \textbf{Funciones trigonométricas}: Sea \( V = \text{Vect}\{1, \sin(nx), \cos(nx) \mid n \in \mathbb{N}\} \). Si \( I = [0, 2\pi] \), entonces \( \overline{V} = C([0, 2\pi]) \) (serie de Fourier).
-\end{itemize}
-
-
-\paragraph{Norma considerada: norma uniforme \( \| \cdot \|_\infty \)}
-
-La norma uniforme se define como:
-\[
-\|f\|_\infty = \sup_{x \in I} |f(x)|.
-\]
-La convergencia en esta norma es la \textbf{convergencia uniforme}. Esto es crucial porque:
-\begin{itemize}
-    \item Preserva la continuidad: si \( f_n \to f \) uniformemente y cada \( f_n \) es continua, entonces \( f \) es continua.
-    \item Es la norma natural para muchos problemas de aproximación.
-\end{itemize}
-
-\paragraph{Ejemplo detallado: Aproximación de \( f(x) = |x| \) en \([-1, 1]\) por polinomios}
-
-Queremos aproximar la función \( f(x) = |x| \) en el intervalo \([-1, 1]\) por una sucesión de polinomios \( P_n(x) \) de grado \( n \), de modo que:
-\[
-\lim_{n \to \infty} \|f - P_n\|_\infty = 0.
-\]
-
-\paragraph{Polinomios de Bernstein}
-Los \textbf{polinomios de Bernstein} proporcionan una construcción explícita de tal aproximación. Para una función \( f \) continua en \([0, 1]\), los polinomios de Bernstein de grado \( n \) se definen como:
-\[
-B_n(f)(x) = \sum_{k=0}^n f\left(\frac{k}{n}\right) \binom{n}{k} x^k (1-x)^{n-k}.
-\]
-Para nuestro caso, adaptamos el intervalo a \([-1, 1]\) usando la transformación lineal \( x \mapsto \frac{x+1}{2} \).
-
-\begin{ejemplo}
-Consideremos \( f(x) = |x| \) en \([-1, 1]\). Usamos los polinomios de Bernstein adaptados:
-\[
-B_n(f)(x) = \sum_{k=0}^n \left| 2 \cdot \frac{k}{n} - 1 \right| \binom{n}{k} \left( \frac{x+1}{2} \right)^k \left( 1 - \frac{x+1}{2} \right)^{n-k}.
-\]
-Para \( n = 5 \), obtenemos:
-\[
-B_5(f)(x) = 0.2 \cdot (1 - x)^5 + 0.6 \cdot x(1 - x)^4 + 1.0 \cdot x^2(1 - x)^3 + 1.0 \cdot x^3(1 - x)^2 + 0.6 \cdot x^4(1 - x) + 0.2 \cdot x^5.
-\]
-La siguiente tabla muestra los valores de \( B_5(f)(x) \) y \( f(x) \) en algunos puntos de \([-1, 1]\):
-
-\begin{table}[h]
-\centering
-\begin{tabular}{|c|c|c|}
-\hline
-\( x \) & \( f(x) = |x| \) & \( B_5(f)(x) \) \\ \hline
--1.0 & 1.0 & 1.0 \\ \hline
--0.5 & 0.5 & 0.499 \\ \hline
-0.0 & 0.0 & 0.016 \\ \hline
-0.5 & 0.5 & 0.499 \\ \hline
-1.0 & 1.0 & 1.0 \\ \hline
-\end{tabular}
-\caption{Comparación entre \( f(x) \) y \( B_5(f)(x) \) para \( n = 5 \).}
-\end{table}
-
-Para \( n \) grande, \( B_n(f)(x) \) converge uniformemente a \( f(x) \). Por ejemplo, con \( n = 100 \), la aproximación es casi perfecta en todo el intervalo.
-\end{ejemplo}
-
-\paragraph{Interpretación}
-Este ejemplo ilustra cómo los polinomios de Bernstein (que son funciones simples) pueden aproximar una función continua no diferenciable en el punto \( x = 0 \). La convergencia es uniforme, lo que garantiza que la aproximación sea buena en todo el intervalo.
-
-\paragraph{Resumen histórico}
-
-\begin{itemize}
-    \item \textbf{1821}: Cauchy introduce la definición de continuidad usando límites.
-    \item \textbf{1872}: Weierstrass define la continuidad en términos de límites funcionales.
-    \item \textbf{1885}: Weierstrass demuestra que cualquier función continua en \([a, b]\) puede aproximarse por polinomios (teorema de aproximación de Weierstrass).
-    \item \textbf{1937}: Stone generaliza el resultado a álgebras de funciones (teorema de Stone-Weierstrass).
-    \item \textbf{Siglo XX}: Desarrollo de la teoría de aproximación, análisis funcional y aplicaciones en física e ingeniería.
-\end{itemize}
-
-\paragraph{Conclusión}
-
-El teorema de Stone-Weierstrass establece que el espacio de las funciones continuas sobre un intervalo cerrado y acotado puede describirse como la clausura (para la norma uniforme) de un espacio vectorial de funciones simples, siempre que este espacio satisfaga ciertas condiciones algebraicas (separación de puntos, contenga constantes y sea estable por multiplicación).
-
-Este resultado es fundamental en análisis matemático, análisis numérico y muchas aplicaciones prácticas, como la interpolación de datos, la compresión de señales y la resolución de ecuaciones diferenciales.
-
-{\footnotesize
-\begin{thebibliography}{9}
-\bibitem{Stone1937}
-Stone, M. H. (1937). \textit{Applications of the theory of Boolean rings to general topology}. Transactions of the American Mathematical Society, 41(3), 375-481.
-
-\bibitem{Weierstrass1885}
-Weierstrass, K. (1885). \textit{Über die analytische Darstellbarkeit sogenannter willkürlicher Funktionen einer reellen Veränderlichen}. Sitzungsberichte der Königlich Preussischen Akademie der Wissenschaften zu Berlin, 1, 633-639.
-
-\bibitem{Rudin1976}
-Rudin, W. (1976). \textit{Principles of Mathematical Analysis} (3rd ed.). McGraw-Hill.
-\end{thebibliography}
-}
 \section{Sugerencias de lecturas}
 
 La selección de obras que se presenta a continuación abarca desde reflexiones sobre la ciencia y las matemáticas hasta exploraciones filosóficas y neurocientíficas. Cada texto ha sido elegido por su capacidad para inspirar, desafiar y ampliar la comprensión de temas fundamentales en sus respectivos campos. Las obras están ordenadas alfabéticamente por autor para facilitar su consulta.
