@@ -11,6 +11,7 @@
 \usepackage{parskip}
 \usepackage{setspace}
 \usepackage{xcolor}
+\usepackage{mathpazo}
 
 \usepackage{tikz}
 \usetikzlibrary{decorations.markings}
@@ -73,7 +74,7 @@
 
 \newcommand{\fc}[1]{{\color{blue}{#1}}}
 
-\title{Cálculo para física -- versión 1.03} 
+\title{Cálculo para física -- versión 1.04} 
 \author{Franz Chouly}
 \date{\today}
 
@@ -1840,11 +1841,88 @@ Identificamos y resulta que:
     Sean $f$ y $g$ funciones derivables en $x$. Entonces:
     \begin{itemize}
         \item \textbf{Suma:} $(f + g)'(x) = f'(x) + g'(x)$.
+
         \item \textbf{Producto:} $(f \cdot g)'(x) = f'(x)g(x) + f(x)g'(x)$.
-        \item \textbf{Cociente:} $\displaystyle \left(\frac{f}{g}\right)'(x) = \frac{f'(x)g(x) - f(x)g'(x)}{g(x)^2}$, si $g(x) \neq 0$.
+
         \item \textbf{Composición:} $(f \circ g)'(x) = f'(g(x)) \cdot g'(x)$.
+        
+        \item \textbf{Cociente:} $\displaystyle \left(\frac{f}{g}\right)'(x) = \frac{f'(x)g(x) - f(x)g'(x)}{g(x)^2}$, si $g(x) \neq 0$.
     \end{itemize}
 \end{teorema}
+
+\paragraph{Explicaciones}
+Sea \(x\) un punto donde \(f\) y \(g\) son diferenciables. Denotemos \(\Delta x\) un pequeño incremento en \(x\), y \(\Delta f=f(x+\Delta x)-f(x)\), \(\Delta g=g(x+\Delta x)-g(x)\). La idea es manipular los incrementos algebraicamente y luego, formalmente, tomar el límite \(\Delta x\to 0\).
+
+\paragraph{Suma}
+Para la suma,
+\[
+\Delta(f+g)=(f+g)(x+\Delta x)-(f+g)(x)=\Delta f+\Delta g.
+\]
+Dividiendo por \(\Delta x\) y tomando límite,
+\[
+\frac{\Delta(f+g)}{\Delta x}=\frac{\Delta f}{\Delta x}+\frac{\Delta g}{\Delta x}\xrightarrow{\ \Delta x\to0\ } f'(x)+g'(x).
+\]
+Por tanto \((f+g)'(x)=f'(x)+g'(x)\).
+
+\paragraph{Producto}
+Para el producto usamos la identidad algebraica
+\[
+\Delta(fg)=f(x+\Delta x)g(x+\Delta x)-f(x)g(x).
+\]
+Sumando y restando \(f(x+\Delta x)g(x)\) obtenemos
+\[
+\Delta(fg)=\big(f(x+\Delta x)-f(x)\big)g(x)+f(x+\Delta x)\big(g(x+\Delta x)-g(x)\big)
+%=\Delta f\; g(x)+f(x+\Delta x)\;\Delta g.
+\]
+y
+\[
+\Delta(fg)%=\big(f(x+\Delta x)-f(x)\big)g(x)+f(x+\Delta x)\big(g(x+\Delta x)-g(x)\big)
+=\Delta f\; g(x)+f(x+\Delta x)\;\Delta g.
+\]
+Dividimos por \(\Delta x\):
+\[
+\frac{\Delta(fg)}{\Delta x}=\frac{\Delta f}{\Delta x}\,g(x)+f(x+\Delta x)\,\frac{\Delta g}{\Delta x}.
+\]
+Al tomar \(\Delta x\to0\), \(f(x+\Delta x)\to f(x)\) y las fracciones dan las derivadas:
+\[
+(fg)'(x)=f'(x)g(x)+f(x)g'(x).
+\]
+
+%\subsection*{Cociente}
+%Si \(g(x)\neq0\) consideramos \(h=1/g\). Usando la regla del producto con \(f\) y \(h\) y sabiendo que \((gh)'=0\) distinto a cero no es directo; es más sencillo derivar directamente:
+%\[
+%\Delta\!\left(\frac{f}{g}\right)=\frac{f(x+\Delta x)}{g(x+\Delta x)}-\frac{f(x)}{g(x)}
+%=\frac{g(x)\Delta f-f(x)\Delta g}{g(x+\Delta x)g(x)}.
+%\]
+%Dividiendo por \(\Delta x\) y tomando límite:
+%\[
+%\frac{\Delta(f/g)}{\Delta x}=\frac{g(x)\,\frac{\Delta f}{\Delta x}-f(x)\,\frac{\Delta g}{\Delta x}}{g(x+\Delta x)g(x)}
+%\xrightarrow{\ \Delta x\to0\ }\frac{g(x)f'(x)-f(x)g'(x)}{g(x)^2}.
+%\]
+%Así,
+%\[
+%\left(\frac{f}{g}\right)'(x)=\frac{f'(x)g(x)-f(x)g'(x)}{g(x)^2}.
+%\]
+
+\paragraph{Composición (regla de la cadena)}
+Sea \(h(x)=f(g(x))\). El incremento es
+\[
+\Delta h=f\big(g(x+\Delta x)\big)-f\big(g(x)\big)=f\big(g(x)+\Delta g\big)-f\big(g(x)\big).
+\]
+Como \(f\) es diferenciable en \(g(x)\), para pequeño \(\Delta g\) tenemos la aproximación lineal
+\[
+f(g(x)+\Delta g)-f(g(x))=f'(g(x))\,\Delta g+\varepsilon(\Delta g),
+\]
+donde \(\varepsilon(\Delta g)/\Delta g\to0\) cuando \(\Delta g\to0\). Dividiendo por \(\Delta x\):
+\[
+\frac{\Delta h}{\Delta x}=f'(g(x))\frac{\Delta g}{\Delta x}+\frac{\varepsilon(\Delta g)}{\Delta x}.
+\]
+Al tomar \(\Delta x\to0\), \(\Delta g/\Delta x\to g'(x)\) y \(\varepsilon(\Delta g)/\Delta x=(\varepsilon(\Delta g)/\Delta g)(\Delta g/\Delta x)\to0\). Por tanto
+\[
+(f\circ g)'(x)=f'(g(x))\,g'(x).
+\]
+
+\paragraph{Cociente} Se deduce de lo anterior.
 
 \begin{ejemplo}
     Calculemos la derivada de $f(x) = x^2 \sin(x)$:
@@ -1883,6 +1961,16 @@ Calculemos la derivada de $\tan(x)$ usando la regla del cociente:
 \end{aligned}
 \]
 La funci\'on $\sec$ es la secante.
+Otra posibilidad:
+\[
+\begin{aligned}
+\tan(x) &= \frac{\sin(x)}{\cos(x)} \\[0.5em]
+\tan'(x) &= \frac{\cos(x) \cdot \cos(x) - \sin(x) \cdot (-\sin(x))}{\cos^2(x)} \\[0.5em]
+&= \frac{\cos^2(x) + \sin^2(x)}{\cos^2(x)} \\[0.5em]
+&= 1 + 
+\tan^2(x).
+\end{aligned}
+\]
 \end{ejemplo}
 
 \begin{ejemplo}
@@ -2447,9 +2535,120 @@ H_{2n+1}(x) = \sum_{i=0}^n \left[ y_i H_i(x) + y_i' \tilde{H}_i(x) \right].
 
 %Fonctions derivable avec derivees non continues
 
+%\usepackage{amsmath}
+%\usepackage{amssymb}
+%\usepackage{mathpazo} % Para tipografía más clara
+
+{Solución del Estado Fundamental del Oscilador Armónico Cuántico}
+
+%\section{Solución del Estado Fundamental}
+
+\subsection{Vuelta a Schr\"odinger}
+
+%\subsection{Ecuación de Schrödinger para el oscilador armónico cuántico}
+Partimos de la \textbf{ecuación de Schrödinger} para un oscilador armónico cuántico en una dimensión:
+\begin{equation*}
+    -\frac{\hbar^2}{2m} \frac{d^2\psi(x)}{dx^2} + \frac{1}{2}m\omega^2x^2\psi(x) = E\psi(x).
+\end{equation*}
+Esta ecuación describe cómo evoluciona la \textbf{función de onda} \(\psi(x)\) de una partícula en un potencial cuadrático (como un resorte ideal). Los términos son:
+\begin{itemize}
+    \item \textbf{Término cinético}: \(-\frac{\hbar^2}{2m} \frac{d^2\psi}{dx^2}\) (relacionado con la energía cinética de la partícula).
+    \item \textbf{Término potencial}: \(\frac{1}{2}m\omega^2x^2\psi(x)\) (energía potencial del oscilador armónico).
+    \item \textbf{Energía total}: \(E\) (autovalor que queremos encontrar).
+\end{itemize}
+
+\subsubsection{Función de onda del estado fundamental} % (\(n=0\))}
+
+La función de onda normalizada para el \textbf{estado fundamental} (el de menor energía) es:
+\begin{equation*}
+    \psi_0(x) = \left( \frac{m\omega}{\pi\hbar} \right)^{1/4} e^{-\frac{m\omega x^2}{2\hbar}}.
+\end{equation*}
+
+\paragraph{Explicación:}
+\begin{itemize}
+    \item El prefijo \(\left( \frac{m\omega}{\pi\hbar} \right)^{1/4}\) garantiza que \(\psi_0(x)\) esté \textbf{normalizada} (que la probabilidad total de encontrar la partícula en cualquier lugar sea 1).
+    \item El exponente \(-\frac{m\omega x^2}{2\hbar}\) determina la forma gaussiana de la función de onda, que se centra en \(x=0\) y decae rápidamente a medida que \(|x|\) aumenta.
+\end{itemize}
+
+\paragraph{Energía del estado fundamental:}
+\begin{equation*}
+    E_0 = \frac{1}{2}\hbar\omega.
+\end{equation*}
+
+\paragraph{Interpretación:}
+\begin{itemize}
+    \item La energía mínima del oscilador no es cero (principio de incertidumbre de Heisenberg).
+    \item \(\hbar\) es la constante reducida de Planck, y \(\omega\) es la frecuencia angular del oscilador.
+\end{itemize}
+
+\subsubsection{Verificación} % de que \(\psi_0(x)\) satisface la ecuación de Schrödinger}
+
+Vamos a demostrar que \(\psi_0(x)\) es solución de la ecuación de Schrödinger, calculando sus derivadas y sustituyéndolas en la ecuación.
+
+\paragraph{Paso 1: Primera derivada}
+Calculamos \(\frac{d\psi_0(x)}{dx}\):
+\begin{equation*}
+    \frac{d\psi_0(x)}{dx} = \left( \frac{m\omega}{\pi\hbar} \right)^{1/4} \left( -\frac{m\omega x}{\hbar} \right) e^{-\frac{m\omega x^2}{2\hbar}}.
+\end{equation*}
+
+\paragraph{Interpretación:}
+\begin{itemize}
+    \item La derivada de la exponencial gaussiana es proporcional a \(x\), lo que refleja la simetría del estado fundamental.
+\end{itemize}
+
+\paragraph{Paso 2: Segunda derivada}
+Calculamos \(\frac{d^2\psi_0(x)}{dx^2}\):
+\begin{equation*}
+    \frac{d^2\psi_0(x)}{dx^2} = \left( \frac{m\omega}{\pi\hbar} \right)^{1/4} \left[ -\frac{m\omega}{\hbar} + \left( \frac{m\omega x}{\hbar} \right)^2 \right] e^{-\frac{m\omega x^2}{2\hbar}}.
+\end{equation*}
+
+\paragraph{Explicación:}
+\begin{itemize}
+    \item Aparece un término constante \(-\frac{m\omega}{\hbar}\) (relacionado con la curvatura de la función de onda en \(x=0\)).
+    \item El término \(\left( \frac{m\omega x}{\hbar} \right)^2\) depende de \(x^2\), lo que refleja la parabolicidad del potencial.
+\end{itemize}
+
+\paragraph{Paso 3: Sustitución en la ecuación de Schrödinger}
+Sustituimos las derivadas en la ecuación de Schrödinger y simplificamos:
+\begin{itemize}
+    \item \textbf{Término cinético}:
+    \begin{equation*}
+        -\frac{\hbar^2}{2m} \frac{d^2\psi_0(x)}{dx^2} = \left( \frac{m\omega}{\pi\hbar} \right)^{1/4} \left[ \frac{\hbar\omega}{2} - \frac{m\omega^2 x^2}{2} \right] e^{-\frac{m\omega x^2}{2\hbar}}.
+    \end{equation*}
+
+    \item \textbf{Interpretación:}
+    \begin{itemize}
+        \item El término \(\frac{\hbar\omega}{2}\) es la energía cinética efectiva en el estado fundamental.
+        \item El término \(-\frac{m\omega^2 x^2}{2}\) es la energía potencial, que compensa exactamente el término cuadrático del potencial original.
+    \end{itemize}
+
+    \item \textbf{Término potencial}:
+    \begin{equation*}
+        \frac{1}{2}m\omega^2x^2\psi_0(x) = \frac{1}{2}m\omega^2x^2 \left( \frac{m\omega}{\pi\hbar} \right)^{1/4} e^{-\frac{m\omega x^2}{2\hbar}}.
+    \end{equation*}
+
+    \item \textbf{Suma de términos}:
+    \begin{equation*}
+        \left( \frac{m\omega}{\pi\hbar} \right)^{1/4} \left[ \frac{\hbar\omega}{2} - \frac{m\omega^2 x^2}{2} + \frac{m\omega^2 x^2}{2} \right] e^{-\frac{m\omega x^2}{2\hbar}} = \frac{\hbar\omega}{2} \psi_0(x).
+    \end{equation*}
+\end{itemize}
+
+\paragraph{Resultado:}
+Los términos cuadráticos en \(x^2\) se cancelan, dejando solo la energía del estado fundamental:
+\begin{equation*}
+    E_0 = \frac{1}{2}\hbar\omega.
+\end{equation*}
+
+\paragraph{Conclusión:}
+Hemos verificado que:
+\begin{equation*}
+    \frac{\hbar\omega}{2} \psi_0(x) = E_0 \psi_0(x),
+\end{equation*}
+confirmando que \(\psi_0(x)\) es efectivamente solución de la ecuación de Schrödinger para el oscilador armónico cuántico, con energía \(E_0 = \frac{1}{2}\hbar\omega\).
+
 \begin{center}
 $\star$
-Versión 1.03 -- 06 Abril 26
+Versión 1.04 -- 12 Abril 26
 $\star$
 \end{center}
 
@@ -2584,20 +2783,20 @@ Una \textbf{primitiva} (o antiderivada) de una función \( f \) es una función 
 \begin{table}[h]
 \centering
 \caption{Primitivas de funciones usuales.}
-\begin{tabular}{ll}
-\toprule
-\textbf{Función \( f(x) \)} & \textbf{Primitiva \( F(x) \)} \\
-\midrule
-\( k \) (constante) & \( kx + C \) \\
-\( x^n \) (\( n \neq -1 \)) & \( \frac{x^{n+1}}{n+1} + C \) \\
-\( \frac{1}{x} \) & \( \ln|x| + C \) \\
-\( e^x \) & \( e^x + C \) \\
-\( a^x \) (\( a > 0 \)) & \( \frac{a^x}{\ln a} + C \) \\
-\( \sin(x) \) & \( -\cos(x) + C \) \\
-\( \cos(x) \) & \( \sin(x) + C \) \\
-\( \tan(x) \) & \( -\ln|\cos(x)| + C \) \\
-\( \frac{1}{1+x^2} \) & \( \arctan(x) + C \) \\
-\( \frac{1}{\sqrt{1-x^2}} \) & \( \arcsin(x) + C \) \\
+\begin{tabular}{ll}\\
+\toprule \\
+\textbf{Función \( f(x) \)} & \textbf{Primitiva \( F(x) \)} \\ \\
+\midrule \\
+\( k \) (constante) & \( kx + C \) \\ \\
+\( x^n \) (\( n \neq -1 \)) & \( \frac{x^{n+1}}{n+1} + C \) \\ \\
+\( \frac{1}{x} \) & \( \ln|x| + C \) \\ \\
+\( e^x \) & \( e^x + C \) \\ \\
+\( a^x \) (\( a > 0 \)) & \( \frac{a^x}{\ln a} + C \) \\ \\
+\( \sin(x) \) & \( -\cos(x) + C \) \\ \\
+\( \cos(x) \) & \( \sin(x) + C \) \\ \\
+\( \tan(x) \) & \( -\ln|\cos(x)| + C \) \\ \\
+\( \displaystyle \frac{1}{1+x^2} \) & \( \arctan(x) + C \) \\ \\
+\( \displaystyle \frac{1}{\sqrt{1-x^2}} \) & \( \arcsin(x) + C \) \\ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -2637,30 +2836,30 @@ Una \textbf{primitiva} (o antiderivada) de una función \( f \) es una función 
 %    $$
 %\end{definicion}
 
-\subsection{Teorema fundamental del cálculo}
-\subsubsection{Enunciado}
-\begin{teorema}[Teorema Fundamental del Cálculo]
-    Sea $f: [a, b] \to \mathbb{R}$ una función continua. Definimos $F: [a, b] \to \mathbb{R}$ como:
-    $$
-    F(x) = \int_a^x f(t)  dt.
-    $$
-    Entonces, $F$ es derivable en $(a, b)$ y se cumple:
-    $$
-    F'(x) = f(x) \quad \forall x \in (a, b).
-    $$
-    Además, si $G$ es cualquier primitiva de $f$ en $[a, b]$, entonces:
-    $$
-    \int_a^b f(x)  dx = G(b) - G(a).
-    $$
-\end{teorema}
+%\subsection{Teorema fundamental del cálculo}
+%\subsubsection{Enunciado}
+%\begin{teorema}[Teorema Fundamental del Cálculo]
+%    Sea $f: [a, b] \to \mathbb{R}$ una función continua. Definimos $F: [a, b] \to \mathbb{R}$ como:
+%    $$
+%    F(x) = \int_a^x f(t)  dt.
+%    $$
+%    Entonces, $F$ es derivable en $(a, b)$ y se cumple:
+%    $$
+%    F'(x) = f(x) \quad \forall x \in (a, b).
+%    $$
+%    Además, si $G$ es cualquier primitiva de $f$ en $[a, b]$, entonces:
+%    $$
+%    \int_a^b f(x)  dx = G(b) - G(a).
+%    $$
+%\end{teorema}
 
-\subsubsection{Aplicación al cálculo de primitivas}
-\begin{ejemplo}
-    Calculemos $\int_0^1 x^2  dx$ usando el Teorema Fundamental del Cálculo. Sabemos que $G(x) = \frac{x^3}{3}$ es una primitiva de $f(x) = x^2$. Por lo tanto:
-    $$
-    \int_0^1 x^2  dx = G(1) - G(0) = \frac{1^3}{3} - \frac{0^3}{3} = \frac{1}{3}.
-    $$
-\end{ejemplo}
+%\subsubsection{Aplicación al cálculo de primitivas}
+%\begin{ejemplo}
+%    Calculemos $\int_0^1 x^2  dx$ usando el Teorema Fundamental del Cálculo. Sabemos que $G(x) = \frac{x^3}{3}$ es una primitiva de $f(x) = x^2$. Por lo tanto:
+%    $$
+%    \int_0^1 x^2  dx = G(1) - G(0) = \frac{1^3}{3} - \frac{0^3}{3} = \frac{1}{3}.
+%    $$
+%\end{ejemplo}
 
 %\subsection{Integrales de funciones usuales}
 
@@ -2734,7 +2933,7 @@ Una \textbf{primitiva} (o antiderivada) de una función \( f \) es una función 
 
 %*******Integrales impropres
 
-\subsection{Teoría de integración: Riemann, Henstock-Kurzweil y Lebesgue}
+\subsection{Teorías de integración} %: Riemann, Henstock-Kurzweil y Lebesgue}
 
 \paragraph{Integración de Riemann: La idea clásica}
 La \textbf{integración de Riemann} es la primera teoría rigurosa de integración, desarrollada por Bernhard Riemann en el siglo XIX. Su idea central es aproximar el área bajo una curva \( f \) en un intervalo \([a, b]\) mediante sumas de áreas de rectángulos, donde la altura de cada rectángulo es el valor de \( f \) en un punto del subintervalo correspondiente.
@@ -2798,6 +2997,66 @@ La integral de Lebesgue maneja funciones muy irregulares, permite intercambiar l
 %\caption{Comparación de las teorías de integración.}
 %\end{table}
 
+\subsection{El integral de Henstock-Kurzweil} %definición, diferencias con Riemann y propiedades}
+
+\subsubsection{Definición del integral de Henstock-Kurzweil}
+El integral de Henstock-Kurzweil (también conocido como \textit{integral generalizada de Riemann}) es una extensión del concepto clásico de integral de Riemann. Una función $f: [a,b] \to \mathbb{R}$ es \textbf{integrable Henstock-Kurzweil} en $[a,b]$ si existe un número real $I$ tal que, para todo $\varepsilon > 0$, existe una \textbf{función de gauge} $\delta: [a,b] \to \mathbb{R}^+$ (es decir, una función que asigna a cada punto $x \in [a,b]$ un intervalo abierto $(x-\delta(x), x+\delta(x))$) con la siguiente propiedad:
+
+Para toda \textbf{partición etiquetada} $\{(t_i, [x_{i-1}, x_i])\}_{i=1}^n$ de $[a,b]$ (donde $a = x_0 < x_1 < \dots < x_n = b$ y $t_i \in [x_{i-1}, x_i]$), si $\max_{1 \leq i \leq n} |x_i - x_{i-1}| < \delta(t_i)$ para todo $i$, entonces:
+\[
+\left| \sum_{i=1}^n f(t_i)(x_i - x_{i-1}) - I \right| < \varepsilon.
+\]
+El número $I$ se denomina el \textbf{integral de Henstock-Kurzweil} de $f$ en $[a,b]$ y se denota como $(H)\int_a^b f(x) \, dx$.
+
+\subsubsection{Diferencias clave con el integral de Riemann}
+\begin{itemize}
+    \item \textbf{Particiones etiquetadas y funciones de gauge:} A diferencia del integral de Riemann, que requiere que todas las particiones tengan diámetro menor a un $\delta$ fijo, el integral de Henstock-Kurzweil permite que cada punto $t_i$ tenga su propio entorno $\delta(t_i)$. Esto hace que la definición sea más flexible y permita integrar funciones que no son integrables en el sentido de Riemann.
+
+    \item \textbf{Integración de funciones no acotadas:} El integral de Henstock-Kurzweil puede integrar funciones que no son acotadas en un conjunto de medida cero (por ejemplo, $f(x) = 1/x$ en $[0,1]$), mientras que el integral de Riemann no puede.
+
+    \item \textbf{Integración de funciones oscilantes:} Captura el comportamiento de funciones altamente oscilantes, como $f(x) = x^2 \sin(1/x)$ en $[0,1]$, que no son integrables en Riemann pero sí en Henstock-Kurzweil.
+\end{itemize}
+
+\subsubsection{Ejemplos ilustrativos}
+\begin{itemize}
+    \item \textbf{Ejemplo 1:} La función $f(x) = \frac{1}{x}$ en $[0,1]$ no es integrable en Riemann, pero es integrable en Henstock-Kurzweil:
+    \[
+    (H)\int_0^1 \frac{1}{x} \, dx = \lim_{\varepsilon \to 0^+} \int_\varepsilon^1 \frac{1}{x} \, dx = \lim_{\varepsilon \to 0^+} \ln(1) - \ln(\varepsilon) = +\infty.
+    \]
+
+    \item \textbf{Ejemplo 2:} La función $f(x) = x^2 \sin(1/x)$ en $[0,1]$ (con $f(0)=0$) es integrable en Henstock-Kurzweil, pero no en Riemann, debido a su comportamiento oscilante cerca de $x=0$.
+\end{itemize}
+
+\subsubsection{Propiedades principales}
+\begin{itemize}
+    \item \textbf{Linealidad:} Si $f$ y $g$ son integrables Henstock-Kurzweil en $[a,b]$, entonces $\alpha f + \beta g$ también lo es para todo $\alpha, \beta \in \mathbb{R}$, y:
+    \[
+    (H)\int_a^b (\alpha f + \beta g) \, dx = \alpha (H)\int_a^b f \, dx + \beta (H)\int_a^b g \, dx.
+    \]
+
+    \item \textbf{Aditividad:} Si $c \in (a,b)$, entonces $f$ es integrable en $[a,b]$ si y solo si lo es en $[a,c]$ y $[c,b]$, y:
+    \[
+    (H)\int_a^b f \, dx = (H)\int_a^c f \, dx + (H)\int_c^b f \, dx.
+    \]
+
+    \item \textbf{Teorema fundamental del cálculo:} Si $F$ es continua en $[a,b]$ y derivable en casi todo punto, con $F'$ integrable Henstock-Kurzweil, entonces:
+    \[
+    (H)\int_a^b F'(x) \, dx = F(b) - F(a).
+    \]
+
+    \item \textbf{Relación con otros integrales:} El integral de Henstock-Kurzweil generaliza al de Riemann y al de Lebesgue para funciones no negativas. Además, integra todas las funciones Lebesgue-integrables.
+\end{itemize}
+
+\subsubsection{Sugerencias de lectura}
+Si uno desea profundizar en el tema, recomiendo consultar las siguientes referencias:
+\begin{itemize}
+    \item \textbf{R. Henstock}, \textit{The General Theory of Integration}, Oxford University Press, 1963.
+    \item \textbf{W. F. Pfeffer}, \textit{The Riemann Approach to Integration: Logic, History and Pedagogy}, American Mathematical Monthly, 1986.
+    \item \textbf{J. Kurzweil}, \textit{Nonabsolutely Convergent Integrals}, World Scientific, 2000.
+    \item \textbf{R. Gordon}, \textit{The Integrals of Lebesgue, Denjoy, Perron, and Henstock}, American Mathematical Society, 1994.
+\end{itemize} % DEMAILLY
+Tambi\'en ver particularmente J.P. Demailly. \textit{Théorie élémentaire de l'intégration: l'intégrale de Kurzweil-Henstock}: \url{https://www-fourier.univ-grenoble-alpes.fr/~demailly/manuscripts/kurzweil_light.pdf} y \url{https://www-fourier.univ-grenoble-alpes.fr/~demailly/manuscripts/kurzweil_light.pdf}.
+
 \subsection{Series de Fourier (bis)} %: Coeficientes y Cálculo para \( f(x) = x \) en \([-π, π]\)}
 
 
@@ -2820,7 +3079,7 @@ Alternativamente, en forma compleja:
 f(x) = \sum_{n=-\infty}^\infty c_n e^{inx}, \quad
 c_n = \frac{1}{2\pi} \int_{-\pi}^\pi f(x) e^{-inx} \, dx.
 \]
----
+
 \paragraph{Cálculo de la serie de Fourier} % para \( f(x) = x \) en \([-π, π]\)}
 
 La función \( f(x) = x \) es \textbf{impar} (\( f(-x) = -f(x) \)) y periódica de período \( 2\pi \).
@@ -2901,7 +3160,7 @@ Una \textbf{integral impropia} es una integral definida donde el integrando no e
 
 \begin{center}
 $\star$
-Versión 1.02 -- 06 Abril 26
+Versión 1.03 -- 12 Abril 26
 $\star$
 \end{center}
 
@@ -3043,12 +3302,63 @@ $$
     \end{itemize}
 \end{ejemplo}
 
+%\subsection{Resolución de la ecuación del calor 1D mediante series de Fourier}
+
+\subsection{Ecuación del calor y series de Fourier}
+La ecuación del calor en una dimensión espacial, para un dominio $0 \leq x \leq L$ y tiempo $t \geq 0$, se expresa como:
+\[
+\frac{\partial u}{\partial t} = \alpha \frac{\partial^2 u}{\partial x^2},
+\]
+donde $u(x,t)$ representa la temperatura en la posición $x$ y el tiempo $t$, y $\alpha$ es la difusividad térmica del material.
+
+\subsubsection{Condiciones de contorno y iniciales}
+Consideramos las siguientes condiciones:
+\begin{itemize}
+    \item \textbf{Condiciones de contorno de Dirichlet:} $u(0,t) = u(L,t) = 0$ para todo $t \geq 0$.
+    \item \textbf{Condición inicial:} $u(x,0) = f(x)$ para $0 \leq x \leq L$.
+\end{itemize}
+
+\subsubsection{Solución por separación de variables}
+Asumimos una solución de la forma $u(x,t) = X(x)T(t)$. Sustituyendo en la ecuación del calor y separando variables, obtenemos:
+\[
+\frac{1}{\alpha T} \frac{dT}{dt} = \frac{1}{X} \frac{d^2X}{dx^2} = -\lambda,
+\]
+donde $\lambda$ es una constante de separación. Esto lleva a dos ecuaciones diferenciales ordinarias:
+\[
+\frac{d^2X}{dx^2} + \lambda X = 0,
+\]
+\[
+\frac{dT}{dt} + \alpha \lambda T = 0.
+\]
+La solución de la ecuación de $X(x)$ con las condiciones de contorno dadas es:
+\[
+X_n(x) = \sin\left(\frac{n\pi x}{L}\right), \quad n = 1, 2, 3, \dots
+\]
+y los valores propios correspondientes son $\lambda_n = \left(\frac{n\pi}{L}\right)^2$.
+La solución para $T(t)$ es:
+\[
+T_n(t) = e^{-\alpha \lambda_n t} = e^{-\alpha \left(\frac{n\pi}{L}\right)^2 t}.
+\]
+\subsubsection{Solución general mediante serie de Fourier}
+La solución general de la ecuación del calor es una superposición de las soluciones individuales:
+\[
+u(x,t) = \sum_{n=1}^{\infty} b_n \sin\left(\frac{n\pi x}{L}\right) e^{-\alpha \left(\frac{n\pi}{L}\right)^2 t},
+\]
+donde los coeficientes $b_n$ se determinan a partir de la condición inicial $f(x)$:
+\[
+b_n = \frac{2}{L} \int_0^L f(x) \sin\left(\frac{n\pi x}{L}\right) dx.
+\]
+
+\subsubsection{Interpretación física}
+La solución muestra que la temperatura en cada punto $x$ y tiempo $t$ es una combinación de modos de Fourier, cada uno decayendo exponencialmente con el tiempo. Los modos de mayor frecuencia ($n$ grande) decaen más rápido, lo que refleja la disipación térmica en el sistema.
+
 \begin{center}
 $\star$
-Versión 1.0 -- 18 Marzo 26
+Versión 1.02 -- 12 Abril 26
 $\star$
 \end{center}
 
+\newpage
 
 \section{Sugerencias de lecturas}
 
