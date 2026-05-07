@@ -86,6 +86,22 @@
 
 \newpage
 
+%**Cálculo para las Ciencias Aplicadas**
+
+Estas notas constituyen un material de apoyo para un curso de Cálculo Diferencial e Integral dirigido a estudiantes de grado (licenciatura) en Ciencias Aplicadas, en particular en física y astronomía, pero también en ingeniería y química, entre otras disciplinas.
+
+Provienen principalmente de los cursos de Cálculo Diferencial e Integral I impartidos en los años 2024 y 2026 en la Facultad de Ciencias de la UdelaR, así como de cursos dictados anteriormente en Francia, en particular en el Instituto Superior de Ingenieros de Franche-Comté (ISIFC) en Besançon, y en el segundo año de la Licenciatura en Matemáticas de la Universidad de Bourgogne (UB). 
+Se basa principalmente en los libros de Stewart y de Hairer \& Wanner, y tiene influencias de los libros de Eriksson, Estep \& Johnson, de Gasquet \& Witomski, de S\"uli \& Mayers, de Gander \& Kwok, de Bishop \& Bridges y de los apuntes de Demailly.
+
+% Stewart Pisk Hairer 
+
+
+%A pesar de mi formación como analista, en estas notas he pretendido redactar un curso de cálculo donde se prioriza, por un lado, la **comprensión cualitativa de los conceptos** y su inserción en un marco histórico, y, por otro, el **dominio de las técnicas de cálculo** a través de ejemplos concretos, dejando de lado en cierta medida el rigor estricto de los enunciados y las demostraciones.
+
+%Estas notas se inspiran, en parte, en dos obras clásicas: los textos de **Stewart** y de **Piskunov**. Asimismo, recogen reflexiones surgidas de la lectura de los trabajos y apuntes de **J.-P. Demailly**, **E. Hairer** y **G. Wanner**, **C. Johnson**, así como de discusiones mantenidas con **Sébastien Alvarez**, **Roland Becker** y **J.-M. Crolet**. A todos ellos, y a los estudiantes, mi más sincero agradecimiento.
+
+\newpage
+
 \section{Funciones}
 
 \subsection{Lo mínimo}
@@ -1363,7 +1379,7 @@ siempre que el límite del lado derecho exista.
 
 \textbf{Ejemplo:}
 $$
-\lim_{x \to 0} \frac{\sin(x)}{x} \quad \text{(forma } \frac{0}{0}\text{)}.
+\lim_{x \to 0} \frac{\sin(x)}{x} \quad \left ( \text{forma } \frac{0}{0}\text{}\right).
 $$
 Aplicando L'Hôpital:
 $$
@@ -1487,14 +1503,14 @@ Todas estas funciones son continuas en sus respectivos dominios, ya que son comp
     La demostración se basa en el método de bisección. Consideremos el punto medio $m = \frac{a + b}{2}$. Si $f(m) = 0$, hemos terminado. Si no, $f(m)$ tiene el mismo signo que $f(a)$ o $f(b)$. Repetimos el proceso en el subintervalo correspondiente. Por el axioma de completez de los números reales, este proceso converge a un punto $c$ donde $f(c) = 0$.
 %\end{proof}
 
-\paragraph{Teorema de Brouwer (enunciado, demostración en 1D y ejemplo)}
+\paragraph{Teorema de Brouwer} %(enunciado, demostración en 1D y ejemplo)}
 \begin{teorema}[Teorema de Brouwer]
 Sea $K \subset \mathbb{R}^n$ un conjunto compacto y convexo, y sea $f: K \to K$ una función continua. Entonces existe al menos un punto fijo para $f$, es decir, existe $x^* \in K$ tal que $f(x^*) = x^*$.
 \end{teorema}
 
 \paragraph{Demostración en 1D}
 En el caso unidimensional ($n=1$), el teorema se reduce a: Sea $K = [a, b] \subset \mathbb{R}$ y $f: [a, b] \to [a, b]$ continua. Entonces existe $x^* \in [a, b]$ tal que $f(x^*) = x^*$.
-\textbf{Demostración:}
+%\textbf{Demostración:}
 Consideremos la función $g(x) = f(x) - x$. Como $f$ es continua, $g$ es continua en $[a, b]$.
 Observamos que 
 $a\leq f(a) \leq b$, entonces
@@ -1514,7 +1530,7 @@ Sea $K = [0, 1]$ y $f(x) = \frac{x + 1}{2}$. Claramente, $f: [0, 1] \to [0, 1]$ 
 \paragraph{Nota}
 El Teorema del Punto Fijo de Brouwer establece que cualquier función continua de un conjunto convexo y compacto en sí mismo tiene al menos un punto fijo. En términos de campos vectoriales, esto significa que en un dominio simplemente conexo y acotado, existe al menos un punto donde el campo vectorial se anula (un punto fijo).
 
-\paragraph{Ejemplo: Movimiento en una Taza de Café}
+\paragraph{Ejemplo: movimiento en una taza de café}
 Imagina una taza de café donde el líquido se mueve debido a la rotación de una cuchara. El campo vectorial que describe el movimiento del líquido en la superficie de la taza debe tener al menos un punto donde el líquido no se mueve (un punto fijo).
 
 \paragraph{Teorema de Weierstrass (o Teorema de los valores extremos)}
@@ -1607,11 +1623,11 @@ El fenómeno de Runge es un problema de oscilación en los bordes que ocurre al 
 La \textbf{interpolación de Lagrange} es fundamental en los métodos de elementos finitos (EF) porque permite aproximar una función desconocida en un dominio discretizado mediante polinomios locales definidos sobre cada elemento. Gracias a esta interpolación, es posible representar la solución de una ecuación diferencial parcial (EDP) con precisión y flexibilidad, utilizando funciones base (los polinomios de Lagrange) que valen 1 en un nodo y 0 en todos los demás. Esto garantiza la continuidad de la solución aproximada entre los elementos, esencial para la estabilidad y convergencia de los métodos EF. Además, la interpolación de Lagrange facilita la construcción de espacios funcionales adecuados, adaptados a la regularidad del problema y a la geometría del dominio, lo que simplifica tanto la implementación numérica como el análisis teórico de los esquemas EF.
 
 \paragraph{Referencia}
-Para más detalles, consulta el libro *An Introduction to Numerical Analysis* de Endre Süli y David F. Mayers.
+Para más detalles, consulta el libro \emph{An Introduction to Numerical Analysis} de Endre Süli y David F. Mayers.
 
 \begin{center}
 $\star$
-Versión 1.1 -- 30 Marzo 26
+Versión 1.2 -- 4 Mayo 26
 $\star$
 \end{center}
 
@@ -1778,7 +1794,7 @@ Finalmente identificamos y viene:
 \]
 De la misma forma, partemos de:
 \begin{align*}
-\sin x = 
+\sen x = 
 x 
 - \frac{x^3}{3!} 
 + \frac{x^5}{5!} 
@@ -1789,7 +1805,7 @@ x
 \end{align*}
 y derivamos cada termino:
 \begin{align*}
-\frac{d\sin x}{dx} = 
+\frac{d\sen x}{dx} = 
 1 
 - \frac{3x^2}{3!} 
 + \frac{5x^4}{5!} 
@@ -1800,7 +1816,7 @@ y derivamos cada termino:
 \end{align*}
 De nuevo simplificamos
 \begin{align*}
-\frac{d\sin x}{dx} = 
+\frac{d\sen x}{dx} = 
 1 
 - \frac{x^2}{2} 
 + \frac{x^4}{4!} 
@@ -1811,7 +1827,7 @@ De nuevo simplificamos
 \end{align*}
 Identificamos y resulta que:
 \[
-\frac{d\sin x}{dx} = \cos(x).
+\frac{d\sen x}{dx} = \cos(x).
 \]
 %
 %   \begin{itemize}
@@ -2173,7 +2189,7 @@ Esto significa que en algún momento, la velocidad instantánea del ciclista fue
 
 El método del gradiente descendente es un algoritmo de optimización utilizado para minimizar funciones, especialmente en el contexto de funciones de costo o pérdida. Es fundamental en métodos numéricos y aprendizaje automático.
 
-\subsubsection{Descripción del Método}
+\subsubsection{Descripción del método}
 El gradiente descendente es un algoritmo iterativo que busca el mínimo de una función diferenciable. Dada una función $f(x)$, el método actualiza el valor de $x$ en la dirección opuesta al gradiente de $f$ en $x$, con un tamaño de paso $\alpha$ (tasa de aprendizaje).
 
 \subsubsection{Algoritmo}
@@ -2188,7 +2204,7 @@ El algoritmo se describe como sigue:
     \item Repetir hasta que se cumpla un criterio de parada (por ejemplo, $f'(x_k)$ es cercano a cero).
 \end{enumerate}
 
-\subsubsection{Ejemplo Práctico}
+\subsubsection{Ejemplo práctico}
 \begin{ejemplo}
 Consideremos la función $f(x) = x^2 - 4x + 5$. Queremos encontrar el valor de $x$ que minimiza $f(x)$ usando el método del gradiente descendente.
 
@@ -2271,7 +2287,7 @@ Consideremos la función \( f(x) = x^2 - 2 \) y busquemos una aproximación de \
 
 Tras estas iteraciones, obtenemos una aproximación de \( \sqrt{2} \) con una precisión de cuatro decimales: \( x_3 \approx 1.4142 \).
 
-\subsection{Orden Superior y Fórmula de Taylor}
+\subsection{Orden superior y fórmula de Taylor}
 
 El estudio de las \textbf{derivadas de orden superior} y la \textbf{fórmula de Taylor-Young} es fundamental, ya que permiten aproximar funciones mediante polinomios y entender su comportamiento local.
 
@@ -2341,7 +2357,7 @@ A continuación, se presentan las expansiones de Taylor para algunas funciones c
 \textbf{Función} & \textbf{Serie de Taylor (Maclaurin)} \\ \\
 \hline \\
 \( e^x \) & \( \displaystyle 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \frac{x^4}{4!} + \cdots \) \\ \\
-\( \sin(x) \) & \( \displaystyle x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} + \cdots \) \\ \\
+\( \sen(x) \) & \( \displaystyle x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} + \cdots \) \\ \\
 \( \cos(x) \) & \( \displaystyle 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \frac{x^6}{6!} + \cdots \) \\ \\
 \( \ln(1+x) \) & \( \displaystyle x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4} + \cdots \) \quad (\( |x| < 1 \)) \\ \\
 \( (1+x)^\alpha \) & \( \displaystyle 1 + \alpha x + \frac{\alpha(\alpha-1)}{2!}x^2 + \frac{\alpha(\alpha-1)(\alpha-2)}{3!}x^3 + \cdots \) \quad (\( |x| < 1 \)) \\ \\
@@ -2450,7 +2466,7 @@ Aunque \( f \) es derivable en todo \( \mathbb{R} \), su derivada \( f' \) no es
     Como \( f'(0) = 0 \) pero \( \lim_{x \to 0} f'(x) \) no existe, la función \( f' \) no es continua en \( x = 0 \).
 \end{itemize}
 
-\subsection{Función de Weierstrass}
+\subsubsection{Función de Weierstrass}
 
 La \textbf{función de Weierstrass} es un clásico ejemplo de una función que es \textbf{continua} pero \textbf{no derivable en ningún punto}, y su gráfico tiene propiedades fractales. Se define mediante la serie:
 \[
@@ -2458,19 +2474,19 @@ f(x) = \sum_{n=0}^{\infty} a^n \cos(b^n \pi x)
 \]
 donde \(0 < a < 1\), \(b\) es un entero impar, y se cumple \(ab > 1 + \frac{3}{2}\pi\).
 
-\subsection*{Propiedades clave}
+\subsubsection*{Propiedades clave}
 \begin{itemize}
     \item \textbf{Continua}: La serie converge uniformemente, así que \(f(x)\) es continua en todo \(\mathbb{R}\).
     \item \textbf{Fractal}: La dimensión de Hausdorff de su gráfico es mayor que 1 (típicamente entre 1 y 2).
     \item \textbf{No derivable}: Es "áspera" en todas partes, como una fractal.
 \end{itemize}
 
-\subsection*{Ejemplo con \(a = 0.5\) y \(b = 3\)}
+\subsubsection*{Ejemplo con \(a = 0.5\) y \(b = 3\)}
 \[
 f(x) = \sum_{n=0}^{10} 0.5^n \cos(3^n \pi x)
 \]
 
-\subsection*{Gráfico aproximado}
+\subsubsection*{Gráfico aproximado}
 \begin{center}
 \begin{tikzpicture}
 \begin{axis}[
@@ -2539,7 +2555,7 @@ H_{2n+1}(x) = \sum_{i=0}^n \left[ y_i H_i(x) + y_i' \tilde{H}_i(x) \right].
 %\usepackage{amssymb}
 %\usepackage{mathpazo} % Para tipografía más clara
 
-{Solución del Estado Fundamental del Oscilador Armónico Cuántico}
+%{Solución del Estado Fundamental del Oscilador Armónico Cuántico}
 
 %\section{Solución del Estado Fundamental}
 
@@ -2585,7 +2601,7 @@ La función de onda normalizada para el \textbf{estado fundamental} (el de menor
 
 Vamos a demostrar que \(\psi_0(x)\) es solución de la ecuación de Schrödinger, calculando sus derivadas y sustituyéndolas en la ecuación.
 
-\paragraph{Paso 1: Primera derivada}
+\paragraph{Paso 1: primera derivada}
 Calculamos \(\frac{d\psi_0(x)}{dx}\):
 \begin{equation*}
     \frac{d\psi_0(x)}{dx} = \left( \frac{m\omega}{\pi\hbar} \right)^{1/4} \left( -\frac{m\omega x}{\hbar} \right) e^{-\frac{m\omega x^2}{2\hbar}}.
@@ -2596,7 +2612,7 @@ Calculamos \(\frac{d\psi_0(x)}{dx}\):
     \item La derivada de la exponencial gaussiana es proporcional a \(x\), lo que refleja la simetría del estado fundamental.
 \end{itemize}
 
-\paragraph{Paso 2: Segunda derivada}
+\paragraph{Paso 2: segunda derivada}
 Calculamos \(\frac{d^2\psi_0(x)}{dx^2}\):
 \begin{equation*}
     \frac{d^2\psi_0(x)}{dx^2} = \left( \frac{m\omega}{\pi\hbar} \right)^{1/4} \left[ -\frac{m\omega}{\hbar} + \left( \frac{m\omega x}{\hbar} \right)^2 \right] e^{-\frac{m\omega x^2}{2\hbar}}.
@@ -2608,7 +2624,7 @@ Calculamos \(\frac{d^2\psi_0(x)}{dx^2}\):
     \item El término \(\left( \frac{m\omega x}{\hbar} \right)^2\) depende de \(x^2\), lo que refleja la parabolicidad del potencial.
 \end{itemize}
 
-\paragraph{Paso 3: Sustitución en la ecuación de Schrödinger}
+\paragraph{Paso 3: sustitución en la ecuación de Schrödinger}
 Sustituimos las derivadas en la ecuación de Schrödinger y simplificamos:
 \begin{itemize}
     \item \textbf{Término cinético}:
@@ -2646,9 +2662,97 @@ Hemos verificado que:
 \end{equation*}
 confirmando que \(\psi_0(x)\) es efectivamente solución de la ecuación de Schrödinger para el oscilador armónico cuántico, con energía \(E_0 = \frac{1}{2}\hbar\omega\).
 
+\subsection{Cálculo del mínimo de energía potencial electrostática}
+
+\begin{paragraph}{Contexto físico}
+Dos cargas puntuales \( q_1 \) y \( q_2 \) están ubicadas sobre un eje a una distancia \( d \) entre sí. Se busca determinar la posición \( x \) de una tercera carga \( q_0 \) (positiva) sobre el mismo eje, de modo que la energía potencial total del sistema sea mínima.
+
+La energía potencial electrostática entre dos cargas \( q_i \) y \( q_j \) separadas por una distancia \( r_{ij} \) está dada por la expresión:
+$$
+E_{\text{pot}} = k \frac{q_i q_j}{r_{ij}}
+$$
+donde \( k = \frac{1}{4 \pi \epsilon_0} \) es la constante de Coulomb. Para simplificar, tomaremos \( k = 1 \).
+\end{paragraph}
+
+\begin{paragraph}{Datos}
+\begin{itemize}
+    \item \( q_1 = +1 \) (C)
+    \item \( q_2 = +1 \) (C)
+    \item \( d = 2 \) (m)
+    \item \( q_0 = +1 \) (C)
+    \item La carga \( q_0 \) se coloca a una distancia \( x \) de \( q_1 \) (por lo tanto, a una distancia \( d - x \) de \( q_2 \)).
+\end{itemize}
+\end{paragraph}
+
+%\begin{paragraph}{Preguntas}
+%\begin{enumerate}
+%    \item Expresar la energía potencial total \( E(x) \) del sistema en función de \( x \).
+%    \item Encontrar la posición \( x \) que minimiza \( E(x) \).
+%    \item Interpretar físicamente el resultado.
+%\end{enumerate}
+%\end{paragraph}
+
+%\begin{paragraph}{Solución detallada}
+%\end{paragraph}
+
+\begin{paragraph}{Expresión de la energía potencial total}
+La energía potencial total del sistema es la suma de las energías potenciales entre cada par de cargas:
+$$
+E(x) = E_{10} + E_{20}
+$$
+donde:
+\begin{align*}
+E_{10} &= \frac{q_1 q_0}{x} = \frac{1 \cdot 1}{x} = \frac{1}{x} \\
+E_{20} &= \frac{q_2 q_0}{d - x} = \frac{1 \cdot 1}{2 - x} = \frac{1}{2 - x}
+\end{align*}
+Por lo tanto:
+$$
+E(x) = \frac{1}{x} + \frac{1}{2 - x}
+$$
+\end{paragraph}
+
+\begin{paragraph}{Cálculo del mínimo}
+Para encontrar el mínimo, derivamos \( E(x) \) con respecto a \( x \) y buscamos el punto crítico:
+$$
+E'(x) = -\frac{1}{x^2} + \frac{1}{(2 - x)^2}
+$$
+Igualamos la derivada a cero:
+$$
+-\frac{1}{x^2} + \frac{1}{(2 - x)^2} = 0
+\quad \Rightarrow \quad
+\frac{1}{(2 - x)^2} = \frac{1}{x^2}
+$$
+Desarrollamos:
+$$
+(2 - x)^2 = x^2
+\quad \Rightarrow \quad
+4 - 4x + x^2 = x^2
+\quad \Rightarrow \quad
+4 - 4x = 0
+\quad \Rightarrow \quad
+x = 1
+$$
+\end{paragraph}
+
+\begin{paragraph}{Verificación del mínimo}
+Calculamos la segunda derivada para confirmar que es un mínimo:
+$$
+E''(x) = \frac{2}{x^3} + \frac{2}{(2 - x)^3}
+$$
+En \( x = 1 \):
+$$
+E''(1) = 2 + 2 = 4 > 0
+$$
+Como \( E''(1) > 0 \), la función tiene un mínimo en \( x = 1 \).
+\end{paragraph}
+
+\begin{paragraph}{Interpretación física}
+La energía potencial es mínima cuando la carga \( q_0 \) está exactamente en el punto medio entre \( q_1 \) y \( q_2 \) (\( x = 1 \) m). Esto tiene sentido físicamente, ya que las cargas son del mismo signo y la repulsión es simétrica.
+\end{paragraph}
+
 \begin{center}
 $\star$
-Versión 1.04 -- 12 Abril 26
+Versión 1.06 -- 05 Mayo 26
 $\star$
 \end{center}
 
@@ -2935,7 +3039,7 @@ Una \textbf{primitiva} (o antiderivada) de una función \( f \) es una función 
 
 \subsection{Teorías de integración} %: Riemann, Henstock-Kurzweil y Lebesgue}
 
-\paragraph{Integración de Riemann: La idea clásica}
+\subsubsection{Integración de Riemann: la idea clásica}
 La \textbf{integración de Riemann} es la primera teoría rigurosa de integración, desarrollada por Bernhard Riemann en el siglo XIX. Su idea central es aproximar el área bajo una curva \( f \) en un intervalo \([a, b]\) mediante sumas de áreas de rectángulos, donde la altura de cada rectángulo es el valor de \( f \) en un punto del subintervalo correspondiente.
 
 \begin{itemize}
@@ -2953,7 +3057,7 @@ La \textbf{integración de Riemann} es la primera teoría rigurosa de integraci�
 \paragraph{Limitaciones de Riemann}
 La integral de Riemann funciona bien para funciones continuas o con discontinuidades "razonables", pero falla para funciones con muchas discontinuidades (por ejemplo, la función de Dirichlet). Además, no permite integrar funciones que no están acotadas en intervalos no acotados.
 
-\paragraph{Integración de Henstock-Kurzweil: Una generalización elegante}
+\subsubsection{Integración de Henstock-Kurzweil: una generalización elegante}
 La \textbf{integración de Henstock-Kurzweil} (también llamada \textit{integral gauge}), desarrollada por Jaroslav Kurzweil y Ralph Henstock en el siglo XX, generaliza la integral de Riemann y de Lebesgue. Su idea clave es permitir que la elección de los puntos \( \xi_i \) en la partición dependa de la función, no solo de la partición.
 
 \begin{itemize}
@@ -2965,7 +3069,8 @@ La \textbf{integración de Henstock-Kurzweil} (también llamada \textit{integral
 \paragraph{Ventajas}
 Esta teoría incluye todas las funciones integrables en el sentido de Riemann y de Lebesgue, pero también funciones como \( \frac{1}{x} \sin\left(\frac{1}{x^3}\right) \) o \( x^2 \sin\left(\frac{1}{x^2}\right) \), que no son integrables en los sentidos clásico o de Lebesgue.
 
-\paragraph{Integración de Lebesgue: Integración por niveles}
+\subsubsection{Integración de Lebesgue: Integración por niveles}
+
 La \textbf{integración de Lebesgue}, desarrollada por Henri Lebesgue a principios del siglo XX, es una de las teorías de integración más poderosas. Su idea central es integrar por niveles en lugar de por intervalos.
 
 \begin{itemize}
@@ -3055,7 +3160,13 @@ Si uno desea profundizar en el tema, recomiendo consultar las siguientes referen
     \item \textbf{J. Kurzweil}, \textit{Nonabsolutely Convergent Integrals}, World Scientific, 2000.
     \item \textbf{R. Gordon}, \textit{The Integrals of Lebesgue, Denjoy, Perron, and Henstock}, American Mathematical Society, 1994.
 \end{itemize} % DEMAILLY
-Tambi\'en ver particularmente J.P. Demailly. \textit{Théorie élémentaire de l'intégration: l'intégrale de Kurzweil-Henstock}: \url{https://www-fourier.univ-grenoble-alpes.fr/~demailly/manuscripts/kurzweil_light.pdf} y \url{https://www-fourier.univ-grenoble-alpes.fr/~demailly/manuscripts/kurzweil_light.pdf}.
+Tambi\'en ver particularmente J.P. Demailly.
+
+\textit{Théorie élémentaire de l'intégration: l'intégrale de Kurzweil-Henstock}: 
+
+{\footnotesize \url{https://www-fourier.univ-grenoble-alpes.fr/~demailly/manuscripts/kurzweil_light.pdf}} %y 
+
+%\url{https://www-fourier.univ-grenoble-alpes.fr/~demailly/manuscripts/kurzweil_light.pdf}.
 
 \subsection{Series de Fourier (bis)} %: Coeficientes y Cálculo para \( f(x) = x \) en \([-π, π]\)}
 
@@ -3160,7 +3271,7 @@ Una \textbf{integral impropia} es una integral definida donde el integrando no e
 
 \begin{center}
 $\star$
-Versión 1.03 -- 12 Abril 26
+Versión 1.04 -- 6 Mayo 26
 $\star$
 \end{center}
 
@@ -3357,6 +3468,8 @@ $\star$
 Versión 1.02 -- 12 Abril 26
 $\star$
 \end{center}
+
+\end{document}
 
 \newpage
 
