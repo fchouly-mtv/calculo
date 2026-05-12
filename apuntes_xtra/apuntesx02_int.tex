@@ -1,0 +1,233 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{mathpazo} % Palatino para texto y matemáticas
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{parskip}
+
+\title{\textbf{Cambio de variable en integrales de una dimensión}}
+\author{Franz Chouly}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Preliminares: integración con límites invertidos}
+
+En esta sección se discute cómo el \textbf{Teorema Fundamental del Cálculo} permite dar sentido a integrales donde el límite inferior es mayor que el superior, es decir, integrales de la forma \(\int_b^a f(t) \, dt\) con \(b < a\).
+
+\subsection{Teorema fundamental del cálculo}
+El \textbf{Teorema Fundamental del Cálculo} establece que si \(f\) es una función \textbf{continua} en un intervalo \([a, b]\), entonces existe una función \(F\) (llamada \textbf{primitiva} o \textbf{antiderivada} de \(f\)) tal que:
+\[
+F'(x) = f(x) \quad \text{para todo } x \in [a, b],
+\]
+y además,
+\[
+\int_a^b f(t) \, dt = F(b) - F(a).
+\]
+
+\subsection{Inversión de los límites de integración}
+Supongamos ahora que \(b < a\). Para definir \(\int_b^a f(t) \, dt\), utilizamos la primitiva \(F\) de \(f\) y aplicamos el teorema fundamental de manera consistente:
+\[
+\int_b^a f(t) \, dt = F(a) - F(b).
+\]
+Sin embargo, observamos que:
+\[
+F(a) - F(b) = - \left( F(b) - F(a) \right) = - \int_a^b f(t) \, dt.
+\]
+Por lo tanto, podemos \textbf{definir} la integral con límites invertidos como:
+\[
+\int_b^a f(t) \, dt = - \int_a^b f(t) \, dt.
+\]
+
+\subsection{Coherencia con la propiedad de aditividad (Regla de Chasles)}
+Esta definición es \textbf{coherente} con la \textbf{propiedad de aditividad} de las integrales (también conocida como \textbf{regla de Chasles}), que establece que para cualquier \(a, b, c\) en el dominio de \(f\):
+\[
+\int_a^c f(t) \, dt = \int_a^b f(t) \, dt + \int_b^c f(t) \, dt.
+\]
+
+En particular, si tomamos \(c = a\), obtenemos:
+\[
+\int_a^a f(t) \, dt = \int_a^b f(t) \, dt + \int_b^a f(t) \, dt.
+\]
+Pero \(\int_a^a f(t) \, dt = 0\) (la integral sobre un intervalo de longitud cero es nula). Por lo tanto:
+\[
+0 = \int_a^b f(t) \, dt + \int_b^a f(t) \, dt.
+\]
+Despejando, recuperamos la definición anterior:
+\[
+\int_b^a f(t) \, dt = - \int_a^b f(t) \, dt.
+\]
+
+\subsection{Interpretación geométrica}
+Desde un punto de vista geométrico, la integral \(\int_a^b f(t) \, dt\) representa el \textbf{área con signo} bajo la curva \(y = f(t)\) entre \(a\) y \(b\):
+\begin{itemize}
+    \item Si \(a < b\), el área se calcula de izquierda a derecha.
+    \item Si \(b < a\), la integral \(\int_b^a f(t) \, dt\) invierte el sentido del recorrido (de derecha a izquierda), lo que justifica el signo negativo.
+\end{itemize}
+
+\subsection{Ejemplo}
+Consideremos \(f(t) = t^2\) y calculemos \(\int_2^1 t^2 \, dt\):
+\[
+\int_2^1 t^2 \, dt = - \int_1^2 t^2 \, dt = - \left[ \frac{t^3}{3} \right]_1^2 = - \left( \frac{8}{3} - \frac{1}{3} \right) = - \frac{7}{3}.
+\]
+Esto coincide con la primitiva evaluada directamente:
+\[
+F(t) = \frac{t^3}{3}, \quad \int_2^1 t^2 \, dt = F(1) - F(2) = \frac{1}{3} - \frac{8}{3} = - \frac{7}{3}.
+\]
+
+\subsection{Observación final}
+Esta convención es \textbf{universal} en matemáticas y física, y garantiza que las propiedades algebraicas de las integrales (como la linealidad y la aditividad) se mantengan incluso cuando los límites están invertidos.
+
+%***
+%\section{Preliminar}
+
+%Teorema fundamental, si $b<a$, el teorema fundamental permite dar un sentido a
+%\[
+%\int_b^a f(t) dt.
+%\]
+%En efecto
+%\[
+%\int_b^a f(t) dt = F(a) - F(b) = - (F(b) - F(a))
+%=:
+%- \int_a^b f(t) dt.
+%\]
+%Es coherente con la regla de Chasles, porque tenemos
+%\[
+%0= \int_a^a f(t)dt 
+%= \int_a^b f(t)dt + \int_b^a f(t)dt.
+%\]
+
+\section{Fórmula de cambio de variable en $\mathbb{R}^1$}
+
+
+Dada una función $f: [a, b] \to \mathbb{R}$ integrable, y una función $\phi: [\alpha, \beta] \to [a, b]$ \textbf{biyectiva}, \textbf{continua} y \textbf{diferenciable} con $\phi'(\theta) \neq 0$ para todo $\theta \in [\alpha, \beta]$, se cumple:
+\[
+\int_{a}^{b} f(x) \, dx = \int_{\alpha}^{\beta} f(\phi(\theta)) \cdot |\phi'(\theta)| \, d\theta
+\]
+
+\subsection*{Explicación}
+\begin{itemize}
+    \item $\phi'(\theta)$ es la \textbf{derivada} de $\phi$ (el "jacobiano" en 1D).
+    \item El valor absoluto $|\phi'(\theta)|$ asegura que la integral preserve el signo del área.
+%    \item Si $\phi$ es \textbf{decreciente} (es decir, $\phi'(\theta) < 0$), los límites de integración se invierten: $\alpha \to \beta$ pasa a ser $\beta \to \alpha$.
+\end{itemize}
+
+\subsection{Demostración del teorema de cambio de variable}
+
+\paragraph{Caso $\phi$ creciente}
+Supongamos que $\phi: [\alpha, \beta] \to [a, b]$ es una función de clase $C^1$ (continuamente diferenciable) y \textbf{estrictamente creciente}, con $\phi'(\theta) > 0$ para todo $\theta \in [\alpha, \beta]$. Sea $f: [a, b] \to \mathbb{R}$ una función continua, y $F$ una primitiva de $f$ en $[a, b]$, es decir, $F'(x) = f(x)$ para todo $x \in [a, b]$.
+
+Aplicamos el \textbf{Teorema Fundamental del Cálculo} y la \textbf{regla de la cadena}:
+\begin{align*}
+\int_{a}^{b} f(x) \, dx &= F(b) - F(a) \\
+&= F(\phi(\beta)) - F(\phi(\alpha)) \quad \text{(por definición de $a$ y $b$)} \\
+&= \int_{\alpha}^{\beta} \frac{d}{d\theta} [F(\phi(\theta))] \, d\theta \quad \text{(Teorema Fundamental)} \\
+&= \int_{\alpha}^{\beta} F'(\phi(\theta)) \cdot \phi'(\theta) \, d\theta \quad \text{(Regla de la Cadena)} \\
+&= \int_{\alpha}^{\beta} f(\phi(\theta)) \cdot \phi'(\theta) \, d\theta \quad \text{(pues $F' = f$)}.
+\end{align*}
+
+\paragraph{Caso $\phi$ decreciente}
+Ahora, supongamos que $\phi: [\alpha, \beta] \to [a, b]$ es de clase $C^1$ y \textbf{estrictamente decreciente}, con $\phi'(\theta) < 0$ para todo $\theta \in [\alpha, \beta]$. En este caso, los extremos del intervalo se invierten: $a = \phi(\beta)$ y $b = \phi(\alpha)$.
+
+Repitiendo el procedimiento:
+\begin{align*}
+\int_{a}^{b} f(x) \, dx &= F(b) - F(a) \\
+&= F(\phi(\alpha)) - F(\phi(\beta)) \quad \text{(pues $a = \phi(\beta)$ y $b = \phi(\alpha)$)} \\
+&= - \left( F(\phi(\beta)) - F(\phi(\alpha)) \right) \\
+&= - \int_{\alpha}^{\beta} \frac{d}{d\theta} [F(\phi(\theta))] \, d\theta \\
+&= - \int_{\alpha}^{\beta} f(\phi(\theta)) \cdot \phi'(\theta) \, d\theta \\
+&= \int_{\beta}^{\alpha} f(\phi(\theta)) \cdot \phi'(\theta) \, d\theta \quad \text{(inversión de límites)} \\
+&= \int_{\alpha}^{\beta} f(\phi(\theta)) \cdot |\phi'(\theta)| \, d\theta \quad \text{(pues $\phi'(\theta) < 0$)}.
+\end{align*}
+
+\subsection{Síntesis}
+En ambos casos, el cambio de variable en integrales se puede expresar de manera unificada como:
+\[
+\int_{a}^{b} f(x) \, dx = \int_{\alpha}^{\beta} f(\phi(\theta)) \cdot |\phi'(\theta)| \, d\theta,
+\]
+donde $\phi$ es una función biyectiva y de clase $C^1$ en $[\alpha, \beta]$. El valor absoluto en $|\phi'(\theta)|$ garantiza que la integral conserve su signo independientemente de si $\phi$ es creciente o decreciente.
+
+%***
+%\subsection{Demontracion}
+
+%\paragraph{Caso $\phi$ creciente}
+
+%En este caso, tenemos
+%\[
+%a = \phi(\alpha)\quad b = \phi(\beta).
+%\]
+%Entonces, con $F$ primitiva de $f$ y aplicando el Teorema Fundamental y luego la regla de la cadena y luego el teorema fundamental de nuevo.
+%\begin{eqnarray}
+%\int_{a}^{b} f(x) \, dx 
+%&=& F(b) - F(a) \\
+%&=& F(\phi(\beta)) - F(\phi(\alpha))\\
+%&=& \int_\alpha^\beta (F \circ \phi)'(\theta)
+%d\theta\\
+%&=& \int_\alpha^\beta (F' \circ \phi)(\theta) \phi'(\theta)
+%d\theta\\
+%&=& \int_\alpha^\beta f ( \phi(\theta)) \phi'(\theta)
+%d\theta
+%.
+%\end{eqnarray}
+
+%Caso D
+%
+%Resumimos
+%$I = (a;b)$ $J=\min$
+%entonces
+
+
+%\subsection{Mas detalles}
+
+\subsection{Ejemplo clásico: sustitución trigonométrica}
+Para calcular $\int_{-1}^{1} \frac{1}{\sqrt{1 - x^2}} \, dx$, usamos $x = \sin(\theta)$:
+\begin{align*}
+    \phi(\theta) &= \sin(\theta), \quad \phi'(\theta) = \cos(\theta), \\
+    \phi^{-1}(-1) &= -\frac{\pi}{2}, \quad \phi^{-1}(1) = \frac{\pi}{2}.
+\end{align*}
+La integral se transforma en:
+\[
+\int_{-\pi/2}^{\pi/2} \frac{1}{\sqrt{1 - \sin^2(\theta)}} \cdot \cos(\theta) \, d\theta = \int_{-\pi/2}^{\pi/2} 1 \, d\theta = \pi.
+\]
+
+\section{Aplicación a funciones pares e impares}
+Si $f$ es una función \textbf{par} ($f(-x) = f(x)$) o \textbf{impar} ($f(-x) = -f(x)$), y el intervalo $[a, b]$ es simétrico respecto al origen (es decir, $a = -b$), entonces:
+
+\[
+\int_{-b}^{b} f(x) \, dx =
+\begin{cases}
+2 \displaystyle \int_{0}^{b} f(x) \, dx & \text{si } f \text{ es par}, \\
+0 & \text{si } f \text{ es impar}.
+\end{cases}
+\]
+
+\subsection*{Demostración para funciones impares}
+Usamos el cambio de variable $x = -u$:
+\begin{align*}
+    \int_{-b}^{b} f(x) \, dx &= \int_{b}^{-b} f(-u) \cdot (-1) \, du \quad (\text{porque } dx = -du) \\
+    &= -\int_{b}^{-b} f(-u) \, du = \int_{-b}^{b} f(-u) \, du.
+\end{align*}
+Si $f$ es impar, $f(-u) = -f(u)$, por lo que:
+\[
+\int_{-b}^{b} f(x) \, dx = \int_{-b}^{b} -f(u) \, du = -\int_{-b}^{b} f(u) \, du.
+\]
+Esto implica que $\displaystyle \int_{-b}^{b} f(x) \, dx = 0$.
+
+%---
+%\section*{Ejemplo con Función Par}
+%Calcular $\int_{-2}^{2} x^2 \cos(x) \, dx$:
+%\begin{itemize}
+%    \item $f(x) = x^2 \cos(x)$ es \textbf{par} porque $f(-x) = (-x)^2 \cos(-x) = x^2 \cos(x) = f(x)$.
+%    \item Por lo tanto:
+%    \[
+%    \int_{-2}^{2} x^2 \cos(x) \, dx = 2 \int_{0}^{2} x^2 \cos(x) \, dx.
+%    \]
+%\end{itemize}
+
+
+\end{document}
