@@ -1,0 +1,122 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{url}
+\usepackage{hyperref}
+
+\title{Derivación de la ecuación de Tsiolkovsky para un cohete}
+\author{Franz Chouly}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Introducción}
+La ecuación
+\[
+m(t) \frac{dv}{dt} = -u \frac{dm}{dt} - m(t) g,
+\]
+describe el movimiento de un cohete que expulsa masa (combustible) a alta velocidad. Es conocida como la \textbf{ecuación de movimiento para sistemas de masa variable} y fue desarrollada por \textbf{Konstantin Tsiolkovsky} (1857--1935), pionero de la astronautica teórica.
+
+\section{Origen histórico}
+\begin{itemize}
+    \item \textbf{Tsiolkovsky (1903)}: Publicó su obra ``Investigación de los Espacios Cósmicos por Medio de Aparatos de Reacción'', donde derivó la ecuación por primera vez.
+    \item \textbf{Robert Goddard (1920s)}: Implementó experimentalmente los principios de Tsiolkovsky con los primeros cohetes de combustible líquido.
+\end{itemize}
+
+\section{Derivación}
+\subsection{Hipótesis}
+\begin{enumerate}
+    \item Velocidad de expulsión $u$ constante (relativa al cohete).
+    \item Masa del cohete $m(t)$ disminuye: $\frac{dm}{dt} < 0$.
+    \item Fuerza externa: gravedad $-m(t)g$ (en dirección opuesta al movimiento).
+\end{enumerate}
+
+\subsection{Paso a Paso}
+
+1. \textbf{Momento lineal total} en $t + dt$:
+   \[
+   p(t + dt) = (m + dm)(v + dv) + (-dm)(v - u).
+   \] 
+Simplificando (ignorando $dm \cdot dv$):
+   \[
+   p(t + dt) = mv + m \, dv + u \, dm.
+   \]
+2. \textbf{Variación del momento}:
+   \[
+   dp = p(t + dt) - p(t) = m \, dv + u \, dm.
+   \]
+   Dividiendo por $dt$:
+   \[
+   \frac{dp}{dt} = m \frac{dv}{dt} + u \frac{dm}{dt}.
+   \]
+3. \textbf{Segunda Ley de Newton}: la fuerza externa (gravedad) es igual a $\frac{dp}{dt}$.
+   \[
+   F_{\text{ext}} = -m(t) g = m \frac{dv}{dt} + u \frac{dm}{dt}.
+   \]
+   Reordenando:
+   \[
+   m(t) \frac{dv}{dt} = -u \frac{dm}{dt} - m(t) g.
+   \]
+
+\subsection{Interpretación}
+\begin{itemize}
+    \item $-u \frac{dm}{dt}$: \textbf{Empuje} (positivo, ya que $\frac{dm}{dt} < 0$).
+    \item $-m(t)g$: Fuerza gravitatoria.
+\end{itemize}
+
+\section{Ecuación de Tsiolkovsky (sin gravedad)}
+Si $g = 0$ y $u$ es constante, integrando:
+\[
+\Delta v = u \ln \left( \frac{m_0}{m_f} \right),
+\]
+donde:
+\begin{itemize}
+    \item $\Delta v$: Cambio de velocidad (``delta-v''),
+    \item $m_0$: Masa inicial (combustible + estructura),
+    \item $m_f$: Masa final (solo estructura).
+\end{itemize}
+
+%\section{Conclusión}
+%La ecuación surge de aplicar las leyes de Newton a sistemas de masa variable. Es fundamental para calcular trayectorias espaciales y el diseño de cohetes.
+
+\section*{Referencias}
+\begin{description}
+    \item[NASA.] \textit{Beginner’s Guide to Aeronautics: Ideal Rocket Equation}. \\
+    Disponible en: \url{https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/ideal-rocket-equation/}. \\
+    Guía introductoria sobre la ecuación de Tsiolkovsky, con explicaciones accesibles y ejemplos prácticos.
+
+    \item[Richard, T.] (2025). \textit{SML\_Tom\_1.pdf: Notes on Mathematical Foundations for Rocket Propulsion}. \\
+    Universidad de Nagoya. \\
+    Disponible en: \url{https://www.math.nagoya-u.ac.jp/~richard/teaching/f2025/SML_Tom_1.pdf}. \\
+    Apuntes académicos sobre fundamentos matemáticos en propulsión de cohetes.
+
+    \item[ArXiv.] (2024). \textit{Advances in Rocket Propulsion Theory}. \\
+    Disponible en: \url{https://arxiv.org/pdf/2406.00055}. \\
+    Artículo reciente sobre avances teóricos en propulsión.
+
+    \item[Tsiolkovsky, K. E.] \textit{Obras Científicas y Legado}. \\
+    Instituto Tsiolkovsky. \\
+    Disponible en: \url{https://www.tsiolkovsky.org/ru/nauchnoe-nasledie/}. \\
+    Recopilación de los trabajos originales de Konstantin Tsiolkovsky.
+
+    \item[Vanier College.] \textit{Rockets: A Mathematical Introduction}. \\
+    Proyecto ITI. \\
+    Disponible en: \url{https://gauss.vaniercollege.qc.ca/~iti/proj/Rockets.pdf}. \\
+    Documento educativo que combina teoría matemática y aplicaciones prácticas.
+\end{description}
+
+%REFS
+%  https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/ideal-rocket-equation/
+
+% https://www.math.nagoya-u.ac.jp/~richard/teaching/f2025/SML_Tom_1.pdf
+
+%https://arxiv.org/pdf/2406.00055
+
+%https://www.tsiolkovsky.org/ru/nauchnoe-nasledie/
+
+% https://gauss.vaniercollege.qc.ca/~iti/proj/Rockets.pdf
+
+\end{document}

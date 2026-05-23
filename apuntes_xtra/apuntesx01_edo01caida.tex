@@ -1,0 +1,105 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{mathpazo} % Fuente mathpazo
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{geometry}
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\title{\textbf{Ecuación de caída libre: análisis de la velocidad}}
+\author{Franz Chouly}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Introducción}
+La \textbf{caída libre} es un movimiento rectilíneo uniformemente acelerado (MRUA) en el que un objeto se deja caer desde una altura inicial bajo la acción exclusiva de la gravedad, ignorando la resistencia del aire. En este documento, analizamos la ecuación que describe la \textbf{velocidad} de un objeto en caída libre y la resolvemos paso a paso.
+
+\section{Definición del problema}
+Consideremos un objeto de masa \( m \) que se deja caer desde una altura \( h_0 \) en el tiempo \( t = 0 \). La única fuerza que actúa sobre el objeto es la gravedad, que produce una aceleración constante \( g \) (aproximadamente \( 9.81 \, \text{m/s}^2 \) cerca de la superficie terrestre).
+
+\paragraph{Hipótesis}
+\begin{itemize}
+    \item La resistencia del aire es despreciable.
+    \item La aceleración debido a la gravedad \( g \) es constante.
+    \item El movimiento es vertical y hacia abajo.
+\end{itemize}
+
+\section{Ecuación diferencial de la velocidad}
+La velocidad \( v(t) \) de un objeto en caída libre se define como la derivada de la posición \( y(t) \) con respecto al tiempo:
+\[
+v(t) = \frac{dy}{dt}
+\]
+La aceleración \( a \) es la derivada de la velocidad con respecto al tiempo:
+\[
+a = \frac{dv}{dt} = -g
+\]
+El signo negativo indica que la aceleración está dirigida hacia abajo (en el sentido opuesto al eje positivo \( y \)).
+%
+%\subsection{Ecuación a resolver}
+La ecuación diferencial que describe la velocidad en función del tiempo es:
+\[
+\frac{dv}{dt} = -g
+\]
+\section{Resolución de la ecuación diferencial}
+Integramos ambos lados de la ecuación con respecto al tiempo \( t \):
+\[
+\int dv = \int -g \, dt
+\]
+\[
+v(t) = -g t + C
+\]
+donde \( C \) es la constante de integración.
+%
+%\subsection{Condición Inicial}
+En \( t = 0 \), la velocidad inicial \( v(0) = v_0 \). Sustituyendo en la ecuación:
+\[
+v(0) = -g \cdot 0 + C \implies C = v_0
+\]
+%
+%\subsection{Solución Final}
+La velocidad en función del tiempo es:
+\[
+v(t) = v_0 - g t
+\]
+
+\paragraph{Caso particular: caída desde el reposo}
+Si el objeto se deja caer desde el reposo (\( v_0 = 0 \)):
+\[
+v(t) = -g t
+\]
+El signo negativo indica que la velocidad está dirigida hacia abajo.
+
+\section{Interpretación Física}
+\begin{itemize}
+    \item La velocidad aumenta linealmente con el tiempo.
+    \item La pendiente de la recta \( v(t) \) es \( -g \), lo que refleja la aceleración constante.
+    \item La velocidad es independiente de la masa del objeto 
+    
+    (en ausencia de resistencia del aire).
+\end{itemize}
+
+\section{Ejemplo Práctico}
+Supongamos que un objeto se deja caer desde el reposo (\( v_0 = 0 \)) en la superficie de la Tierra (\( g = 9.81 \, \text{m/s}^2 \)). ¿Cuál es su velocidad después de \( 3 \) segundos?
+
+\paragraph{Solución}
+Usamos la ecuación:
+\[
+v(t) = -g t
+\]
+Sustituyendo \( t = 3 \, \text{s} \):
+\[
+v(3) = -9.81 \times 3 = -29.43 \, \text{m/s}
+\]
+El signo negativo indica que la velocidad está dirigida hacia abajo.
+
+\section{Conclusión}
+La ecuación de la velocidad en caída libre es una herramienta fundamental en la física clásica. Su resolución nos permite entender cómo varía la velocidad de un objeto bajo la influencia exclusiva de la gravedad.
+
+\end{document}
