@@ -1,0 +1,163 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+\title{Relatividad especial: dilatación del tiempo y geometría de Minkowski}
+\author{Franz Chouly}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Introducción}
+La teoría de la relatividad especial, desarrollada principalmente por Albert Einstein en 1905, revolucionó nuestra comprensión del espacio y el tiempo. Uno de sus resultados más fascinantes es la \textbf{dilatación del tiempo}, que muestra cómo el tiempo medido por un observador en movimiento es diferente al tiempo medido por un observador en reposo. Este fenómeno está estrechamente ligado a la geometría del espacio-tiempo de Minkowski, que proporciona un marco matemático para describir estas relaciones.
+
+\section{Derivación de la dilatación del tiempo}
+En relatividad especial, la relación entre el \textbf{tiempo propio} ($\tau$) y el \textbf{tiempo coordinado} ($t$) está dada por el \textbf{factor de Lorentz} ($\gamma$). Consideremos dos observadores:
+\begin{itemize}
+    \item Un observador en reposo mide el tiempo propio $\tau$.
+    \item Otro observador en movimiento relativo con velocidad $v$ mide el tiempo coordinado $t$.
+\end{itemize}
+El intervalo espacio-temporal entre dos eventos es invariante y se expresa como:
+\[
+ds^2 = c^2 dt^2 - dx^2 - dy^2 - dz^2.
+\]
+Para un observador en movimiento a lo largo del eje $x$ con velocidad constante $v$, tenemos:
+\[
+dx = v \, dt, \quad dy = dz = 0.
+\]
+Sustituyendo en el intervalo:
+\[
+ds^2 = c^2 dt^2 - v^2 dt^2 = (c^2 - v^2) dt^2.
+\]
+Para el observador en reposo, el intervalo es:
+\[
+ds^2 = c^2 d\tau^2.
+\]
+Igualando ambas expresiones (ya que $ds^2$ es invariante):
+\[
+c^2 d\tau^2 = (c^2 - v^2) dt^2.
+\]
+Despejando $d\tau$:
+\[
+d\tau = \sqrt{1 - \frac{v^2}{c^2}} \, dt.
+\]
+Se define el \textbf{factor de Lorentz} como:
+\[
+\gamma = \frac{1}{\sqrt{\displaystyle 1 - \frac{v^2}{c^2}}}.
+\]
+Por lo tanto, la relación entre $t$ y $\tau$ es:
+\[
+dt = \gamma \, d\tau
+\]
+Esto significa que el tiempo coordinado ($t$) es más largo que el tiempo propio ($\tau$) por un factor $\gamma$.
+
+\section{Ejemplo}
+
+Un Observador A (en reposo) mide que una nave espacial (Observador B) se mueve a una velocidad $v = 0.8c$ (80\% de la velocidad de la luz).
+Observador B (en la nave): Mide el tiempo propio de un evento que dura $\Delta t_0 = 1$ segundo en su marco de referencia.
+
+\paragraph{Cálculo del factor de Lorentz ($\gamma$)}
+El factor de Lorentz se define como:
+\[
+\gamma = \frac{1}{\sqrt{\displaystyle 1 - \frac{v^2}{c^2}}}.
+\]
+Sustituyendo $v = 0.8c$:
+\[
+\gamma = \frac{1}{\sqrt{1 - (0.8)^2}} = \frac{1}{\sqrt{1 - 0.64}} = \frac{1}{\sqrt{0.36}} = \frac{1}{0.6} \approx 1.6667.
+\]
+%### **Dilatación temporal**
+El tiempo medido por el Observador A ($\Delta t$) para el mismo evento es:
+\[
+\Delta t = \gamma \cdot \Delta t_0 = 1.6667 \times 1\, \text{s} \approx 1.6667\, \text{segundos}.
+\]
+%### **Interpretación**
+Para el Observador B (en la nave), el evento dura 1 segundo. Para el Observador A (en reposo), el mismo evento dura 1.6667 segundos.
+
+%En el ejemplo anterior:
+%- **Para el Observador A (en reposo)**: El tiempo del Observador B (en la nave) **se dilata** (1 segundo en la nave → ~1.6667 segundos para A).
+%- **Para el Observador B (en la nave)**: El tiempo del Observador A **también se dilata** si B considera que A es quien se mueve (por la relatividad del movimiento).
+%### **Clave**
+%La dilatación temporal es **relativa**: ambos observadores ven el tiempo del otro dilatado si se mueven el uno respecto al otro. No hay un "marco absoluto"; depende del sistema de referencia.
+
+\section{Geometría de Minkowski}
+La geometría de Minkowski es una extensión del espacio euclidiano que incorpora el tiempo como una cuarta dimensión. En este espacio-tiempo, el intervalo entre dos eventos se define como:
+\[
+s^2 = c^2 t^2 - x^2 - y^2 - z^2.
+\]
+%A diferencia de la geometría euclidiana, donde la distancia es siempre positiva, en la geometría de Minkowski el intervalo puede ser positivo, negativo o cero, dependiendo de la relación entre el espacio y el tiempo. Esto refleja la estructura hiperbólica del espacio-tiempo, donde las líneas de universo de los observadores en movimiento relativo son hipérbolas.
+
+%\section{Ejemplos Concretos}
+
+\section{El muón en la atmósfera}
+
+Los muones son partículas subatómicas que se generan en la atmósfera superior debido a la interacción de los rayos cósmicos. En reposo, su vida media es de aproximadamente $2.2 \, \mu s$. Sin embargo, cuando se mueven a velocidades cercanas a la de la luz ($v \approx 0.994c$), su vida media medida desde la Tierra es mucho mayor debido a la dilatación del tiempo. Esto les permite llegar a la superficie terrestre antes de desintegrarse.
+
+Calculando el factor de Lorentz:
+$
+\gamma = \frac{1}{\sqrt{1 - (0.994)^2}} \approx 8.8
+$
+Por lo tanto, la vida media del muón en movimiento es aproximadamente $8.8 \times 2.2 \, \mu s \approx 19.4 \, \mu s$, lo que les permite recorrer distancias mucho mayores de lo esperado clásicamente.
+
+\paragraph{Referencias}
+
+\begin{itemize}
+    \item \url{https://doi.org/10.1119/1.2135319}
+
+    \item \scriptsize{\url{https://www.sciencesalecole.org/wp-content/uploads/2016/06/relativite-restreinte.pdf}}
+\end{itemize}
+
+%**American Journal of Physics (AIP Publishing)**
+%- Titre : *A compact apparatus for muon lifetime measurement and time dilation demonstration in the undergraduate laboratory*
+%- Lien : [https://pubs.aip.org/aapt/ajp/article-abstract/74/2/161/1039340/](https://pubs.aip.org/aapt/ajp/article-abstract/74/2/161/1039340/)
+
+%**Sciences à l'École**
+%- Titre : *Relativité restreinte* (inclut calculs et explications sur les muons atmosphériques)
+%- Lien : [https://www.sciencesalecole.org/wp-content/uploads/2016/06/relativite-restreinte.pdf](https://www.sciencesalecole.org/wp-content/uploads/2016/06/relativite-restreinte.pdf)
+
+%**Culture Sciences Physique (ENS Lyon)**
+%- Titre : *Validation des principes de la relativité restreinte*
+%- Lien : [https://culturesciencesphysique.ens-lyon.fr/ressource/validation-relativite-restreinte-3.xml](https://culturesciencesphysique.ens-lyon.fr/ressource/validation-relativite-restreinte-3.xml)
+%- Explications claires avec données expérimentales sur les muons cosmiques.
+
+\subsection{El experimento de Hafele-Keating}
+En 1971, Joseph Hafele y Richard Keating realizaron un experimento en el que sincronizaron relojes atómicos y los transportaron en aviones comerciales alrededor del mundo. Al comparar los relojes en movimiento con los relojes en reposo en la Tierra, encontraron que los relojes en movimiento habían experimentado una dilatación del tiempo, confirmando las predicciones de la relatividad especial. Este experimento fue una de las primeras verificaciones experimentales directas de la dilatación del tiempo.
+
+\paragraph{Referencia}
+%### **Article historique**
+%- **Hafele, J. C. & Keating, R. E.** (1972).
+%  *Around-the-World Atomic Clocks: Predicted Relativistic Time Gains*.
+%  **Science**, *177*(4044), 166–168.
+%  �� [DOI:10.1126/science.177.4044.166](https://www.science.org/doi/10.1126/science.177.4044.166)
+\url{https://paulba.no/paper/Hafele_Keating.pdf}
+
+%- **Hafele-Keating Experiment Reassessed** (2020).
+%  Analyse critique des données et comparaison avec les prédictions théoriques.
+%[ResearchGate (PDF)](https://www.researchgate.net/publication/344428119_Hafele-Keating_Experiment_Reassessed)
+
+%- **Hafele and Keating revisited: A novel interpretation** %(2024).
+%  Réinterprétation des résultats avec une approche alternative.
+%  �� [ResearchGate (PDF)](https://www.researchgate.net/publication/381541586_Hafele_and_Keating_revisited_A_novel_interpretation_of_the_results_of_the_Hafele-Keating_experiment)
+
+\section{Origen de la relatividad especial}
+La relatividad especial no fue el trabajo de una sola persona, sino el resultado de contribuciones clave de varios científicos, entre otros:
+\begin{itemize}
+    \item \textbf{James Clerk Maxwell}: Formuló las ecuaciones del electromagnetismo, que mostraron que la velocidad de la luz es constante y no depende del movimiento del observador. Esto planteó un problema con la mecánica clásica, que fue resuelto por la relatividad especial.
+    \item \textbf{Hendrik Lorentz}: Desarrolló las transformaciones de Lorentz, que describen cómo las coordenadas de espacio y tiempo se transforman entre observadores en movimiento relativo. Estas transformaciones son fundamentales en la relatividad especial.
+    \item \textbf{Henri Poincaré}: Contribuyó significativamente a la formulación mate\-mática de la relatividad especial y fue el primero en reconocer que las transformaciones de Lorentz forman un grupo, lo que implica que la relatividad es una propiedad fundamental del espacio-tiempo.
+    \item \textbf{Albert Einstein}: En su artículo de 1905, ``Sobre la electrodinámica de cuerpos en movimiento'', Einstein formuló los postulados de la relatividad especial y derivó muchas de sus consecuencias, incluyendo la dilatación del tiempo y la contracción de la longitud. Su enfoque fue más conceptual y menos matemático que el de Poincaré o Lorentz, pero su trabajo unificó y popularizó la teoría.
+\end{itemize}
+
+\paragraph{Referencia}
+A.~Einstein, ``Zur Elektrodynamik bewegter K\"orper'', \textit{Annalen der Physik} \textbf{17} (1905) 891--921.
+
+\noindent
+\url{https://www.fourmilab.ch/etexts/einstein/specrel/specrel.pdf}
+
+\end{document}
